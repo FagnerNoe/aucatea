@@ -4,7 +4,16 @@ import { Auth } from './components/Auth';
 import { Dashboard } from './components/Dashboard';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AuthCallback from './components/AuthCallback';
+import { supabase } from './service/supabase';
+import type { ReactNode } from 'react';
 
+function PrivateRoute({ children }: { children: ReactNode }) {
+  const session = supabase.auth.getSession();
+  if (!session) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+}
 
 
 
@@ -18,7 +27,7 @@ function App() {
             <Route path="/login" element={<Auth />} />
 
             {/* Tela principal após login */}
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
 
             {/* Rota de callback para confirmar email */}
             <Route path="/auth/callback" element={<AuthCallback />} />

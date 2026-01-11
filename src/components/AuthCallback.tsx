@@ -11,8 +11,8 @@ export default function AuthCallback() {
                 console.error("Erro ao confirmar email:", error.message);
             } else {
                 // Agora o email_confirmed_at foi atualizado em auth.users
-                // Redireciona para a tela de login
-                window.location.href = "/login";
+                // Redireciona para a tela de dashboard
+                window.location.href = "/dashboard";
             }
         };
 
