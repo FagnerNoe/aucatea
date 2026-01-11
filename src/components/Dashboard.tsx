@@ -23,7 +23,7 @@ export function Dashboard() {
                         <button
                             onClick={() => setActiveTab('book')}
                             className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${activeTab === 'book'
-                                ? 'bg-blue-600 text-white'
+                                ? 'bg-yellow-600 text-white'
                                 : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                                 }`}
                         >
@@ -33,7 +33,7 @@ export function Dashboard() {
                         <button
                             onClick={() => setActiveTab('list')}
                             className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${activeTab === 'list'
-                                ? 'bg-blue-600 text-white'
+                                ? 'bg-yellow-600 text-white'
                                 : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                                 }`}
                         >

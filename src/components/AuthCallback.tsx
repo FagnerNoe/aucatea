@@ -12,12 +12,16 @@ export default function AuthCallback() {
             } else {
                 // Agora o email_confirmed_at foi atualizado em auth.users
                 // Redireciona para a tela de login
-                window.location.href = "/";
+                window.location.href = "/login";
             }
         };
 
         handleCallback();
     }, []);
 
-    return <p>Confirmando sua conta...</p>;
+    return (
+        <><p>Email Confirmado com sucesso!</p>
+            <div>Redirecionando para a tela de login...</div></>
+    );
+
 }

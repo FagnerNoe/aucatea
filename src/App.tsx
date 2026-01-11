@@ -2,7 +2,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { Auth } from './components/Auth';
 import { Dashboard } from './components/Dashboard';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AuthCallback from './components/AuthCallback';
 
 
@@ -24,7 +24,7 @@ function App() {
             <Route path="/auth/callback" element={<AuthCallback />} />
 
             {/* Rota padrão → redireciona para login */}
-            <Route path="/" element={<Auth />} />
+            <Route path="/" element={<Navigate to="/login" />} />
           </Routes>
         </AuthProvider>
       </ThemeProvider>
