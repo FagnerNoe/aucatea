@@ -9,7 +9,7 @@ export default function AuthCallback() {
 
         const handleCallback = async () => {
             // troca o código da URL por sessão
-            const { data, error } = await supabase.auth.exchangeCodeForSession(window.location.href);
+            const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);
 
             if (error) {
                 console.error("Erro ao confirmar:", error.message);
@@ -17,14 +17,10 @@ export default function AuthCallback() {
                 return;
             }
 
-            // se a sessão foi criada, redireciona
-            if (data?.session) {
-                console.log("Sessão criada:", data.session);
-                navigate("/dashboard");
-            } else {
-                console.error("Nenhuma sessão encontrada");
-                navigate("/login");
-            }
+            // não precisa checar data.session aqui
+            // o AuthProvider vai atualizar user automaticamente
+            navigate("/dashboard");
+
         };
 
         handleCallback();
