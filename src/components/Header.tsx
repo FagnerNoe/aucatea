@@ -1,9 +1,10 @@
 
+import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { Car, LogOut, Moon, Sun } from 'lucide-react';
+import { LogOut, Moon, Sun } from 'lucide-react';
 
 export function Header() {
-
+    const { signOut } = useAuth();
     const { theme, toggleTheme } = useTheme();
 
     return (
@@ -11,14 +12,14 @@ export function Header() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                            <Car className="w-6 h-6 text-white" />
+                        <div className="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center">
+                            <img src='/upcar-logo.png' className="w-12 h-12 text-white" />
                         </div>
                         <div>
-                            <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                                RideBook
+                            <h1 className="text-xl font-[Poppins] font-bold text-gray-900 dark:text-white">
+                                UpCar
                             </h1>
-                            <p className="text-xs text-gray-600 dark:text-gray-400">
+                            <p className="text-xs font-[Poppins] text-gray-600 dark:text-gray-400">
                                 Agendamento de Corridas
                             </p>
                         </div>
@@ -41,7 +42,9 @@ export function Header() {
 
                             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition-colors"
                         >
-                            <LogOut className="w-4 h-4" />
+                            <LogOut
+                                onClick={signOut}
+                                className="w-4 h-4" />
                             <span className="hidden sm:inline">Sair</span>
                         </button>
                     </div>

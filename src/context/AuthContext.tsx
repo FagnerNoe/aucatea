@@ -4,6 +4,8 @@ import { supabase } from "../service/supabase";
 interface AuthContextType {
     user: any;       // ou o tipo correto do usuário do Supabase
     loading: boolean;
+    signOut: () => Promise<void>;
+
 }
 
 
@@ -28,8 +30,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return () => subscription?.subscription.unsubscribe();
     }, []);
 
+    // Função de logout
+    const signOut = async () => {
+        await supabase.auth.signOut();
+        setUser(null);
+    };
+
+
     return (
-        <AuthContext.Provider value={{ user, loading }} >
+        <AuthContext.Provider value={{ user, loading, signOut }} >
             {children}
         </AuthContext.Provider>
     );

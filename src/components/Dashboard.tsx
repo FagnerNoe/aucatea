@@ -23,7 +23,7 @@ export function Dashboard() {
                         <button
                             onClick={() => setActiveTab('book')}
                             className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${activeTab === 'book'
-                                ? 'bg-yellow-600 text-white'
+                                ? 'bg-linear-to-r from-yellow-500 to-yellow-600 text-white'
                                 : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                                 }`}
                         >
@@ -33,7 +33,7 @@ export function Dashboard() {
                         <button
                             onClick={() => setActiveTab('list')}
                             className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${activeTab === 'list'
-                                ? 'bg-yellow-600 text-white'
+                                ? 'bg-linear-to-r from-yellow-500 to-yellow-600 text-white'
                                 : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                                 }`}
                         >
@@ -46,7 +46,7 @@ export function Dashboard() {
                 <div className="animate-fadeIn">
                     {activeTab === 'book' ? (
                         <div>
-                            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                            <h2 className="text-2xl font-[Poppins] font-bold text-gray-900 dark:text-white mb-6">
                                 Agendar Nova Corrida
                             </h2>
                             <BookRideForm onSuccess={handleBookingSuccess} />

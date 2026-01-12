@@ -2,19 +2,24 @@ import { useEffect } from "react";
 import { supabase } from "../service/supabase";
 
 export default function AuthCallback() {
-    const url = new URL(window.location.href);
-    const code = url.searchParams.get("code");
-    const codeVerifier = localStorage.getItem('supabase.auth.code_verifier');
 
-    if (!code || !codeVerifier) {
-        throw new Error('auth code and code verifier are required')
-    }
-    console.log("Code:", code);
-    console.log("Code Verifier:", codeVerifier);
 
 
     useEffect(() => {
+
+        const url = new URL(window.location.href);
+        const code = url.searchParams.get("code");
+        const codeVerifier = localStorage.getItem('supabase.auth.code_verifier');
+
+        if (!code || !codeVerifier) {
+            throw new Error('auth code and code verifier are required')
+        }
+        console.log("Code:", url.searchParams.get("code"));
+        console.log("Code Verifier:", localStorage.getItem("supabase.auth.code_verifier"));
+
+
         const handleCallback = async () => {
+
             // Tenta trocar código por sessão (fluxo de e-mail/senha)
             const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);
 

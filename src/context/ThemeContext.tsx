@@ -11,17 +11,23 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
     const [theme, setTheme] = useState<Theme>(() => {
-        const saved = localStorage.getItem('theme');
-        return (saved as Theme) || 'light';
+        // tenta recuperar do localStorage
+        const saved = localStorage.getItem("theme") as Theme | null;
+        if (saved) return saved;
+
+        // se não houver nada salvo, usa a preferência do sistema
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        return prefersDark ? "dark" : "light";
     });
 
+
     useEffect(() => {
-        localStorage.setItem('theme', theme);
         if (theme === 'dark') {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
         }
+        localStorage.setItem("theme", theme);
     }, [theme]);
 
     const toggleTheme = () => {

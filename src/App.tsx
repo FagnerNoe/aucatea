@@ -1,5 +1,5 @@
 import { AuthProvider, useAuth } from './context/AuthContext';
-import { ThemeProvider } from './context/ThemeContext';
+
 import { Auth } from './components/Auth';
 import { Dashboard } from './components/Dashboard';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
@@ -20,25 +20,25 @@ function PrivateRoute({ children }: { children: ReactNode }) {
 
 function App() {
   return (
+
     <BrowserRouter>
-      <ThemeProvider>
-        <AuthProvider>
-          <Routes>
-            {/* Tela de login */}
-            <Route path="/login" element={<Auth />} />
+      <AuthProvider>
+        <Routes>
+          {/* Tela de login */}
+          <Route path="/login" element={<Auth />} />
 
-            {/* Tela principal após login */}
-            <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          {/* Tela principal após login */}
+          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
 
-            {/* Rota de callback para confirmar email */}
-            <Route path="/auth/callback" element={<AuthCallback />} />
+          {/* Rota de callback para confirmar email */}
+          <Route path="/auth/callback" element={<AuthCallback />} />
 
-            {/* Rota padrão → redireciona para login */}
-            <Route path="/" element={<Navigate to="/login" />} />
-          </Routes>
-        </AuthProvider>
-      </ThemeProvider>
+          {/* Rota padrão → redireciona para login */}
+          <Route path="/" element={<Navigate to="/login" />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
+
   );
 }
 

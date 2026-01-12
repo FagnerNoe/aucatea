@@ -44,7 +44,7 @@ export function Auth() {
                 alert('Verifique seu e-mail para confirmar a conta.');
 
                 // Redireciona para login
-                navigate('/login');
+                navigate('/');
             }
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Ocorreu um erro');
@@ -54,31 +54,31 @@ export function Auth() {
     };
 
     async function signInWithGoogle() {
-        const { error } = await supabase.auth.signInWithOAuth({
+        await supabase.auth.signInWithOAuth({
             provider: "google",
             options: {
-                redirectTo: 'https://upcar.vercel.app/auth/callback',
+                redirectTo: window.location.origin + "/auth/callback",
             },
         });
 
         if (error) {
-            console.error("Erro ao logar com Google:", error.message);
+            console.error("Erro ao logar com Google:", error);
         }
     }
 
 
     return (
-        <div className="min-h-screen bg-linear-to-br from-blue-50 to-yellow-200 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-linear-to-t from-yellow-100 to-yellow-500 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
             <div className="w-full max-w-md">
                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                     <div className="text-center mb-8">
                         <div className="inline-flex items-center justify-center w-40 h-35 rounded-full mb-4">
                             {isLogin ? <img src='upcar-logo.png' className="w-36 h-30 text-white" /> : <UserPlus className="w-15 h-15 text-yellow-600 border-3 rounded-full px-2" />}
                         </div>
-                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 font-[Poppins]">
+                        <h1 className="text-3xl font-bold bg-clip-text bg-linear-to-r from-yellow-400 to-yellow-800 text-transparent dark:text-white mb-2 font-[Poppins]">
                             {isLogin ? 'Bem-vindo!' : 'Criar Conta'}
                         </h1>
-                        <p className="text-gray-600 dark:text-gray-400">
+                        <p className="text-gray-600  text-sm font-[Poppins] dark:text-gray-400">
                             {isLogin ? 'Entre para agendar suas corridas' : 'Cadastre-se para começar'}
                         </p>
                     </div>

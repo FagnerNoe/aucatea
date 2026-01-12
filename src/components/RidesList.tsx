@@ -16,7 +16,7 @@ export function RidesList() {
 
         setLoading(true);
         const { data, error } = await supabase
-            .from('rides')
+            .from('corridas')
             .select('*')
             .eq('user_id', user.id)
             .order('scheduled_time', { ascending: false });
@@ -82,7 +82,7 @@ export function RidesList() {
     if (loading) {
         return (
             <div className="flex items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-600"></div>
             </div>
         );
     }
@@ -91,10 +91,10 @@ export function RidesList() {
         return (
             <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-xl shadow-md">
                 <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                <h3 className="text-lg font-[Poppins] font-semibold text-gray-900 dark:text-white mb-2">
                     Nenhuma corrida agendada
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="font-[Poppins] text-gray-600 text-xs dark:text-gray-400 px-10">
                     Agende sua primeira corrida usando o formulário acima
                 </p>
             </div>
