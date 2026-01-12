@@ -3,10 +3,12 @@ import { Header } from './Header';
 import { BookRideForm } from './FormRide';
 import { RidesList } from './RidesList';
 import { Plus, List } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export function Dashboard() {
     const [activeTab, setActiveTab] = useState<'book' | 'list'>('book');
     const [refreshKey, setRefreshKey] = useState(0);
+    const { user } = useAuth();
 
     const handleBookingSuccess = () => {
         setRefreshKey(prev => prev + 1);
@@ -17,7 +19,11 @@ export function Dashboard() {
         <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors">
             <Header />
 
-            <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <main className=" mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div className="flex items-center justify-end mb-6">
+                    <p>Olá, <span className='font-[Poppins] font-medium'>{user.fullName.split(" ")[0]}</span></p>
+                    <div className='bg-amber-600 rounded-xl w-10 h-10 ml-2'></div>
+                </div>
                 <div className="mb-6">
                     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-1 inline-flex">
                         <button

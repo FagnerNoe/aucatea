@@ -35,7 +35,7 @@ export function RidesList() {
         if (!confirm('Tem certeza que deseja cancelar esta corrida?')) return;
 
         const { error } = await supabase
-            .from('rides')
+            .from('corridas')
             .delete()
             .eq('id', id);
 

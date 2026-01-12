@@ -24,7 +24,7 @@ export interface Database {
           updated_at?: string;
         };
       };
-      rides: {
+      corridas: {
         Row: {
           id: string;
           user_id: string;

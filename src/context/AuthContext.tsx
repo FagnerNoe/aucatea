@@ -36,6 +36,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(null);
     };
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (!user) return;
+
+            const { data, error } = await supabase
+                .from("clientes")
+                .select("full_name") // ajuste para o campo real
+                .eq("id", user.id) // supondo que você tenha esse relacionamento
+                .single();
+
+            if (error) {
+                console.error("Erro ao buscar cliente:", error.message);
+                return;
+            }
+
+            if (data) {
+                setUser({
+                    ...user,
+                    fullName: data.full_name
+                });
+            }
+        };
+
+        fetchUserData();
+    }, [user]);
+
 
     return (
         <AuthContext.Provider value={{ user, loading, signOut }} >
