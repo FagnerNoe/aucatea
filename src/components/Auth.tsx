@@ -57,7 +57,7 @@ export function Auth() {
         const { error } = await supabase.auth.signInWithOAuth({
             provider: "google",
             options: {
-                redirectTo: window.location.origin + '/auth/callback',
+                redirectTo: 'https://upcar.vercel.app/auth/callback',
             },
         });
 
@@ -75,7 +75,7 @@ export function Auth() {
                         <div className="inline-flex items-center justify-center w-40 h-35 rounded-full mb-4">
                             {isLogin ? <img src='upcar-logo.png' className="w-36 h-30 text-white" /> : <UserPlus className="w-15 h-15 text-yellow-600 border-3 rounded-full px-2" />}
                         </div>
-                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 font-[Poppins]">
                             {isLogin ? 'Bem-vindo!' : 'Criar Conta'}
                         </h1>
                         <p className="text-gray-600 dark:text-gray-400">
@@ -153,7 +153,7 @@ export function Auth() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-linear-to-r from-yellow-400 to-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full font-[Poppins] bg-linear-to-r from-yellow-400 to-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {loading ? 'Carregando...' : isLogin ? 'Entrar' : 'Criar Conta'}
                         </button>
@@ -172,7 +172,7 @@ export function Auth() {
 
 
                         <button onClick={signInWithGoogle}
-                            className='bg-white  border-amber-400 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 mt-4 w-full flex items-center justify-center gap-2 border  dark:border-gray-600 text-gray-900 dark:text-white font-semibold py-3 px-4 rounded-lg transition-colors'>
+                            className='bg-white font-[Poppins] border-amber-400 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 mt-4 w-full flex items-center justify-center gap-2 border  dark:border-gray-600 text-gray-900 dark:text-white font-semibold py-3 px-4 rounded-lg transition-colors'>
                             Entrar com Google
                         </button>
                     </div>
