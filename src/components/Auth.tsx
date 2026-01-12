@@ -54,17 +54,19 @@ export function Auth() {
     };
 
     async function signInWithGoogle() {
-        await supabase.auth.signInWithOAuth({
-            provider: "google",
-            options: {
-                redirectTo: window.location.origin + "/auth/callback",
-            },
-        });
-
-        if (error) {
-            console.error("Erro ao logar com Google:", error);
+        try {
+            await supabase.auth.signInWithOAuth({
+                provider: "google",
+                options: {
+                    redirectTo: window.location.origin + "/auth/callback",
+                },
+            });
+            // não há retorno aqui: o usuário será redirecionado para o Google
+        } catch (err) {
+            console.error("Erro ao iniciar login com Google:", err);
         }
     }
+
 
 
     return (
