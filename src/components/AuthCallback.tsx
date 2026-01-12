@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { supabase } from "../service/supabase";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthCallback() {
+    const navigate = useNavigate();
 
 
 
@@ -30,14 +32,15 @@ export default function AuthCallback() {
             // Depois verifica se a sessão existe (OAuth ou e-mail confirmado)
             const { data } = await supabase.auth.getSession();
             if (data?.session) {
-                window.location.href = "/dashboard";
+                navigate('/dashboard');
             } else {
                 console.error("Nenhuma sessão encontrada");
             }
         };
 
         handleCallback();
-    }, []);
+    }, [navigate]);
 
     return <p>Processando autenticação...</p>;
+
 }
