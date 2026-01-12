@@ -1,40 +1,29 @@
 import { useEffect } from "react";
-import { supabase } from "../service/supabase";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../service/supabase";
 
 export default function AuthCallback() {
     const navigate = useNavigate();
 
-
-
     useEffect(() => {
 
-        const url = new URL(window.location.href);
-        const code = url.searchParams.get("code");
-        const codeVerifier = localStorage.getItem('supabase.auth.code_verifier');
-
-        if (!code || !codeVerifier) {
-            throw new Error('auth code and code verifier are required')
-        }
-        console.log("Code:", url.searchParams.get("code"));
-        console.log("Code Verifier:", localStorage.getItem("supabase.auth.code_verifier"));
-
-
         const handleCallback = async () => {
-
-            // Tenta trocar código por sessão (fluxo de e-mail/senha)
-            const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);
+            // troca o código da URL por sessão
+            const { data, error } = await supabase.auth.exchangeCodeForSession(window.location.href);
 
             if (error) {
                 console.error("Erro ao confirmar:", error.message);
+                navigate("/login"); // volta pro login se falhar
+                return;
             }
 
-            // Depois verifica se a sessão existe (OAuth ou e-mail confirmado)
-            const { data } = await supabase.auth.getSession();
+            // se a sessão foi criada, redireciona
             if (data?.session) {
-                navigate('/dashboard');
+                console.log("Sessão criada:", data.session);
+                navigate("/dashboard");
             } else {
                 console.error("Nenhuma sessão encontrada");
+                navigate("/login");
             }
         };
 
@@ -42,5 +31,4 @@ export default function AuthCallback() {
     }, [navigate]);
 
     return <p>Processando autenticação...</p>;
-
 }
