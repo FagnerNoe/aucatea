@@ -1,9 +1,9 @@
-import { useAuth } from '../context/AuthContext';
+
 import { useTheme } from '../context/ThemeContext';
 import { Car, LogOut, Moon, Sun } from 'lucide-react';
 
 export function Header() {
-    const { signOut } = useAuth();
+
     const { theme, toggleTheme } = useTheme();
 
     return (
@@ -38,7 +38,7 @@ export function Header() {
                         </button>
 
                         <button
-                            onClick={signOut}
+
                             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition-colors"
                         >
                             <LogOut className="w-4 h-4" />

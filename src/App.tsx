@@ -1,17 +1,18 @@
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { Auth } from './components/Auth';
 import { Dashboard } from './components/Dashboard';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AuthCallback from './components/AuthCallback';
-import { supabase } from './service/supabase';
+
 import type { ReactNode } from 'react';
 
 function PrivateRoute({ children }: { children: ReactNode }) {
-  const session = supabase.auth.getSession();
-  if (!session) {
-    return <Navigate to="/login" replace />;
-  }
+  const { loading, user } = useAuth();
+
+  if (loading) return <p>Carregando...</p>;
+  if (!user) return <Navigate to="/login" replace />;
+
   return children;
 }
 

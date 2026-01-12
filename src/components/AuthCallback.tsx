@@ -1,17 +1,25 @@
 import { useEffect } from "react";
-import { supabase } from "./../service/supabase";
+import { supabase } from "../service/supabase";
 
 export default function AuthCallback() {
     useEffect(() => {
         const handleCallback = async () => {
-            // Finaliza a confirmação de e-mail trocando o código pelo token de sessão
-            const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);
+            // Primeiro tenta recuperar sessão (OAuth já cria automaticamente)
+            const { data, error } = await supabase.auth.getSession();
 
             if (error) {
-                console.error("Erro ao confirmar email:", error.message);
+                console.error("Erro ao recuperar sessão:", error.message);
+            } else if (data?.session) {
+                // Usuário autenticado (Google, GitHub etc.)
+                window.location.href = "/dashboard";
+                return;
+            }
+
+            // Se não houver sessão, tenta fluxo de e-mail/senha
+            const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(window.location.href);
+            if (exchangeError) {
+                console.error("Erro ao confirmar email:", exchangeError.message);
             } else {
-                // Agora o email_confirmed_at foi atualizado em auth.users
-                // Redireciona para a tela de dashboard
                 window.location.href = "/dashboard";
             }
         };
@@ -19,9 +27,5 @@ export default function AuthCallback() {
         handleCallback();
     }, []);
 
-    return (
-        <><p>Email Confirmado com sucesso!</p>
-            <div>Redirecionando para a tela de login...</div></>
-    );
-
+    return <p>Processando autenticação...</p>;
 }
