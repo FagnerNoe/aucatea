@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import type { Database } from '../types/database.types';
 import { MapPin, Calendar, Clock, Trash2, CheckCircle, XCircle } from 'lucide-react';
 
-type Ride = Database['public']['Tables']['rides']['Row'];
+type Ride = Database['public']['Tables']['corridas']['Row'];
 
 export function RidesList() {
     const { user } = useAuth();

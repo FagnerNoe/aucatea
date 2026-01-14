@@ -54,9 +54,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             if (data) {
                 setUser({
                     ...user,
-                    fullName: data.full_name
+                    full_name: data.full_name
                 });
             }
+
         };
 
         fetchUserData();

@@ -13,7 +13,7 @@ export default function PrivateRoute({ children }: { children: JSX.Element }) {
     if (!user) {
         console.log("PrivateRoute → sem usuário, redirecionando para /login");
 
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/" replace />;
     }
 
     // se houver usuário, renderiza o conteúdo protegido
