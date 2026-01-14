@@ -5,17 +5,20 @@ import type { JSX } from "react";
 export default function PrivateRoute({ children }: { children: JSX.Element }) {
     const { user, loading } = useAuth();
 
+    // Enquanto estiver checando a sessão, NÃO MOSTRA NADA ou mostra um Spinner
     if (loading) {
-        return <p>Carregando...</p>;
+        return (
+            <div className="flex h-screen w-screen items-center justify-center bg-gray-50">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-yellow-600"></div>
+            </div>
+        );
     }
 
-    // se não houver usuário logado, redireciona para login
+    // Se parou de carregar e NÃO tem usuário, redireciona.
     if (!user) {
-        console.log("PrivateRoute → sem usuário, redirecionando para /login");
-
         return <Navigate to="/" replace />;
     }
 
-    // se houver usuário, renderiza o conteúdo protegido
+    // SÓ chega aqui se loading = false E user existe.
     return children;
 }
