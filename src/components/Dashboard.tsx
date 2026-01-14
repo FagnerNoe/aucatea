@@ -21,7 +21,7 @@ export function Dashboard() {
 
             <main className=" mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="flex items-center justify-end mb-6">
-                    <p>Olá, <span className='font-[Poppins] font-medium dark:text-white'>{user?.full_name?.split(' ')[0]}
+                    <p className='text-gray-600 dark:text-white'>Olá, <span className='font-[Poppins] font-medium dark:text-white'>{user?.full_name?.split(' ')[0]}
                     </span></p>
                     <div className='bg-amber-600 rounded-xl w-10 h-10 ml-2'></div>
                 </div>

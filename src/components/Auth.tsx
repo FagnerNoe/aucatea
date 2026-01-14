@@ -44,7 +44,7 @@ export function Auth() {
                 alert('Verifique seu e-mail para confirmar a conta.');
 
                 // Redireciona para login
-                navigate('/');
+                navigate('/login');
             }
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Ocorreu um erro');
@@ -70,7 +70,7 @@ export function Auth() {
 
 
     return (
-        <div className="min-h-screen bg-linear-to-t from-yellow-100 to-yellow-500 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-linear-to-t from-yellow-100 to-yellow-200 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
             <div className="w-full max-w-md">
                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                     <div className="text-center mb-8">

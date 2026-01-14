@@ -22,7 +22,7 @@ export default function AuthCallback() {
                 // Delay para garantir que o AuthContext sincronize os dados do banco
                 setTimeout(() => {
                     navigate("/dashboard", { replace: true });
-                }, 2500);
+                }, 3500);
 
             } catch (error: any) {
                 console.error("Erro no callback:", error.message);
