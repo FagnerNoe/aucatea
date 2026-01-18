@@ -1,6 +1,4 @@
-
-
-import { Auth } from './components/Auth';
+import { Auth } from './components/Login';
 import { Dashboard } from './components/Dashboard';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import AuthCallback from './components/AuthCallback';

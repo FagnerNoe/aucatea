@@ -28,13 +28,13 @@ export interface Database {
         Row: {
           id: string;
           user_id: string;
-          passenger_name: string;
-          passenger_phone: string;
-          pickup_address: string;
-          destination_address: string;
-          pickup_details: string;
-          destination_details: string;
-          scheduled_time: string;
+          nome_passageiro: string;
+          telefone_passageiro: string;
+          endereco_partida: string;
+          endereco_destino: string;
+          detalhes_partida: string;
+          detalhes_destino: string;
+          horario_agendado: string;
           status: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
           notes: string;
           created_at: string;
@@ -43,13 +43,13 @@ export interface Database {
         Insert: {
           id?: string;
           user_id: string;
-          passenger_name: string;
-          passenger_phone: string;
-          pickup_address: string;
-          destination_address: string;
-          pickup_details?: string;
-          destination_details?: string;
-          scheduled_time: string;
+          nome_passageiro: string;
+          telefone_passageiro: string;
+          endereco_partida: string;
+          endereco_destino: string;
+          detalhes_partida?: string;
+          detalhes_destino?: string;
+          horario_agendado: string;
           status?: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
           notes?: string;
           created_at?: string;
@@ -58,13 +58,13 @@ export interface Database {
         Update: {
           id?: string;
           user_id?: string;
-          passenger_name?: string;
-          passenger_phone?: string;
-          pickup_address?: string;
-          destination_address?: string;
-          pickup_details?: string;
-          destination_details?: string;
-          scheduled_time?: string;
+          nome_passageiro?: string;
+          telefone_passageiro?: string;
+          endereco_partida?: string;
+          endereco_destino?: string;
+          detalhes_partida?: string;
+          detalhes_destino?: string;
+          horario_agendado?: string;
           status?: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
           notes?: string;
           created_at?: string;

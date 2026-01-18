@@ -28,6 +28,7 @@ export function Auth() {
                 const { error } = await supabase.auth.signInWithPassword({
                     email,
                     password,
+
                 });
                 if (error) throw error;
 
@@ -38,6 +39,9 @@ export function Auth() {
                 const { error } = await supabase.auth.signUp({
                     email,
                     password,
+                    options: {
+                        data: { role: "cliente", full_name: fullName, phone: phone }
+                    }
                 });
                 if (error) throw error;
 
@@ -70,7 +74,7 @@ export function Auth() {
 
 
     return (
-        <div className="min-h-screen bg-linear-to-t from-yellow-100 to-yellow-200 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-linear-to-t from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
             <div className="w-full max-w-md">
                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                     <div className="text-center mb-8">
@@ -167,9 +171,10 @@ export function Auth() {
                                 setIsLogin(!isLogin);
                                 setError('');
                             }}
-                            className="text-yellow-600 dark:text-yellow-400 hover:underline text-sm"
+                            className=" dark:text-yellow-400 hover:underline text-sm"
                         >
-                            {isLogin ? 'Não tem uma conta? Cadastre-se' : 'Já tem uma conta? Entre'}
+                            {isLogin ? <p className='text-gray-500 dark:text-white'>Não tem uma conta? <span className='font-[Poppins] text-yellow-600 text-sm font-medium'>Cadastre-se</span></p> :
+                                <p className='text-gray-400 dark:text-white'>Já tem uma conta? <span className='font-[Poppins] text-yellow-600 text-sm font-medium'>Entre</span></p>}
                         </button>
 
 

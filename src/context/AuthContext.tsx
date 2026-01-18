@@ -21,17 +21,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const checkUser = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             if (mounted) {
-                setUser(session?.user ?? null);
+                if (session?.user) {
+                    const completeUser = await getFullUser(session.user);
+                    setUser(completeUser);
+                } else {
+                    setUser(null);
+                }
                 setLoading(false);
             }
         };
 
         checkUser();
 
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+
             if (mounted) {
-                setUser(session?.user ?? null);
+                if (session?.user) {
+                    const completeUser = await getFullUser(session.user);
+                    setUser(completeUser);
+                } else {
+                    setUser(null);
+                }
                 setLoading(false);
+
             }
         });
 
@@ -52,11 +64,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
 
-
     useEffect(() => {
         // 1. Monitora mudanças de autenticação (mais confiável que getSession inicial sozinho)
         const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
             console.log("Auth Event:", event);
+
+            if (event === "SIGNED_OUT") {
+                setUser(null); // limpa imediatamente
+                setLoading(false);
+                return;
+            }
+
 
             if (session?.user) {
                 // Só libera o loading após tentar buscar o perfil completo
@@ -76,9 +94,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const signOut = async () => {
         setLoading(true);
         await supabase.auth.signOut();
-        setUser(null);
         setLoading(false);
     };
+
 
 
 

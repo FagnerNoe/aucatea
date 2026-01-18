@@ -16,7 +16,7 @@ export default function PrivateRoute({ children }: { children: JSX.Element }) {
 
     // Se parou de carregar e NÃO tem usuário, redireciona.
     if (!user) {
-        return <Navigate to="/" replace />;
+        return <Navigate to="/login" replace />;
     }
 
     // SÓ chega aqui se loading = false E user existe.

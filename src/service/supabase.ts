@@ -7,8 +7,8 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseKey,{
     auth: {
-        persistSession: true, // Isso deve estar true
-      autoRefreshToken: true,
-      detectSessionInUrl: true // Ajuda na autenticação via OAuth
+        persistSession:true,        
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
     },  
 });

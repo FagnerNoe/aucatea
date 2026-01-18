@@ -13,13 +13,13 @@ export function BookRideForm({ onSuccess }: BookRideFormProps) {
     const [error, setError] = useState('');
 
     const [formData, setFormData] = useState({
-        passengerName: '',
-        passengerPhone: '',
-        pickupAddress: '',
-        pickupDetails: '',
-        destinationAddress: '',
-        destinationDetails: '',
-        scheduledTime: '',
+        nome_passageiro: '',
+        telefone_passageiro: '',
+        endereco_partida: '',
+        detalhes_partida: '',
+        endereco_destino: '',
+        detalhes_destino: '',
+        horario_agendado: '',
         notes: '',
     });
 
@@ -35,13 +35,13 @@ export function BookRideForm({ onSuccess }: BookRideFormProps) {
                 .from('corridas')
                 .insert({
                     user_id: user.id,
-                    passenger_name: formData.passengerName,
-                    passenger_phone: formData.passengerPhone,
-                    pickup_address: formData.pickupAddress,
-                    pickup_details: formData.pickupDetails,
-                    destination_address: formData.destinationAddress,
-                    destination_details: formData.destinationDetails,
-                    scheduled_time: formData.scheduledTime,
+                    nome_passageiro: formData.nome_passageiro,
+                    telefone_passageiro: formData.telefone_passageiro,
+                    endereco_partida: formData.endereco_partida,
+                    detalhes_partida: formData.detalhes_partida,
+                    endereco_destino: formData.endereco_destino,
+                    detalhes_destino: formData.detalhes_destino,
+                    horario_agendado: formData.horario_agendado,
                     notes: formData.notes,
                     status: 'pending',
                 });
@@ -49,14 +49,15 @@ export function BookRideForm({ onSuccess }: BookRideFormProps) {
             if (insertError) throw insertError;
 
             setFormData({
-                passengerName: '',
-                passengerPhone: '',
-                pickupAddress: '',
-                pickupDetails: '',
-                destinationAddress: '',
-                destinationDetails: '',
-                scheduledTime: '',
+                nome_passageiro: '',
+                telefone_passageiro: '',
+                endereco_partida: '',
+                detalhes_partida: '',
+                endereco_destino: '',
+                detalhes_destino: '',
+                horario_agendado: '',
                 notes: '',
+
             });
 
             onSuccess();
@@ -77,8 +78,6 @@ export function BookRideForm({ onSuccess }: BookRideFormProps) {
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
 
-
-
             <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md">
                 <h3 className="text-lg  font-[Poppins] font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                     <MapPin className="w-5 h-5  text-yellow-600" />
@@ -92,8 +91,8 @@ export function BookRideForm({ onSuccess }: BookRideFormProps) {
                         </label>
                         <input
                             type="text"
-                            name="pickupAddress"
-                            value={formData.pickupAddress}
+                            name="endereco_partida"
+                            value={formData.endereco_partida}
                             onChange={handleChange}
                             className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                             placeholder="Rua, número, bairro, cidade"
@@ -107,8 +106,8 @@ export function BookRideForm({ onSuccess }: BookRideFormProps) {
                         </label>
                         <input
                             type="text"
-                            name="pickupDetails"
-                            value={formData.pickupDetails}
+                            name="detalhes_partida"
+                            value={formData.detalhes_partida}
                             onChange={handleChange}
                             className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                             placeholder="Apartamento, bloco, ponto de referência"
@@ -130,8 +129,8 @@ export function BookRideForm({ onSuccess }: BookRideFormProps) {
                         </label>
                         <input
                             type="text"
-                            name="destinationAddress"
-                            value={formData.destinationAddress}
+                            name="endereco_destino"
+                            value={formData.endereco_destino}
                             onChange={handleChange}
                             className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                             placeholder="Rua, número, bairro, cidade"
@@ -145,8 +144,8 @@ export function BookRideForm({ onSuccess }: BookRideFormProps) {
                         </label>
                         <input
                             type="text"
-                            name="destinationDetails"
-                            value={formData.destinationDetails}
+                            name="detalhes_destino"
+                            value={formData.detalhes_destino}
                             onChange={handleChange}
                             className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                             placeholder="Apartamento, bloco, ponto de referência"
@@ -168,8 +167,8 @@ export function BookRideForm({ onSuccess }: BookRideFormProps) {
                         </label>
                         <input
                             type="datetime-local"
-                            name="scheduledTime"
-                            value={formData.scheduledTime}
+                            name="horario_agendado"
+                            value={formData.horario_agendado}
                             onChange={handleChange}
                             className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                             required

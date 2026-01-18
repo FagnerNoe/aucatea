@@ -12,24 +12,39 @@ export function RidesList() {
     const [loading, setLoading] = useState(true);
 
     const fetchRides = async () => {
-        if (!user) return;
+        if (!user?.id) {
+            setLoading(false); // garante que não trava
+            return;
+        }
 
         setLoading(true);
+
         const { data, error } = await supabase
             .from('corridas')
             .select('*')
             .eq('user_id', user.id)
-            .order('scheduled_time', { ascending: false });
+            .order('horario_agendado', { ascending: false });
 
-        if (!error && data) {
-            setRides(data);
+        if (error) {
+            console.error("Erro ao buscar corridas:", error.message);
+            setRides([]); // evita travar
+        } else {
+            setRides(data ?? []);
         }
+
         setLoading(false);
+        console.log("Corridas:", data, "Erro:", error);
     };
 
     useEffect(() => {
         fetchRides();
     }, [user]);
+
+    useEffect(() => {
+        console.log("User atual:", user);
+    }, [user]);
+
+
 
     const handleDelete = async (id: string) => {
         if (!confirm('Tem certeza que deseja cancelar esta corrida?')) return;
@@ -119,10 +134,10 @@ export function RidesList() {
                             </div>
                             <div>
                                 <h3 className="font-semibold text-gray-900 dark:text-white">
-                                    {ride.passenger_name}
+                                    {ride.nome_passageiro}
                                 </h3>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                                    {ride.passenger_phone}
+                                    {ride.telefone_passageiro}
                                 </p>
                             </div>
                         </div>
@@ -147,9 +162,9 @@ export function RidesList() {
                             </div>
                             <div className="flex-1">
                                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Partida</p>
-                                <p className="text-gray-900 dark:text-white">{ride.pickup_address}</p>
-                                {ride.pickup_details && (
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">{ride.pickup_details}</p>
+                                <p className="text-gray-900 dark:text-white">{ride.endereco_partida}</p>
+                                {ride.detalhes_partida && (
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">{ride.detalhes_partida}</p>
                                 )}
                             </div>
                         </div>
@@ -160,9 +175,9 @@ export function RidesList() {
                             </div>
                             <div className="flex-1">
                                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300">Destino</p>
-                                <p className="text-gray-900 dark:text-white">{ride.destination_address}</p>
-                                {ride.destination_details && (
-                                    <p className="text-sm text-gray-600 dark:text-gray-400">{ride.destination_details}</p>
+                                <p className="text-gray-900 dark:text-white">{ride.endereco_destino}</p>
+                                {ride.detalhes_destino && (
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">{ride.detalhes_destino}</p>
                                 )}
                             </div>
                         </div>
@@ -170,7 +185,7 @@ export function RidesList() {
                         <div className="flex items-center gap-3 pt-3 border-t border-gray-200 dark:border-gray-700">
                             <Clock className="w-5 h-5 text-gray-400" />
                             <p className="text-sm text-gray-600 dark:text-gray-400">
-                                {formatDate(ride.scheduled_time)}
+                                {formatDate(ride.horario_agendado)}
                             </p>
                         </div>
 

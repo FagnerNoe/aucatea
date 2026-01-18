@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Header } from './Header';
-import { BookRideForm } from './FormRide';
-import { RidesList } from './RidesList';
-import { Plus, List } from 'lucide-react';
+import { BookRideForm } from './FormCorrida';
+import { RidesList } from './ListaCorridas';
+import { Plus, List, User } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export function Dashboard() {
@@ -20,12 +20,18 @@ export function Dashboard() {
             <Header />
 
             <main className=" mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="flex items-center justify-end mb-6">
-                    <p className='text-gray-600 dark:text-white'>Olá, <span className='font-[Poppins] font-medium dark:text-white'>{user?.full_name?.split(' ')[0]}
-                    </span></p>
-                    <div className='bg-amber-600 rounded-xl w-10 h-10 ml-2'></div>
-                </div>
+                {user ? (
+                    <>
+                        <div className="flex items-center justify-end mb-6">
+                            <p className='text-gray-600 dark:text-gray-400'>Olá, <span className='font-[Poppins] font-medium dark:text-white'>{user?.full_name?.split(' ')[0]}
+                            </span></p>
+                            <div className='bg-amber-500 rounded-full w-10 h-10 ml-2 p-2'><User className="w-6 h-6 text-white" /></div>
+                        </div>
+                    </>
+                ) : (<h2></h2>)}
+
                 <div className="mb-6">
+                    <h2 className='bg-clip-text bg-linear-to-r from-yellow-400 to-yellow-700 text-transparent  font-[Poppins] mb-5 text-center'>Pronto para sua próxima corrida?</h2>
                     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-1 inline-flex">
                         <button
                             onClick={() => setActiveTab('book')}
