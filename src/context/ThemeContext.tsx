@@ -20,13 +20,16 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         return prefersDark ? "dark" : "light";
     });
 
-
     useEffect(() => {
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        const root = window.document.documentElement;
+
+        // Remove as duas classes para garantir que não haja conflito
+        root.classList.remove('light', 'dark');
+
+        // Adiciona a classe do tema atual
+        root.classList.add(theme);
+
+        // Salva a escolha do usuário
         localStorage.setItem("theme", theme);
     }, [theme]);
 

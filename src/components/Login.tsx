@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 export function Auth() {
     const navigate = useNavigate();
-    const [isLogin, setIsLogin] = useState(true);
+    const [isLogin] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [fullName, setFullName] = useState('');
@@ -33,7 +33,7 @@ export function Auth() {
                 if (error) throw error;
 
                 // Redireciona para dashboard sem recarregar a página
-                navigate('/dashboard');
+                navigate('/painel');
 
             } else {
                 const { error } = await supabase.auth.signUp({
@@ -57,19 +57,6 @@ export function Auth() {
         }
     };
 
-    async function signInWithGoogle() {
-        try {
-            await supabase.auth.signInWithOAuth({
-                provider: "google",
-                options: {
-                    redirectTo: window.location.origin + "/auth/callback",
-                },
-            });
-            // não há retorno aqui: o usuário será redirecionado para o Google
-        } catch (err) {
-            console.error("Erro ao iniciar login com Google:", err);
-        }
-    }
 
 
 
@@ -79,13 +66,13 @@ export function Auth() {
                 <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
                     <div className="text-center mb-8">
                         <div className="inline-flex items-center justify-center w-40 h-35 rounded-full mb-4">
-                            {isLogin ? <img src='upcar-logo.png' className="w-36 h-30 text-white" /> : <UserPlus className="w-15 h-15 text-yellow-600 border-3 rounded-full px-2" />}
+                            {isLogin ? <img src='lobo.png' className="w-36 h-30 text-white" /> : <UserPlus className="w-15 h-15 text-yellow-600 border-3 rounded-full px-2" />}
                         </div>
                         <h1 className="text-3xl font-bold bg-clip-text bg-linear-to-r from-yellow-400 to-yellow-800 text-transparent dark:text-white mb-2 font-[Poppins]">
-                            {isLogin ? 'Bem-vindo!' : 'Criar Conta'}
+                            Bem Vindo!
                         </h1>
                         <p className="text-gray-600  text-sm font-[Poppins] dark:text-gray-400">
-                            {isLogin ? 'Entre para agendar suas corridas' : 'Cadastre-se para começar'}
+                            Sistema Aucatea
                         </p>
                     </div>
 
@@ -159,30 +146,13 @@ export function Auth() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full font-[Poppins] bg-linear-to-r from-yellow-400 to-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full font-[Poppins] bg-linear-to-r from-blue-600  to-pink-700 hover:bg-yellow-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                            {loading ? 'Carregando...' : isLogin ? 'Entrar' : 'Criar Conta'}
+                            {loading ? 'Carregando...' : 'Entrar'}
                         </button>
                     </form>
 
-                    <div className="mt-6 text-center">
-                        <button
-                            onClick={() => {
-                                setIsLogin(!isLogin);
-                                setError('');
-                            }}
-                            className=" dark:text-yellow-400 hover:underline text-sm"
-                        >
-                            {isLogin ? <p className='text-gray-500 dark:text-white'>Não tem uma conta? <span className='font-[Poppins] text-yellow-600 text-sm font-medium'>Cadastre-se</span></p> :
-                                <p className='text-gray-400 dark:text-white'>Já tem uma conta? <span className='font-[Poppins] text-yellow-600 text-sm font-medium'>Entre</span></p>}
-                        </button>
 
-
-                        <button onClick={signInWithGoogle}
-                            className='bg-white font-[Poppins] border-amber-400 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 mt-4 w-full flex items-center justify-center gap-2 border  dark:border-gray-600 text-gray-900 dark:text-white font-semibold py-3 px-4 rounded-lg transition-colors'>
-                            Entrar com Google
-                        </button>
-                    </div>
 
                 </div>
             </div>

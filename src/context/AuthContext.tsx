@@ -2,28 +2,48 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 import { supabase } from "../service/supabase";
 
 interface AuthContextType {
-    user: any;       // ou o tipo correto do usuário do Supabase
+    user: any; // Você pode substituir 'any' pelo seu tipo de Usuário (ex: User | null)
+    session: any; // Você pode substituir 'any' pelo seu tipo de Sessão
     loading: boolean;
     signOut: () => Promise<void>;
-
 }
 
+// 2. Crie o contexto com o tipo definido
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const AuthContext = createContext<AuthContextType | null>(null);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    const [session, setSession] = useState<any>(null);
+
+
+    // Função única para buscar perfil completo
+    const getFullUser = async (baseUser: any) => {
+        if (!baseUser) return null;
+        try {
+            const { data } = await supabase
+                .from("clientes")
+                .select("full_name")
+                .eq("id", baseUser.id)
+                .single();
+            return data ? { ...baseUser, full_name: data.full_name } : baseUser;
+        } catch (e) {
+            return baseUser;
+        }
+    };
 
     useEffect(() => {
         let mounted = true;
 
-        const checkUser = async () => {
+        // 1. Inicialização única
+        const initialize = async () => {
             const { data: { session } } = await supabase.auth.getSession();
             if (mounted) {
                 if (session?.user) {
                     const completeUser = await getFullUser(session.user);
                     setUser(completeUser);
+                    setSession(session);
                 } else {
                     setUser(null);
                 }
@@ -31,82 +51,59 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             }
         };
 
-        checkUser();
+        initialize();
 
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+        // 2. Listener de eventos (Lida com login, logout e refresh de token)
+        const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
+            console.log("⚡ Auth Event:", event);
 
             if (mounted) {
                 if (session?.user) {
                     const completeUser = await getFullUser(session.user);
                     setUser(completeUser);
+                    setSession(session);
                 } else {
                     setUser(null);
                 }
                 setLoading(false);
-
             }
         });
 
-        return () => { mounted = false; subscription.unsubscribe(); };
-    }, []);
-
-
-    const getFullUser = async (baseUser: any) => {
-        if (!baseUser) return null;
-
-        const { data } = await supabase
-            .from("clientes")
-            .select("full_name")
-            .eq("id", baseUser.id)
-            .single();
-
-        return data ? { ...baseUser, full_name: data.full_name } : baseUser;
-    };
-
-
-    useEffect(() => {
-        // 1. Monitora mudanças de autenticação (mais confiável que getSession inicial sozinho)
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-            console.log("Auth Event:", event);
-
-            if (event === "SIGNED_OUT") {
-                setUser(null); // limpa imediatamente
-                setLoading(false);
-                return;
+        // 3. Listener de visibilidade (Resolve o problema de "parar de carregar" ao voltar)
+        const handleVisibilityChange = async () => {
+            if (document.visibilityState === 'visible') {
+                // Apenas verifica se a sessão ainda é válida, o onAuthStateChange fará o resto
+                const { data: { session } } = await supabase.auth.getSession();
+                if (!session && user) {
+                    // Se a sessão caiu enquanto estava fora
+                    setUser(null);
+                }
             }
+        };
 
+        document.addEventListener('visibilitychange', handleVisibilityChange);
 
-            if (session?.user) {
-                // Só libera o loading após tentar buscar o perfil completo
-                const completeUser = await getFullUser(session.user);
-                setUser(completeUser);
-            } else {
-                setUser(null);
-            }
+        return () => {
+            listener?.subscription.unsubscribe();
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+        };
+    }, []); // Apenas um useEffect resolve tudo
 
-            setLoading(false); // Só desativa o loading aqui
-        });
-
-        return () => subscription.unsubscribe();
-    }, []);
-
-    // Função de logout
     const signOut = async () => {
         setLoading(true);
         await supabase.auth.signOut();
+        setUser(null);
+        setSession(null);
         setLoading(false);
     };
 
-
-
-
-
     return (
-        <AuthContext.Provider value={{ user, loading, signOut }} >
+        <AuthContext.Provider value={{ user, session, loading, signOut }}>
             {children}
         </AuthContext.Provider>
     );
 }
+
 
 export function useAuth() {
     const context = useContext(AuthContext);

@@ -1,76 +1,22 @@
-export interface Database {
-  public: {
-    Tables: {
-      profiles: {
-        Row: {
-          id: string;
-          full_name: string;
-          phone: string;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id: string;
-          full_name: string;
-          phone: string;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          full_name?: string;
-          phone?: string;
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
-      corridas: {
-        Row: {
-          id: string;
-          user_id: string;
-          nome_passageiro: string;
-          telefone_passageiro: string;
-          endereco_partida: string;
-          endereco_destino: string;
-          detalhes_partida: string;
-          detalhes_destino: string;
-          horario_agendado: string;
-          status: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
-          notes: string;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          user_id: string;
-          nome_passageiro: string;
-          telefone_passageiro: string;
-          endereco_partida: string;
-          endereco_destino: string;
-          detalhes_partida?: string;
-          detalhes_destino?: string;
-          horario_agendado: string;
-          status?: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
-          notes?: string;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          user_id?: string;
-          nome_passageiro?: string;
-          telefone_passageiro?: string;
-          endereco_partida?: string;
-          endereco_destino?: string;
-          detalhes_partida?: string;
-          detalhes_destino?: string;
-          horario_agendado?: string;
-          status?: 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
-          notes?: string;
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
-    };
-  };
+export interface Paciente {
+  id: number;
+  nome: string;
+  telefone: string;
+  endereco: string;
+  dataNascimento: Date;
+  bairro: string;
+  cep: string;
+  mae: string;
+  pai: string;
+  laudoUrl?: string;   // foto do laudo (opcional)
+  avatarUrl?: string;  // foto/avatar do paciente (opcional)
+}
+
+export interface Membro {
+  id: number;
+  nome: string;
+  telefone: string;
+  cargo: string;       // ex: presidente, tesoureiro, voluntário
+  email?: string;
+  avatarUrl?: string; 
 }
