@@ -4,3 +4,20 @@
 
 @import "tailwindcss";
 
+@keyframes fadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-down {
+  animation: fadeDown 4s ease forwards;
+}
+
+
+

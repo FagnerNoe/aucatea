@@ -1,82 +1,125 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { supabase } from "../service/supabase";
+// AuthContext.tsx
+import { createContext, useContext, useEffect, useState } from 'react';
+import { supabase } from '../service/supabase';
+import type { Membro } from '../types/database.types';
+import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
-    user: any; // Você pode substituir 'any' pelo seu tipo de Usuário (ex: User | null)
-    session: any; // Você pode substituir 'any' pelo seu tipo de Sessão
-    loading: boolean;
-    signOut: () => Promise<void>;
+    login: (email: string, password: string) => Promise<void>;
+    logout: () => Promise<void>;
+    user: Membro | null;
+    session: any;
+    isAuthenticated: boolean;
+    loadingSession: boolean;
 }
 
-// 2. Crie o contexto com o tipo definido
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
-
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState<any>(null);
-    const [loading, setLoading] = useState(true);
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+    const [user, setUser] = useState<Membro | null>(null);
     const [session, setSession] = useState<any>(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [loadingSession, setLoadingSession] = useState(true);
+    const navigate = useNavigate();
 
 
-    // Função única para buscar perfil completo
-    const getFullUser = async (baseUser: any) => {
-        if (!baseUser) return null;
-        try {
-            const { data } = await supabase
-                .from("clientes")
-                .select("full_name")
-                .eq("id", baseUser.id)
-                .single();
-            return data ? { ...baseUser, full_name: data.full_name } : baseUser;
-        } catch (e) {
-            return baseUser;
-        }
+
+    const login = async (email: string, password: string) => {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error || !data?.user) throw error;
     };
 
-    useEffect(() => {
-        let mounted = true;
+    const logout = async () => {
+        await supabase.auth.signOut();
+        // Limpa o token manualmente
+        localStorage.removeItem('supabase.auth.token');
 
-        // 1. Inicialização única
-        const initialize = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (mounted) {
-                if (session?.user) {
-                    const completeUser = await getFullUser(session.user);
-                    setUser(completeUser);
-                    setSession(session);
-                } else {
-                    setUser(null);
-                }
-                setLoading(false);
+        setUser(null);
+        setIsAuthenticated(false);
+        navigate('/login');
+    };
+
+
+    useEffect(() => {
+        let sessionChecked = false;
+        const fetchAdminData = async (id: string, _email: string) => {
+            const { data: usuarioData, error: adminError } = await supabase
+                .from('usuario_sistema')
+                .select('id, nome, telefone, responsabilidade')
+                .eq('id', id)
+                .single();
+
+            if (!usuarioData || adminError) {
+                console.warn('Membro não encontrado ou erro na consulta.');
+                setUser(null);
+                setIsAuthenticated(false);
+                return;
             }
+            setUser(usuarioData);
+            setIsAuthenticated(true);
         };
 
-        initialize();
 
-        // 2. Listener de eventos (Lida com login, logout e refresh de token)
-        const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
-            console.log("⚡ Auth Event:", event);
 
-            if (mounted) {
-                if (session?.user) {
-                    const completeUser = await getFullUser(session.user);
-                    setUser(completeUser);
-                    setSession(session);
+        const getSession = async () => {
+            if (sessionChecked) return;
+            sessionChecked = true;
+            setLoadingSession(true);
+
+            const { data } = await supabase.auth.getSession();
+            const sessionUser = data?.session?.user;
+            setSession(data?.session || null);
+
+            if (sessionUser && sessionUser?.email) {
+                await fetchAdminData(sessionUser.id, sessionUser.email);
+            } else {
+                //tentar recuperar com getUser como fallback
+                const { data: userData } = await supabase.auth.getUser();
+                if (userData?.user?.email) {
+                    await fetchAdminData(userData.user.id, userData.user.email);
                 } else {
                     setUser(null);
+                    setIsAuthenticated(false)
                 }
-                setLoading(false);
             }
+            console.log("Sessão verificada:", data?.session);
+            setLoadingSession(false);
+
+
+        };
+        getSession();
+
+        const { data: listener } = supabase.auth.onAuthStateChange(async (_event, session) => {
+            setTimeout(async () => {
+
+                setSession(session)
+                const sessionUser = session?.user;
+                if (sessionUser && sessionUser.email) {
+                    await fetchAdminData(sessionUser.id, sessionUser.email);
+                } else {
+                    setUser(null);
+                    setIsAuthenticated(false);
+                }
+
+            }, 0)
         });
 
-        // 3. Listener de visibilidade (Resolve o problema de "parar de carregar" ao voltar)
         const handleVisibilityChange = async () => {
-            if (document.visibilityState === 'visible') {
-                // Apenas verifica se a sessão ainda é válida, o onAuthStateChange fará o resto
-                const { data: { session } } = await supabase.auth.getSession();
-                if (!session && user) {
-                    // Se a sessão caiu enquanto estava fora
-                    setUser(null);
+            if (document.visibilityState === 'visible' && isAuthenticated) {
+                const { data } = await supabase.auth.getSession();
+                const sessionUser = data?.session?.user;
+                setSession(data?.session || null);
+
+                if (sessionUser?.email) {
+                    await fetchAdminData(sessionUser.id, sessionUser.email);
+                } else {
+                    const { data: userData } = await supabase.auth.getUser();
+                    if (userData?.user?.email) {
+                        await fetchAdminData(userData.user.id, userData.user.email);
+                    } else {
+                        setUser(null);
+                        setIsAuthenticated(false);
+                    }
                 }
             }
         };
@@ -84,31 +127,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         document.addEventListener('visibilitychange', handleVisibilityChange);
 
         return () => {
-            listener?.subscription.unsubscribe();
+            listener?.subscription?.unsubscribe();
             document.removeEventListener('visibilitychange', handleVisibilityChange);
         };
-    }, []); // Apenas um useEffect resolve tudo
 
-    const signOut = async () => {
-        setLoading(true);
-        await supabase.auth.signOut();
-        setUser(null);
-        setSession(null);
-        setLoading(false);
-    };
+
+
+    }, []);
+
+
 
     return (
-        <AuthContext.Provider value={{ user, session, loading, signOut }}>
+        <AuthContext.Provider value={{ login, user, session, isAuthenticated, loadingSession, logout }}>
             {children}
         </AuthContext.Provider>
     );
-}
+};
 
-
-export function useAuth() {
+export const useAuth = (): AuthContextType => {
     const context = useContext(AuthContext);
     if (!context) {
-        throw new Error("useAuth deve ser usado dentro de AuthProvider");
+        throw new Error('useAuth must be used within an AuthProvider');
     }
     return context;
-}
+};

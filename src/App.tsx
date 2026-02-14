@@ -1,39 +1,53 @@
 import { Auth } from './components/Login';
-
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { supabase } from './service/supabase';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { PublicRoute } from './components/PublicRoute';
 import Painel from './components/Painel';
+import { PrivateRoute } from './components/PrivateRoute';
+import { Membros } from './components/Membros';
+import { Pacientes } from './components/Pacientes';
+import { Agenda } from './components/Agenda';
+import { Relatorios } from './components/Relatorios';
+import { Home } from './components/Home';
 
 
 
 
 
 function App() {
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Evento de Auth:", event);
-      console.log("Sessão atual:", session);
 
-      if (event === "SIGNED_IN" && session) {
-        console.log("Usuário logado com sucesso! Redirecionando...");
-        navigate("/painel");
-      }
-    });
-  }, []);
+
   return (
 
     <Routes>
+      {/* Redireciona raiz para login */}
+      <Route path="/" element={<Navigate to="/login" replace />} />
+
       {/* Tela de login */}
-      <Route path="/login" element={<Auth />} />
+      <Route path="/login" element={<PublicRoute><Auth /></PublicRoute>} />
 
-      {/* Tela principal após login */}
-      <Route path="/painel" element={<Painel />} />
+      {/* Painel protegido */}
+      <Route
+        path="/painel"
+        element={
+          <PrivateRoute>
+            <Painel />
+          </PrivateRoute>
+        }
+      >
+        {/* Rotas filhas dentro do painel */}
+        <Route index element={<Home />} /> {/* /painel */}
+        <Route path="membros" element={<Membros />} />
+        <Route path="pacientes" element={<Pacientes />} />
+        <Route path="agenda" element={<Agenda />} />
+        <Route path="relatorios" element={<Relatorios />} />
+      </Route>
 
+      {/* Fallback global: qualquer rota inválida → login */}
+      <Route path="*" element={<Navigate to="/login" replace />} />
 
     </Routes>
+
 
 
 

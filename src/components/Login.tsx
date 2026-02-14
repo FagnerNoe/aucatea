@@ -1,20 +1,21 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { UserPlus } from 'lucide-react';
-import { supabase } from '../service/supabase';
 import { useNavigate } from 'react-router-dom';
 
 export function Auth() {
     const navigate = useNavigate();
-    const [isLogin] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [fullName, setFullName] = useState('');
-    const [phone, setPhone] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    useAuth();
+    const { login, session, loadingSession } = useAuth();
 
+
+    useEffect(() => {
+        if (!loadingSession && session) {
+            navigate("/painel");
+        }
+    }, [loadingSession, session]);
 
 
 
@@ -24,32 +25,7 @@ export function Auth() {
         setLoading(true);
 
         try {
-            if (isLogin) {
-                const { error } = await supabase.auth.signInWithPassword({
-                    email,
-                    password,
-
-                });
-                if (error) throw error;
-
-                // Redireciona para dashboard sem recarregar a página
-                navigate('/painel');
-
-            } else {
-                const { error } = await supabase.auth.signUp({
-                    email,
-                    password,
-                    options: {
-                        data: { role: "cliente", full_name: fullName, phone: phone }
-                    }
-                });
-                if (error) throw error;
-
-                alert('Verifique seu e-mail para confirmar a conta.');
-
-                // Redireciona para login
-                navigate('/login');
-            }
+            await login(email, password);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Ocorreu um erro');
         } finally {
@@ -61,76 +37,58 @@ export function Auth() {
 
 
     return (
-        <div className="min-h-screen bg-linear-to-t from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
-            <div className="w-full max-w-md">
-                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+        <div className="h-screen  bg-linear-to-t from-white to-gray-100 flex items-center justify-start">
+
+            <div className="absolute inset-0 h-screen  max-w-5xl bg-cover bg-center  "
+                style={{ backgroundImage: "url('/aucatea_capa.jpg')" }}>
+                <div className="absolute inset-0 bg-linear-to-b from-black/60 to-black/20"></div>
+            </div>
+
+
+            <h1 className="border-t w-[90%] py-2 absolute top-12 left-5 text-white sm:w-sm sm:left-55  lg:w-lg lg:text-4xl lg:top-60 lg:left-50
+            text-2xl z-10 font-[Style_Script,cursive] text-center  fade-down">
+                Associação Candidomotense de Apoio a Pessoas com Transtorno do Espectro Autista
+            </h1>
+
+
+            <div className="relative z-10 w-[90%] max-w-md mx-auto sm:mx-[28%]  lg:mx-[60%] ">
+                <div className="bg-white rounded-2xl shadow-xl shadow-black p-8 z-50 sm:w-sm sm-150  lg:w-md ">
                     <div className="text-center mb-8">
                         <div className="inline-flex items-center justify-center w-40 h-35 rounded-full mb-4">
-                            {isLogin ? <img src='lobo.png' className="w-36 h-30 text-white" /> : <UserPlus className="w-15 h-15 text-yellow-600 border-3 rounded-full px-2" />}
+                            <img src='lobo.png' className="w-36 h-30 text-white" />
                         </div>
-                        <h1 className="text-3xl font-bold bg-clip-text bg-linear-to-r from-yellow-400 to-yellow-800 text-transparent dark:text-white mb-2 font-[Poppins]">
-                            Bem Vindo!
+                        <h1 className="text-3xl font-bold bg-clip-text bg-linear-to-l from-red-400 to-purple-800 text-transparent -2 font-[Poppins]">
+                            Aucatea
                         </h1>
-                        <p className="text-gray-600  text-sm font-[Poppins] dark:text-gray-400">
-                            Sistema Aucatea
+                        <p className="text-gray-600  text-sm font-[Poppins] ">
+                            Cadastros
                         </p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
-                        {!isLogin && (
-                            <>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                        Nome Completo
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={fullName}
-                                        onChange={(e) => setFullName(e.target.value)}
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                                        placeholder="Seu nome completo"
-                                        required={!isLogin}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                        Telefone
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                                        placeholder="(11) 99999-9999"
-                                        required={!isLogin}
-                                    />
-                                </div>
-                            </>
-                        )}
-
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <label className="block text-sm font-medium text-gray-700  mb-2">
                                 Email
                             </label>
                             <input
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 00 bg-white text-gray-900 cus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                                 placeholder="seu@email.com"
                                 required
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            <label className="block text-sm font-medium text-gray-700  mb-2">
                                 Senha
                             </label>
                             <input
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 00 bg-white ext-gray-900 cus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                                 placeholder="••••••••"
                                 required
                                 minLength={6}
@@ -138,7 +96,7 @@ export function Auth() {
                         </div>
 
                         {error && (
-                            <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-lg text-sm">
+                            <div className="bg-red-50  border border-red-200 0 text-red-600 px-4 py-3 rounded-lg text-sm">
                                 {error}
                             </div>
                         )}
@@ -146,7 +104,7 @@ export function Auth() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full font-[Poppins] bg-linear-to-r from-blue-600  to-pink-700 hover:bg-yellow-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full font-[Poppins] bg-linear-to-r from-red-600  to-purple-700 hover:bg-yellow-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {loading ? 'Carregando...' : 'Entrar'}
                         </button>
@@ -155,7 +113,7 @@ export function Auth() {
 
 
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }

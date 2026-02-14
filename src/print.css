@@ -1,0 +1,54 @@
+
+body{
+    text-align: start;    
+    padding: 10px 8px 10px 8px;
+}
+
+#header{
+    text-align: center;
+}
+
+#header p{
+    margin-top: -20px;
+    margin-bottom: 50px;
+}
+
+#container{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input{
+    border:1px solid gray;
+    border-radius: 5px;
+    height: 25px;
+    width: 100%;
+}
+
+#boxNascimento{
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+}
+
+.box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  
+    gap: 20px;
+}
+
+.campos{
+    width: 100%;
+}
+
+#numResidencia{
+    width: 80px;
+}
+
+#convenio{
+    width: 250px;
+}
+
+

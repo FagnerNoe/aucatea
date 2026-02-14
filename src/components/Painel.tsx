@@ -1,132 +1,102 @@
-import { useEffect, useState } from "react";
-import { Users, SquareUserRound, Calendar, Printer, PowerIcon, CloudSun, CloudRain, Sun, Home } from "lucide-react";
-import { Pacientes } from "./Pacientes";
-import { Membros } from "./Membros";
-import { Agenda } from "./Agenda";
-import { Relatorios } from "./Relatorios";
+
+import { Users, SquareUserRound, Calendar, Printer, PowerIcon, Home, X, Menu } from "lucide-react";
+import { Outlet, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
+
 
 export default function Painel() {
-    const [selectedMenu, setSelectedMenu] = useState<string>("Home");
-
-    const [weather, setWeather] = useState<any>(null);
-
-    useEffect(() => {
-        async function fetchWeather() {
-            try {
-                const apiKey = "446a777e790e4c777331ba4bef56587a";
-                const city = "Candido Mota,BR"; // formato correto
-                const res = await fetch(
-                    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&lang=pt_br&appid=${apiKey}`
-                );
-                const data = await res.json();
-                setWeather(data); // salva o objeto inteiro
-            } catch (error) {
-                console.error("Erro ao buscar clima:", error);
-            }
-        }
-
-        fetchWeather();
-    }, []);
-
-    const renderIcon = () => {
-        if (!weather) return null;
-        const condition = weather.weather[0].main.toLowerCase();
-
-        if (condition.includes("clear")) {
-            return <Sun className="inline-block text-yellow-400 w-6 h-6 ml-2" />;
-        }
-        if (condition.includes("cloud")) {
-            return <CloudSun className="inline-block text-gray-500 w-6 h-6 ml-2" />;
-        }
-        if (condition.includes("rain")) {
-            return <CloudRain className="inline-block text-blue-500 w-6 h-6 ml-2" />;
-        }
-        return null;
-    };
+    const [menuAberto, setMenuAberto] = useState(false);
+    const { user, logout } = useAuth();
 
 
+    function Saudacao() {
+        const nome = user?.nome;
+        console.log("Nome do usuário no painel:", nome);
+        const hora = new Date().getHours();
+        let saudacao;
+
+        if (hora < 12) saudacao = "Bom dia";
+        else if (hora < 18) saudacao = "Boa tarde";
+        else saudacao = "Boa noite";
+        return <h3>{saudacao}, <span className="font-[Poppins] font-bold">{nome}</span></h3>;
+    }
 
 
 
     const menuItems = [
-        { title: "Pacientes", icon: Users },
-        { title: "Membros", icon: SquareUserRound },
-        { title: "Agenda", icon: Calendar },
-        { title: "Relatórios", icon: Printer },
+        { title: "Home", path: "home", icon: Home },
+        { title: "Pacientes", path: "pacientes", icon: Users },
+        { title: "Membros", path: "membros", icon: SquareUserRound },
+        { title: "Agenda", path: "agenda", icon: Calendar },
+        { title: "Relatórios", path: "relatorios", icon: Printer },
     ];
 
     return (
         <div className="flex h-screen bg-gray-100">
+            <button
+                onClick={() => setMenuAberto(!menuAberto)}
+                className="p-2 lg:hidden fixed top-4 left-4 z-50 bg-white rounded-lg shadow-xl "
+            >
+                {menuAberto ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+
             {/* Sidebar */}
-            <aside className="hidden md:flex md:w-64 bg-white/40 shadow-lg flex-col">
+            <aside
+                className={` realtive inset-y-0  sm:hidden left-0 w-64 bg-white/20  shadow-lg flex-col transform transition-transform duration-300
+          ${menuAberto ? "translate-x-0" : "-translate-x-full"}
+          md:translate-x-0 md:flex`}
+            >
+
                 <div className="h-25">
                     <img src="/lobo.png" alt="Logo" className="w-20 h-20 mx-auto my-4" />
                 </div>
-                <div className="p-4 font-bold text-3xl text-center border-b font-[Poppins] bg-clip-text bg-linear-to-r from-pink-300 to-red-500 text-transparent">
+                <div className="p-4 font-bold text-3xl text-center border-b font-[Poppins] bg-clip-text bg-linear-to-r from-pink-400 to-red-500 text-transparent">
                     AucaTea
                 </div>
 
-                <div
-                    onClick={() => setSelectedMenu("Home")}
-                    className="flex items-center justify-center border border-red-400 m-auto rounded-full hover:bg-gray-500 cursor-pointer">
-                    <Home className="m-3 text-red-400" />
-                </div>
+
                 <nav className="flex-1 p-2 space-y-2 ">
                     {menuItems.map((menu) => (
-                        <button
+                        <Link
                             key={menu.title}
-                            onClick={() => setSelectedMenu(menu.title)}
-                            className="w-full cursor-pointer hover:scale-105 transition-transform text-left text-white font-medium px-3 py-2 rounded bg-linear-to-r from-red-500 to-pink-500 hover:bg-gray-200 flex items-center"
+                            to={menu.title === "Home" ? "/painel" : `/painel/${menu.path}`}
+                            className={
+                                menu.title === "Home"
+                                    ? "flex items-center justify-center border border-red-400 m-auto rounded-lg p-2 mb-5 mx-auto hover:bg-gray-300 cursor-pointer bg-white text-red-400 font-bold shadow-md"
+                                    : "w-full cursor-pointer hover:scale-105 transition-transform text-left text-white font-medium px-3 py-2 rounded bg-linear-to-r from-red-500 to-pink-500 hover:bg-gray-200 flex items-center"
+                            }
                         >
                             {menu.icon && <menu.icon className="inline-block mr-2" />}
                             {menu.title}
-                        </button>
+                        </Link>
                     ))}
                 </nav>
-                <div className=" flex flex-col mb-3 text-sm border py-1 text-shadow-amber-200 border-gray-200 rounded-lg text-center text-gray-600 font-[Poppins] mt-2">
-                    {weather ? (
-                        <>
-                            {weather.name} - {Math.round(weather.main.temp)}°C
-                            <div className="flex justify-center items-center">
-                                <span className="mr-3 mb-2">{renderIcon()}</span>
-                                {weather.weather[0].description}
-                            </div>
-                        </>
-                    ) : (
-                        "Carregando clima..."
-                    )}
-                </div>
-                <div className="flex hover:scale-109 transition-transform py-3 px-3 mb-2 m-auto cursor-pointer rounded-full bg-linear-to-r from-red-500 to-pink-400 shadow-md shadow-red-400 text-white hover:bg-gray-600">
+                <span className="mx-auto p-2 mb-3 text-sm text-gray-600">{Saudacao()}</span>
+
+
+                <div
+                    onClick={() => logout()}
+                    className="flex hover:scale-109 transition-transform py-3 px-3 mb-2 m-auto cursor-pointer rounded-full bg-linear-to-r from-red-500 to-pink-400 shadow-md shadow-red-400 text-white hover:bg-gray-600">
                     <PowerIcon />
                 </div>
             </aside>
+            {menuAberto && (
+                <div
+                    className="fixed inset-0 bg-black/40 md:hidden"
+                    onClick={() => setMenuAberto(false)}
+                />
+            )}
+
 
             {/* Conteúdo principal */}
             <main className="flex-1 xs:mt-10 relative p-6 bg-[url('/aucateaimg.jpg')] bg-cover">
-
-                {selectedMenu === "Home" && (
-                    <><h1 className="font-['Style_Script',cursive] text-4xl bg-clip-text bg-linear-to-bl from-red-500 via-orange-400 to-pink-500 text-transparent">
-                        Associação Candidomotense de Apoio a Pessoas com Trasntorno do Espectro Autista</h1>
-                        <p className="font-[Poppins] text-gray-500 text-sm">Bem Vindo ao Sistema de Cadastros Aucatea !</p></>
-                )
-
-                }
-
-                {selectedMenu === "Pacientes" && (
-                    <Pacientes />
-                )}
-                {selectedMenu === "Membros" && (
-                    <Membros />
-                )}
-                {selectedMenu === "Agenda" && (
-                    <Agenda />
-                )}
-                {selectedMenu === "Relatórios" && (
-                    <Relatorios />
-                )}
+                <Outlet />
             </main>
         </div>
     );
 }
+
+
 
 
