@@ -37,7 +37,7 @@ export function Auth() {
 
 
     return (
-        <div className="h-screen  bg-linear-to-t from-white to-gray-100 flex items-center justify-start">
+        <div className="h-screen  bg-linear-to-t from-white to-gray-200 flex items-center justify-start">
 
             <div className="absolute inset-0 h-screen  max-w-5xl bg-cover bg-center  "
                 style={{ backgroundImage: "url('/aucatea_capa.jpg')" }}>
@@ -51,16 +51,14 @@ export function Auth() {
             </h1>
 
 
-            <div className="relative z-10 w-[90%] max-w-md mx-auto sm:mx-[28%]  lg:mx-[60%] ">
-                <div className="bg-white rounded-2xl shadow-xl shadow-black p-8 z-50 sm:w-sm sm-150  lg:w-md ">
-                    <div className="text-center mb-8">
-                        <div className="inline-flex items-center justify-center w-40 h-35 rounded-full mb-4">
-                            <img src='lobo.png' className="w-36 h-30 text-white" />
+            <div className="relative z-10 w-[90%] max-w-md mx-auto sm:mx-[28%] lg:mx-[60%]  ">
+                <div className="bg-white rounded-2xl shadow-xl shadow-black p-6 z-50 sm:w-sm sm-150  lg:w-sm ">
+                    <div className=" mb-8 flex flex-col justify-center items-center">
+                        <div className="inline-flex items-center justify-center w-40 h-35  ml-5 ">
+                            <img src='logo_aucatea.png' className="w-35 h-42 text-white" />
                         </div>
-                        <h1 className="text-3xl font-bold bg-clip-text bg-linear-to-l from-red-400 to-purple-800 text-transparent -2 font-[Poppins]">
-                            Aucatea
-                        </h1>
-                        <p className="text-gray-600  text-sm font-[Poppins] ">
+                        <img src='nome_aucatea.png' className='w-35 h-18 mx-auto ' />
+                        <p className="text-gray-500  font-medium mt-2 text-sm font-[Poppins] ">
                             Cadastros
                         </p>
                     </div>
@@ -104,7 +102,7 @@ export function Auth() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full font-[Poppins] bg-linear-to-r from-red-600  to-purple-700 hover:bg-yellow-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full font-[Poppins] bg-linear-to-r from-red-500 to-red-700 hover:bg-yellow-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {loading ? 'Carregando...' : 'Entrar'}
                         </button>

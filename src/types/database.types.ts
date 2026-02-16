@@ -16,6 +16,7 @@ export interface Paciente {
   laudo_url?: string;   // foto do laudo (opcional)
   foto_paciente?: string;  // foto/avatar do paciente (opcional)
   convenio?: string; // nome do convênio (opcional) 
+  laudo?:[];
   tratamento?: []; // descrição do tratamento (opcional)
   data_criacao: Date;
   data_atualizacao: Date;

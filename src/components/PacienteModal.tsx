@@ -32,7 +32,6 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
     ];
 
     useEffect(() => {
-
         if (paciente) {
             console.log(paciente)
             setFormData({
@@ -45,6 +44,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                 email: paciente.email_principal || "",
                 telefoneMae: paciente.telefone_mae || "",
                 telefonePai: paciente.telefone_pai || "",
+                laudo: paciente.laudo || [],
                 convenio: paciente.convenio || "",
                 tratamentos: paciente.tratamento || [],
                 dataNascimento: paciente.data_nascimento || "",
@@ -66,6 +66,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                 telefoneMae: "",
                 telefonePai: "",
                 convenio: "",
+                laudo: [],
                 dataNascimento: "",
                 tratamentos: [],
                 bairro: "",
@@ -261,6 +262,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                     telefone_mae: formData.telefoneMae,
                     telefone_pai: formData.telefonePai,
                     convenio: formData.convenio,
+                    laudo: formData.laudo,
                     tratamentos: selecionados,
                     data_atualizacao: new Date().toISOString(),
                 };
@@ -299,6 +301,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                         telefone_pai: formData.telefonePai,
                         email_principal: formData.email,
                         convenio: formData.convenio,
+                        laudo: formData.laudo,
                         tratamentos: selecionados,
                         data_criacao: new Date(),
 
@@ -312,6 +315,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
             { isEditing ? alert("Paciente Editado com Sucesso!") : alert("Paciente salvo com sucesso!") };
             setLoading(false);
             onClose(); // fecha modal
+
             if (onSaved) onSaved();
         } catch (err) {
             console.error(err);
@@ -455,6 +459,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                         <input
                                             type="text"
                                             id="nome"
+                                            required
                                             name="nome"
                                             value={formData.nome || ""}
                                             onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
@@ -467,6 +472,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                         </label>
                                         <input
                                             type="date"
+                                            required
                                             id="dataNascimento"
                                             name="dataNascimento"
                                             value={formData.dataNascimento || ""}
@@ -483,6 +489,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                         <input
                                             type="text"
                                             name="endereco"
+                                            required
                                             value={formData.endereco || ""}
                                             onChange={(e) => setFormData({ ...formData, endereco: e.target.value })}
                                             className="w-full border border-gray-200 p-2  text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
@@ -493,9 +500,10 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                         <input
                                             type="text"
                                             name="numeroCasa"
+                                            required
                                             value={formData.numeroCasa || ""}
                                             onChange={(e) => setFormData({ ...formData, numeroCasa: e.target.value })}
-                                            placeholder="Número da casa"
+                                            placeholder="Num"
                                             className=" border border-gray-200   text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                         />
                                     </div>
@@ -510,6 +518,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                         <input
                                             type="text"
                                             name="bairro"
+                                            required
                                             value={formData.bairro || ""}
                                             onChange={(e) => setFormData({ ...formData, bairro: e.target.value })}
                                             className="w-full border border-gray-200  p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
@@ -562,6 +571,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                 <input
                                     type="text"
                                     name="mae"
+                                    required
                                     value={formData.mae || ""}
                                     onChange={(e) => setFormData({ ...formData, mae: e.target.value })}
                                     className="w-full border border-gray-200 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
@@ -573,7 +583,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                 <input
                                     type="text"
                                     name="telefoneMae"
-
+                                    required
                                     maxLength={14}
                                     value={formData.telefoneMae || ""}
                                     onChange={(e) => setFormData({ ...formData, telefoneMae: formatarTelefone(e.target.value) })}
@@ -614,7 +624,30 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                             </div>
 
                         </div>
-                        <div className="flex items-center justify-between space-x-4">
+                        <div className="flex items-center justify-start space-x-4">
+                            <div>
+                                <label
+                                    htmlFor="laudo"
+                                    className="font-semibold text-md"
+                                >
+                                    Laudo
+                                </label>
+                                <input
+                                    type="text"
+                                    name="laudo"
+                                    value={formData.laudo.join(", ")} // mostra valores separados
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            laudo: e.target.value.split(",").map(v => v.trim()).filter(Boolean)
+                                        })
+                                    }
+                                    className="w-full border border-gray-200 p-2 rounded-lg"
+                                />
+
+                            </div>
+
+
                             <div>
                                 <label
                                     htmlFor="convenio"
@@ -625,11 +658,12 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                 <select
                                     id="convenio"
                                     name="convenio"
+                                    required
                                     value={formData.convenio || ""}
                                     onChange={(e) => setFormData({ ...formData, convenio: e.target.value })}
                                     className="w-full border border-gray-200  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                 >
-
+                                    <option value="">Selecione...</option>
                                     <option value="SUS">SUS</option>
                                     <option value="Unimed">Unimed</option>
                                     <option value="Amil">Amil</option>
@@ -642,59 +676,61 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                 </select>
                             </div>
 
-                            <div className="w-full ">
-                                <label className="font-semibold text-md">Tratamentos</label>
-                                <div className="relative ">
-                                    {/* Botão que abre o dropdown */}
-                                    <button
-                                        type="button"
-
-                                        onClick={() => setOpen(!open)}
-                                        className="w-full flex items-center  text-gray-700 font-[Poppins] justify-between border border-gray-200 p-2 h-10 rounded-sm text-left  focus:outline-none focus:ring-1 focus:ring-purple-400"
-                                    >
-                                        <span>
-                                            {selecionados.length > 0
-                                                ? opcoes
-                                                    .filter((o) => selecionados.includes(o.id as any))
-                                                    .map((o) => o.label)
-                                                    .join(", ")
-                                                : "Selecione os tratamentos"}
-                                        </span>
-                                        {open ? (
-                                            <ChevronUpIcon className="w-5 h-5 text-gray-600" />
-                                        ) : (
-                                            <ChevronDownIcon className="w-5 h-5 text-gray-600" />
-                                        )}
-
-
-                                    </button>
-
-                                    {/* Dropdown com checkboxes */}
-                                    {open && (
-                                        <div className="absolute mt-1 w-full border border-gray-300 rounded-lg bg-white shadow-lg z-10">
-                                            {opcoes.map((opcao) => (
-                                                <label
-                                                    key={opcao.id}
-                                                    className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={selecionados.includes(opcao.id as any)}
-                                                        onChange={() => toggleSelecionado(opcao.id as any)}
-                                                        className="mr-2"
-                                                    />
-                                                    {opcao.label}
-                                                </label>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-
-
 
 
                         </div>
+
+                        <div className="w-full ">
+                            <label className="font-semibold text-md">Tratamentos</label>
+                            <div className="relative ">
+                                {/* Botão que abre o dropdown */}
+                                <button
+                                    type="button"
+                                    onClick={() => setOpen(!open)}
+                                    className="w-full flex items-center  text-gray-700 font-[Poppins] justify-between border border-gray-200 p-2 h-10 rounded-sm text-left  focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                >
+                                    <span>
+                                        {selecionados.length > 0
+                                            ? opcoes
+                                                .filter((o) => selecionados.includes(o.id as any))
+                                                .map((o) => o.label)
+                                                .join(", ")
+                                            : "Selecione os tratamentos"}
+                                    </span>
+                                    {open ? (
+                                        <ChevronUpIcon className="w-5 h-5 text-gray-600" />
+                                    ) : (
+                                        <ChevronDownIcon className="w-5 h-5 text-gray-600" />
+                                    )}
+
+
+                                </button>
+
+                                {/* Dropdown com checkboxes */}
+                                {open && (
+                                    <div className="absolute mt-1 w-full border border-gray-300 rounded-lg bg-white shadow-lg z-10">
+                                        {opcoes.map((opcao) => (
+                                            <label
+                                                key={opcao.id}
+                                                className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selecionados.includes(opcao.id as any)}
+                                                    onChange={() => toggleSelecionado(opcao.id as any)}
+                                                    className="mr-2"
+                                                />
+                                                {opcao.label}
+                                            </label>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+
+
+
 
 
 

@@ -65,6 +65,8 @@ export default function PacienteDetalhesModal({
                     </div>
 
                     <div>
+
+                        <p><span className="font-semibold text-pink-600">Laudo:</span> {paciente.laudo?.join(",")}</p>
                         <p><span className="font-semibold text-pink-600">Convênio:</span> {paciente.convenio}</p>
                         <p><span className="font-semibold text-pink-600">Tratamentos:</span> {paciente.tratamentos?.join(", ")}</p>
                         {paciente.laudo_url && (
