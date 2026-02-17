@@ -1,13 +1,15 @@
 
-import { Users, SquareUserRound, Calendar, Printer, PowerIcon, Home, X, Menu } from "lucide-react";
+import { Users, SquareUserRound, Calendar, Printer, PowerIcon, Home, X, Menu, HandCoins } from "lucide-react";
 import { Outlet, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
+import { useStyle } from "../context/StyleContext";
 
 
 export default function Painel() {
     const [menuAberto, setMenuAberto] = useState(false);
     const { user, logout } = useAuth();
+    const { cores } = useStyle();
 
 
     function Saudacao() {
@@ -29,6 +31,7 @@ export default function Painel() {
         { title: "Pacientes", path: "pacientes", icon: Users },
         { title: "Membros", path: "membros", icon: SquareUserRound },
         { title: "Agenda", path: "agenda", icon: Calendar },
+        { title: "Doações", path: "doacoes", icon: HandCoins },
         { title: "Relatórios", path: "relatorios", icon: Printer },
     ];
 
@@ -58,8 +61,8 @@ export default function Painel() {
                 <div className="h-28">
                     <img src="/logo_aucatea.png" alt="Logo" className="w-25 h-28 mx-auto mt-5 " />
                 </div>
-                <div className="p-4 font-bold text-3xl text-center border-b font-[Poppins] bg-clip-text bg-linear-to-r from-red-600  to-red-400 text-transparent">
-                    AucaTea
+                <div className={`p-4 font-bold text-2xl text-center ${cores.dangerText}`}>
+                    AUCA<span className={`${cores.primaryText}`}>TEA</span>
                 </div>
 
 
@@ -71,8 +74,8 @@ export default function Painel() {
                             to={menu.title === "Home" ? "/painel" : `/painel/${menu.path}`}
                             className={
                                 menu.title === "Home"
-                                    ? "flex items-center justify-center border border-red-400 m-auto rounded-lg p-2 mb-5 mx-auto hover:bg-gray-300 cursor-pointer bg-white text-red-400 font-bold shadow-md"
-                                    : "w-full cursor-pointer hover:scale-105 transition-transform text-left text-white font-medium px-3 py-2 rounded bg-linear-to-r from-red-500 to-pink-500 hover:bg-gray-200 flex items-center"
+                                    ? `flex items-center justify-center border border-blue-500 m-auto rounded p-2 mb-5 mx-auto hover:bg-blue-300 cursor-pointer bg-white/10 ${cores.primaryText} hover:text-white  font-bold shadow-md`
+                                    : `w-full cursor-pointer hover:scale-105 transition-transform text-left text-white font-medium px-3 py-2 rounded ${cores.gradientBlue} hover:bg-gray-200 flex items-center`
                             }
                         >
                             {menu.icon && <menu.icon className="inline-block mr-2" />}
@@ -87,7 +90,7 @@ export default function Painel() {
 
                     <div
                         onClick={() => logout()}
-                        className="w-20 flex  hover:scale-109 transition-transform py-3 px-3 cursor-pointer rounded-full bg-linear-to-r from-red-500 to-pink-400 shadow-md shadow-red-400 text-white hover:bg-gray-600">
+                        className={`w-15 flex  hover:scale-109 transition-transform py-3 px-2 cursor-pointer rounded-full ${cores.gradientBlue} shadow-xl shadow-blue-800 text-white hover:bg-gray-600`}>
                         <PowerIcon className="w-6 h-6 mx-auto" />
                     </div>
                 </div>
@@ -96,7 +99,7 @@ export default function Painel() {
 
 
             {/* Conteúdo principal */}
-            <main className="flex-1 py-20 md:py-10 lg:py-8 w-full relative p-6 bg-[url('/aucateaimg.jpg')] bg-cover">
+            <main className="flex-1 py-8 md:py-10 lg:py-8 w-full relative p-4 bg-[url('/aucateaimg.jpg')] bg-cover">
                 <Outlet />
             </main>
         </div>

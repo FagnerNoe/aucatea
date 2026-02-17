@@ -8,6 +8,7 @@ import { Pacientes } from './components/Pacientes';
 import { Agenda } from './components/Agenda';
 import { Relatorios } from './components/Relatorios';
 import { Home } from './components/Home';
+import { Doacoes } from './components/Doacoes';
 
 
 
@@ -40,6 +41,7 @@ function App() {
         <Route path="membros" element={<Membros />} />
         <Route path="pacientes" element={<Pacientes />} />
         <Route path="agenda" element={<Agenda />} />
+        <Route path="doacoes" element={<Doacoes />} />
         <Route path="relatorios" element={<Relatorios />} />
       </Route>
 

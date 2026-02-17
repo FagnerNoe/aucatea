@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useStyle } from '../context/StyleContext';
 
 export function Auth() {
     const navigate = useNavigate();
@@ -9,6 +10,8 @@ export function Auth() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const { login, session, loadingSession } = useAuth();
+    const { cores } = useStyle();
+
 
 
     useEffect(() => {
@@ -72,7 +75,7 @@ export function Auth() {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full px-4 py-3 rounded-lg border border-gray-300 00 bg-white text-gray-900 cus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300  bg-white text-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline"
                                 placeholder="seu@email.com"
                                 required
                             />
@@ -86,7 +89,7 @@ export function Auth() {
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full px-4 py-3 rounded-lg border border-gray-300 00 bg-white ext-gray-900 cus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 00 bg-white ext-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline"
                                 placeholder="••••••••"
                                 required
                                 minLength={6}
@@ -102,7 +105,7 @@ export function Auth() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full font-[Poppins] bg-linear-to-r from-red-500 to-red-700 hover:bg-yellow-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className={`w-full font-[Poppins] ${cores.gradientBlue} hover:bg-yellow-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
                         >
                             {loading ? 'Carregando...' : 'Entrar'}
                         </button>
