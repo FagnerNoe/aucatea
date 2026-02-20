@@ -7,10 +7,10 @@ export function Home() {
 
     return (
         <div className="mt-10">
-            <h1 className={`font-['Style_Script',cursive] text-4xl bg-clip-text ${cores.gradientBlue} text-transparent`}>
+            <h1 className={`font-['Style_Script',cursive] text-4xl bg-clip-text text-center ${cores.gradientBlue} text-transparent`}>
                 Associação Candidomotense de Apoio a Pessoas com Transtorno do Espectro Autista
             </h1>
-            <p className="font-[Poppins] text-gray-500 text-sm">
+            <p className="font-[Poppins] text-gray-500 text-sm text-center">
                 Bem Vindo ao Sistema de Cadastros Aucatea !
             </p>
         </div>

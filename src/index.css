@@ -19,5 +19,63 @@
   animation: fadeDown 4s ease forwards;
 }
 
+/* Esconde elementos na impressão */
+@media print {
+  /* Esconde backdrop */
+  .modal-backdrop {
+    display: none !important;
+  }
 
+
+ 
+ .no-print {
+    display: none !important;
+  }
+
+  /* Mostra elementos apenas na impressão */
+  .print-only {
+    display: block !important;
+    text-align:center;
+  }
+
+  /* Ajusta o container para ocupar a folha inteira */
+  .print-container {
+     display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: #fff !important;
+    
+  }
+
+   /* Define tamanho da página A4 */
+  @page {
+    size: A4;
+    margin: 20mm;
+  }
+
+* {
+    color: #000 !important;
+    background: transparent !important;
+  }
+
+
+  /* Centraliza e estiliza a seção de cidade + data + assinatura */
+  .assinatura {
+    margin-top: 50px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .assinatura hr {
+    border: none;
+    border-top: 2px solid #000;
+    width: 50%;
+    margin: 20px auto 5px auto;
+  }
+}
 

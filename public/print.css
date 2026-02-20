@@ -47,8 +47,27 @@ input{
     width: 80px;
 }
 
+#boxLaudo{
+    display: flex;
+    gap:25px
+}
+
 #convenio{
     width: 250px;
+}
+
+#assinatura{
+    margin-top: 10px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#linhaAssinatura{
+    width:300px; 
+    text-align:left; 
+    margin-top:20px;
+    margin-bottom: -10px;
 }
 
 

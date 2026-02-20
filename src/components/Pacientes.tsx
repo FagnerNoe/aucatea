@@ -139,10 +139,6 @@ export function Pacientes() {
 
     };
 
-
-
-
-
     return (
         <div className="bg-white w-full">
             <header className="flex flex-col justify-between items-center md:items-start mb-4 sm:mb-8 md:mb-20">
@@ -162,7 +158,7 @@ export function Pacientes() {
                         </button>
 
                         {/* Campo de busca */}
-                        <div className="relative  w-xs max-w-sm  sm:w-sm md:w-md ">
+                        <div className="relative w-full sm:w-xs md:w-xs  lg:w-sm xl-w ">
                             <input
                                 type="text"
                                 placeholder="Buscar Paciente..."
@@ -171,7 +167,7 @@ export function Pacientes() {
                                     setBuscar(e.target.value);
                                     setSelectedPaciente(null)
                                 }}
-                                className="border border-gray-400 px-10 py-2 mx-auto rounded-full w-xs md:w-sm focus:outline-none focus:ring-2 focus:ring-lime-400"
+                                className="border border-gray-400 w-full px-10 py-2 rounded-full  focus:outline-none focus:ring-2 focus:ring-lime-400"
                             />
                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" />
                         </div>

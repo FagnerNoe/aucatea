@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useStyle } from '../context/StyleContext';
+import { Eye, EyeClosed } from 'lucide-react';
 
 export function Auth() {
     const navigate = useNavigate();
@@ -9,6 +10,7 @@ export function Auth() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [mostrarSenha, setMostrarSenha] = useState(false);
     const { login, session, loadingSession } = useAuth();
     const { cores } = useStyle();
 
@@ -39,6 +41,8 @@ export function Auth() {
 
 
 
+
+
     return (
         <div className="h-screen  bg-linear-to-t from-white to-gray-200 flex items-center justify-start">
 
@@ -48,13 +52,13 @@ export function Auth() {
             </div>
 
 
-            <h1 className="border-t w-[90%] py-2 absolute top-12 left-5 text-white sm:w-sm sm:left-55  lg:w-lg lg:text-4xl lg:top-60 lg:left-50
+            <h1 className="border-t w-[90%] py-2 absolute top-12 xs:top-5 left-5 text-white sm:w-sm sm:left-55 lg:w-lg lg:text-4xl lg:top-60 lg:left-50
             text-2xl z-10 font-[Style_Script,cursive] text-center  fade-down">
                 Associação Candidomotense de Apoio a Pessoas com Transtorno do Espectro Autista
             </h1>
 
 
-            <div className="relative z-10 w-[90%] max-w-md mx-auto sm:mx-[28%] lg:mx-[60%]  ">
+            <div className="relative z-10 w-[90%] max-w-md mx-auto sm:mx-[60%] ">
                 <div className="bg-white rounded-2xl shadow-xl shadow-black p-6 z-50 sm:w-sm sm-150  lg:w-sm ">
                     <div className=" mb-8 flex flex-col justify-center items-center">
                         <div className="inline-flex items-center justify-center w-40 h-35  ml-5 ">
@@ -81,20 +85,26 @@ export function Auth() {
                             />
                         </div>
 
-                        <div>
+                        <div className='relative'>
                             <label className="block text-sm font-medium text-gray-700  mb-2">
                                 Senha
                             </label>
                             <input
-                                type="password"
+                                type={mostrarSenha ? "text" : "password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full px-4 py-3 rounded-lg border border-gray-300 00 bg-white ext-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline"
-                                placeholder="••••••••"
+                                className=" relative w-full px-4 py-3 rounded-lg border border-gray-300 00 bg-white ext-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline"
                                 required
+                                placeholder='**********'
                                 minLength={6}
                             />
-                        </div>
+                            <div
+                                onClick={() => setMostrarSenha(!mostrarSenha)}
+                                className='absolute right-2 top-1/2 pr-1'>
+                                {mostrarSenha ? <Eye className='text-gray-400' /> : <EyeClosed className='text-gray-400' />}
+
+                            </div>
+                        </div >
 
                         {error && (
                             <div className="bg-red-50  border border-red-200 0 text-red-600 px-4 py-3 rounded-lg text-sm">

@@ -96,26 +96,44 @@
                 Email:
                 <input type="email" name="email" />
             </label>
-            <div id="convenio">
-                <label>
-                    Laudo:
-                </label>
-                <input />
+            <label>
+                Instituição de Ensino:
+                <input type="email" name="email" />
+            </label>
+            <label>
+                Instituição de Ensino(Fora Cândido Mota):
+                <input type="email" name="email" />
+            </label>
+            <div id="boxLaudo">
 
-            </div>
-            <div id="convenio">
-                <label>
-                    Convenio:
-                </label>
-                <input />
+                <div id="convenio">
+                    <label>
+                        Laudo:
+                    </label>
+                    <input />
+
+                </div>
+                <div id="convenio">
+                    <label>
+                        Convenio:
+                    </label>
+                    <input />
+
+                </div>
 
             </div>
             <label>
                 Terapias:
                 <input id="terapia" />
-                <input id="terapia" />
-                <input id="terapia" />
             </label>
+
+            <div id="assinatura">
+                <p>Cândido Mota, <span id="data"></span></p>
+                <hr id="linhaAssinatura">
+                <p>Assinatura do Responsável</p>
+            </div>
+
+
 
 
         </div>
@@ -124,6 +142,12 @@
     </form>
 
 
+    <script>
+        // Pega a data atual e formata no padrão brasileiro
+        const hoje = new Date();
+        const opcoes = { day: 'numeric', month: 'long', year: 'numeric' };
+        document.getElementById("data").textContent = hoje.toLocaleDateString('pt-BR', opcoes);
+    </script>
 
 
 

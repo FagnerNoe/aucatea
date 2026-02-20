@@ -24,16 +24,20 @@ export default function PacienteDetalhesModal({
     if (!isOpen || !paciente) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-40">
-            <div className="bg-white rounded-lg shadow-lg w-90 sm:w-md md:w-xl max-h-150 overflow-y-auto p-4 relative">
+        <div className=" fixed inset-0 bg-black/40 flex items-center justify-center z-40">
+            <div className="print-container bg-white rounded-lg shadow-lg w-90 sm:150 md:w-200 max-h-150 overflow-y-auto p-4 relative">
                 {/* Header */}
-                <h2 className="text-2xl text-center font-bold mb-6 border-b pb-2 font-[Poppins] text-blue-500">
+                <h2 className="no-print text-2xl text-center font-bold mb-6 border-b pb-2 font-[Poppins] text-blue-500">
                     Detalhes do Paciente
                 </h2>
-
+                <div className="hidden print-only">
+                    <h2 className="text-2xl text-center">AUCATEA</h2>
+                    <p>Associação Candidomotense de Apoio a Pessos com Transtorno do Espectro Autista</p>
+                </div>
+                <h4 className=" hidden print-only">Ficha de Cadastro de Pacientes</h4>
                 {/* Foto */}
                 {paciente.foto_paciente && (
-                    <div className="flex justify-center mb-6">
+                    <div className="no-print flex justify-center mb-6">
                         <img
                             src={paciente.foto_paciente}
                             alt="Foto do paciente"
@@ -46,8 +50,12 @@ export default function PacienteDetalhesModal({
                 <div className="grid sm:grid-cols-2 gap-4 text-sm font-[Poppins]">
                     <div>
                         <p><span className={`font-semibold ${cores.primaryText}`}>Nome:</span> {paciente.nome}</p>
-                        <p><span className={`font-semibold ${cores.primaryText}`}>Data de Nascimento:</span> {paciente.data_nascimento}</p>
-                        <p><span className={`font-semibold ${cores.primaryText}`}>Email:</span> {paciente.email_principal}</p>
+                        <p><span className={`font-semibold ${cores.primaryText}`}>
+                            Data de Nascimento:
+                        </span>{" "}
+                            {new Date(paciente.data_nascimento).toLocaleDateString("pt-BR")}
+                        </p>
+
                     </div>
 
 
@@ -66,10 +74,16 @@ export default function PacienteDetalhesModal({
                         <p><span className={`font-semibold ${cores.primaryText}`}>Telefone Mãe:</span> {paciente.telefone_mae}</p>
                         <p><span className={`font-semibold ${cores.primaryText}`}>Pai:</span> {paciente.nome_pai}</p>
                         <p><span className={`font-semibold ${cores.primaryText}`}>Telefone Pai:</span> {paciente.telefone_pai}</p>
+                        <p><span className={`font-semibold ${cores.primaryText}`}>Email:</span> {paciente.email_principal}</p>
                     </div>
 
                     <div>
-
+                        {paciente.escola && (
+                            <p><span className={`font-semibold ${cores.primaryText}`}>Instituição de Ensino:</span> {paciente.escola}</p>
+                        )}
+                        {paciente.escola_externa && (
+                            <p><span className={`font-semibold ${cores.primaryText}`}>Outra Instituição:</span> {paciente.escola_externa}</p>
+                        )}
                         <p><span className={`font-semibold ${cores.primaryText}`}>Laudo:</span> {paciente.laudo?.join(",")}</p>
                         <p><span className={`font-semibold ${cores.primaryText}`}>Convênio:</span> {paciente.convenio}</p>
                         <p><span className={`font-semibold ${cores.primaryText}`}>Tratamentos:</span> {paciente.tratamentos?.join(", ")}</p>
@@ -78,7 +92,7 @@ export default function PacienteDetalhesModal({
                                 href={paciente.laudo_url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-pink-500 underline mt-2 block"
+                                className="no-print text-pink-500 underline mt-2 block"
                             >
                                 Ver Laudo
                             </a>
@@ -87,10 +101,23 @@ export default function PacienteDetalhesModal({
 
                 </div>
 
+                {/* Linha para cidade, data e assinatura (apenas na impressão) */}
+                <div className="hidden print:block mt-12 text-center font-[Poppins]">
+                    <p className="mb-8">
+                        Cândido Mota, {new Date().toLocaleDateString("pt-BR")}
+                    </p>
+                    <hr className="border-t-2 border-gray-700 w-1/2 mx-auto mb-2" />
+                    <p className="text-sm">Assinatura do Responsável</p>
+                </div>
+
+
+
 
                 {/* Footer com ações */}
                 <div className="flex justify-between gap-x-3 mt-8 border-t pt-4">
-                    <button className="shadow-sm rounded-lg shadow-gray-400 px-2">
+                    <button
+                        onClick={() => console.log("impressao")}
+                        className=" no-print shadow-sm rounded-lg shadow-gray-400 px-2">
                         <Printer />
                     </button>
                     <div className=" flex gap-3">
@@ -99,14 +126,14 @@ export default function PacienteDetalhesModal({
                                 onEdit(paciente);
                                 onClose();
                             }}
-                            className={`px-4 py-2 bblue-500 text-white ${cores.primaryBg} rounded shadow hover:bg-blue-700`}
+                            className={`no-print px-4 py-2 bblue-500 text-white ${cores.primaryBg} rounded shadow hover:bg-blue-700`}
                         >
                             Editar
                         </button>
 
                         <button
                             onClick={onClose}
-                            className="px-4 py-2 blue-500 text-white bg-gray-700 rounded shadow hover:bg-yellow-400"
+                            className="no-print px-4 py-2 blue-500 text-white bg-gray-700 rounded shadow hover:bg-yellow-400"
                         >
                             Fechar
                         </button>

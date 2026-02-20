@@ -24,12 +24,52 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
     const [selecionados, setSelecionados] = useState<number[]>([]);
     const [formData, setFormData] = useState<Record<string, any>>({});
     const { user } = useAuth();
-    const opcoes = [
+
+    const escolas = [
+        "Outros",
+        "PRIMEIROS PASSOS JARDIM DA INFANCIA ",
+        "MARIA DOMENICA MORINO IRMA CRECHE ",
+        "JOSE AUGUSTO DE CARVALHO DR",
+        "ANTONIO FONTANA",
+        "E.E JOSE DOS SANTOS ALMEIDA (GRUPINHO)",
+        "SANTO HINO",
+        "LUIZ PIRES BARBOSA PROF ETEC",
+        "RACHID JABUR ",
+        "CLOTILDE DE CASTRO BARREIRA PROFA (GRUPÃO)",
+        "JARDIM SAO FRANCISCO",
+        "JOAO E MARIA EMEI  ",
+        "E.M HELENA PUPIM ALBANEZ",
+        "SANTA CLARA COLEGIO",
+        "NOSSA SENHORA DAS DORES CASA DA CRIANCA",
+        "MARIA PAGOTE CONTE ESCOLA DE EDUCACAO ESPECIAL",
+        "ESCOLA MUNICIPAL OLGA BREVE ALVES",
+        "E.M JOAO LEAO DE CARVALHO ",
+        "LEONILDA PEREIRA DE ALMEIDA EMEI",
+        "MENINO JESUS CRECHE",
+        "EMEI VALTER APARECIDO FRANCISCANI",
+        "SANTOS ANJOS COLEGIO",
+    ];
+
+    const convenios = [
+        "SUS",
+        "Unimed",
+        "Amil",
+        "Bradesco Saúde",
+        "SulAmérica",
+        "Notredame Intermédica",
+        "Hapvida",
+        "IAMSP",
+        "Outros"
+    ];
+
+    const opcoesTratamentos = [
         { id: "psicologo", label: "Psicólogo" },
         { id: "terapia", label: "Terapia" },
         { id: "fonoaudiologia", label: "Fonoaudiologia" },
         { id: "outros", label: "Outros" },
     ];
+
+
 
     useEffect(() => {
         if (paciente) {
@@ -44,6 +84,8 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                 email: paciente.email_principal || "",
                 telefoneMae: paciente.telefone_mae || "",
                 telefonePai: paciente.telefone_pai || "",
+                escola: paciente.escola || "",
+                escola_externa: paciente.escola_externa || '',
                 laudo: paciente.laudo || [],
                 convenio: paciente.convenio || "",
                 tratamentos: paciente.tratamento || [],
@@ -65,6 +107,8 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                 email: "",
                 telefoneMae: "",
                 telefonePai: "",
+                escola: "",
+                escola_externa: "",
                 convenio: "",
                 laudo: [],
                 dataNascimento: "",
@@ -261,6 +305,8 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                     atualizado_por_id: user.id,
                     telefone_mae: formData.telefoneMae,
                     telefone_pai: formData.telefonePai,
+                    escola: formData.escola,
+                    escola_externa: formData.escola_externa,
                     convenio: formData.convenio,
                     laudo: formData.laudo,
                     tratamentos: selecionados,
@@ -300,6 +346,8 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                         telefone_mae: formData.telefoneMae,
                         telefone_pai: formData.telefonePai,
                         email_principal: formData.email,
+                        escola: formData.escola,
+                        escola_externa: formData.escola_externa,
                         convenio: formData.convenio,
                         laudo: formData.laudo,
                         tratamentos: selecionados,
@@ -382,16 +430,16 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
             <div className=" fixed inset-0 bg-black/70 bg-opacity-50 flex items-center justify-center z-50">
 
 
-                <div className="bg-white w-9/12 h-5/6 rounded-lg shadow-lg overflow-y-auto p-6 relative">
+                <div className="bg-white w-90 h-5/6 mb-20 mt-20 sm:mt-15 md:mt-20  sm:w-9/12 sm:h-5/6 md:w-9/12 md:h-5/6  rounded-lg shadow-lg overflow-y-auto p-4 relative">
                     {/* Botão fechar */}
                     <button
                         onClick={() => onClose()}
-                        className="absolute top-7 right-7 text-gray-600 hover:text-red-500 text-xl"
+                        className="absolute top-5 right-7 text-gray-600 hover:text-red-500 text-xl"
                     >
-                        <X className="h-8 w-8 border-2 rounded-lg text-white hover:text-red-500" />
+                        <X className="sm:h-8 sm:w-8 border-2 rounded-lg text-white hover:text-red-500" />
                     </button>
 
-                    <h3 className={`text-2xl text-white font-bold mb-6 shadow-sm px-4 py-1 rounded-lg 
+                    <h3 className={`text-md sm:text-2xl text-white font-bold mb-6 shadow-sm px-4 py-1 rounded-lg 
                     ${isEditing ? 'bg-linear-to-l from-blue-500 to-indigo-500' : 'bg-linear-to-l from-green-500 to-emerald-500'
                         }`}>
                         {isEditing ? "Editar Paciente" : "Novo Paciente"}</h3>
@@ -406,16 +454,16 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                         }}
                         className="flex flex-col gap-3"
                     >
-                        <div className="flex">
-                            <div className={`flex flex-col items-center p-2 bg-white                              
-                                 rounded shadow-md max-w-md h-[35%] mr-6 mt-20 border ${isEditing ? 'border-blue-500' : 'border-green-400'}`}>
+                        <div className="flex flex-col sm:flex-row items-center">
+                            <div className={`flex flex-col items-center  p-2 bg-white                              
+                                 rounded shadow-md mx-auto w-60 sm-w-full h-65 sm:mr-6 sm:mt-12 border ${isEditing ? 'border-blue-500' : 'border-green-400'}`}>
                                 {/* Quadrado com ícone ou preview */}
-                                <div className="relative w-36 h-36 flex items-center justify-center border border-gray-300 rounded bg-gray-100">
+                                <div className="relative w-full h-full  flex items-center justify-center border border-gray-300 rounded bg-gray-100">
                                     {preview ? (
                                         <img
                                             src={preview}
                                             alt="Pré-visualização"
-                                            className="w-full h-full object-cover rounded"
+                                            className="w-full h-50 object-cover rounded"
                                         />
                                     ) : (
                                         <UserIcon className="h-16 w-16 text-gray-400" /> // Ícone de usuário
@@ -450,8 +498,8 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
 
                             </div>
 
-                            <div className="w-full flex flex-col gap-3 mt-5">
-                                <div className="flex justify-between space-x-4">
+                            <div className="w-full flex flex-col gap-2 sm:gap-3 mt-5">
+                                <div className="flex flex-col gap-2 sm:flex-row md:flex-row xjustify-between">
                                     <div className="w-full">
                                         <label htmlFor="nome" className="text-md font-semibold">
                                             Nome
@@ -463,7 +511,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             name="nome"
                                             value={formData.nome || ""}
                                             onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                                            className=" w-full border border-gray-200 text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                            className=" w-full border border-gray-300 text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                         />
                                     </div>
                                     <div className="flex flex-col items-start">
@@ -477,11 +525,11 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             name="dataNascimento"
                                             value={formData.dataNascimento || ""}
                                             onChange={(e) => setFormData({ ...formData, dataNascimento: e.target.value })}
-                                            className=" border border-gray-200 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                            className=" border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                         />
                                     </div>
                                 </div>
-                                <div className="flex items-center justify-between space-x-4">
+                                <div className="flex flex-col gap-2 sm:flex-row md:flex-row sm:items-center justify-between ">
                                     <div className="w-full">
                                         <label
                                             htmlFor="endereco"
@@ -492,10 +540,10 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             required
                                             value={formData.endereco || ""}
                                             onChange={(e) => setFormData({ ...formData, endereco: e.target.value })}
-                                            className="w-full border border-gray-200 p-2  text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                            className="w-full border border-gray-300 p-2  text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                         />
                                     </div>
-                                    <div className="w-[10%] flex flex-col justify-center">
+                                    <div className=" flex w-25 flex-col sm:justify-center">
                                         <label htmlFor="numeroCasa" className="text-md font-semibold"> Número </label>
                                         <input
                                             type="text"
@@ -504,13 +552,13 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             value={formData.numeroCasa || ""}
                                             onChange={(e) => setFormData({ ...formData, numeroCasa: e.target.value })}
                                             placeholder="Num"
-                                            className=" border border-gray-200   text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                            className=" border border-gray-300   text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                         />
                                     </div>
 
                                 </div>
 
-                                <div className="flex items-center justify-between space-x-4">
+                                <div className="flex items-start flex-col sm:flex-row gap-2 justify-between">
                                     <div className="w-full">
                                         <label
                                             htmlFor="bairro"
@@ -521,10 +569,10 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             required
                                             value={formData.bairro || ""}
                                             onChange={(e) => setFormData({ ...formData, bairro: e.target.value })}
-                                            className="w-full border border-gray-200  p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                            className="w-full border border-gray-300  p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                         />
                                     </div>
-                                    <div >
+                                    <div className="w-50  sm:w-35 flex flex-col ">
                                         <label htmlFor="cep" className="text-md font-semibold"> CEP </label>
                                         <input
                                             type="text"
@@ -533,7 +581,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             maxLength={9}
                                             onChange={(e) => setFormData({ ...formData, cep: formatarCep(e.target.value) })}
                                             placeholder="CEP"
-                                            className=" border border-gray-200  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                            className=" border border-gray-300  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                         />
                                     </div>
                                 </div>
@@ -545,24 +593,15 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                         value={formData.complemento || ""}
                                         onChange={(e) => setFormData({ ...formData, complemento: e.target.value })}
 
-                                        className="w-full border border-gray-200 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                        className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                     />
                                 </div>
 
                             </div>
 
                         </div>
-                        <div >
-                            <label htmlFor="email" className="text-md font-semibold"> E-mail </label>
-                            <input
-                                type="text"
-                                name="email"
-                                value={formData.email || ""}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                className="w-full border border-gray-200 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
-                            />
-                        </div>
-                        <div className="flex items-center justify-between space-x-4">
+
+                        <div className="flex flex-col sm:flex-row md:flex-row items-center justify-between gap-2">
                             <div className=" w-full ">
                                 <label
                                     htmlFor="mae"
@@ -574,12 +613,12 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     required
                                     value={formData.mae || ""}
                                     onChange={(e) => setFormData({ ...formData, mae: e.target.value })}
-                                    className="w-full border border-gray-200 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                    className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                 />
 
                             </div>
                             <div >
-                                <label htmlFor="telefoneMae" className="text-md font-semibold">Celular</label>
+                                <label htmlFor="telefoneMae" className="text-md font-semibold">Celular da Mãe</label>
                                 <input
                                     type="text"
                                     name="telefoneMae"
@@ -588,13 +627,13 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     value={formData.telefoneMae || ""}
                                     onChange={(e) => setFormData({ ...formData, telefoneMae: formatarTelefone(e.target.value) })}
                                     placeholder="(xx)xxxx-xxxx"
-                                    className=" border border-gray-200 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                    className=" border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                 />
 
                             </div>
 
                         </div>
-                        <div className="flex items-center justify-between space-x-4">
+                        <div className="flex flex-col sm:flex-row md:flex-row items-center justify-between gap-2">
                             <div className=" w-full">
                                 <label
                                     htmlFor="pai"
@@ -605,12 +644,12 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     name="pai"
                                     value={formData.pai || ""}
                                     onChange={(e) => setFormData({ ...formData, pai: e.target.value })}
-                                    className="w-full border border-gray-200 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                    className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                 />
 
                             </div>
                             <div >
-                                <label htmlFor="telefonePai" className="text-md font-semibold">Celular</label>
+                                <label htmlFor="telefonePai" className="text-md font-semibold">Celular do Pai</label>
                                 <input
                                     type="text"
                                     name="telefonePai"
@@ -618,12 +657,53 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     value={formData.telefonePai || ""}
                                     onChange={(e) => setFormData({ ...formData, telefonePai: formatarTelefone(e.target.value) })}
                                     placeholder="(xx)xxxx-xxxx"
-                                    className="border border-gray-200 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                    className="border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                 />
 
                             </div>
 
                         </div>
+
+                        <div >
+                            <label htmlFor="email" className="text-md font-semibold"> E-mail </label>
+                            <input
+                                type="text"
+                                name="email"
+                                value={formData.email || ""}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                            />
+                        </div>
+                        <div >
+                            <label htmlFor="escola" className="text-md font-semibold"> Instituição de Ensino </label>
+                            <select
+                                id="escola"
+                                name="escola"
+                                required
+                                value={formData.escola || ""}
+                                onChange={(e) => setFormData({ ...formData, escola: e.target.value })}
+                                className="w-full border border-gray-300  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                            >
+
+                                {escolas.map((escola, index) => (
+                                    <option
+                                        key={index} value={escola}>
+                                        {escola}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div >
+                            <label htmlFor="escola_externa" className="text-sm sm:text-md font-semibold"> Instituição de Ensino (Fora de Cândido Mota)</label>
+                            <input
+                                type="text"
+                                name="escola_externa"
+                                value={formData.escola_externa || ""}
+                                onChange={(e) => setFormData({ ...formData, escola_externa: e.target.value })}
+                                className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                            />
+                        </div>
+
                         <div className="flex items-center justify-start space-x-4">
                             <div>
                                 <label
@@ -642,7 +722,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             laudo: e.target.value.split(",").map(v => v.trim()).filter(Boolean)
                                         })
                                     }
-                                    className="w-full border border-gray-200 p-2 rounded-lg"
+                                    className="w-full border border-gray-300 p-2 rounded-lg"
                                 />
 
                             </div>
@@ -661,18 +741,14 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     required
                                     value={formData.convenio || ""}
                                     onChange={(e) => setFormData({ ...formData, convenio: e.target.value })}
-                                    className="w-full border border-gray-200  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                    className="w-full border border-gray-300  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                 >
-                                    <option value="">Selecione...</option>
-                                    <option value="SUS">SUS</option>
-                                    <option value="Unimed">Unimed</option>
-                                    <option value="Amil">Amil</option>
-                                    <option value="Bradesco Saúde">Bradesco Saúde</option>
-                                    <option value="SulAmérica">SulAmérica</option>
-                                    <option value="Notredame Intermédica">Notredame Intermédica</option>
-                                    <option value="Hapvida">Hapvida</option>
-                                    <option value="IAMSP">IAMSP</option>
-                                    <option value="Outros">Outros</option>
+                                    <option value={convenios[0]}>SUS</option>
+                                    {convenios.map((convenio, index) => (
+                                        <option key={index} value={convenio}>
+                                            {convenio}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -687,11 +763,11 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                 <button
                                     type="button"
                                     onClick={() => setOpen(!open)}
-                                    className="w-full flex items-center  text-gray-700 font-[Poppins] justify-between border border-gray-200 p-2 h-10 rounded-sm text-left  focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                    className="w-full flex items-center  text-gray-700 font-[Poppins] justify-between border border-gray-300 p-2 h-10 rounded-sm text-left  focus:outline-none focus:ring-1 focus:ring-purple-400"
                                 >
                                     <span>
                                         {selecionados.length > 0
-                                            ? opcoes
+                                            ? opcoesTratamentos
                                                 .filter((o) => selecionados.includes(o.id as any))
                                                 .map((o) => o.label)
                                                 .join(", ")
@@ -709,7 +785,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                 {/* Dropdown com checkboxes */}
                                 {open && (
                                     <div className="absolute mt-1 w-full border border-gray-300 rounded-lg bg-white shadow-lg z-10">
-                                        {opcoes.map((opcao) => (
+                                        {opcoesTratamentos.map((opcao) => (
                                             <label
                                                 key={opcao.id}
                                                 className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
