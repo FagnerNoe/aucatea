@@ -69,7 +69,7 @@ export default function PacienteDetalhesModal({
 
 
 
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col ">
                         <p><span className={`font-semibold ${cores.primaryText}`}>Endereço:</span> {paciente.endereco}, {paciente.numero_casa}</p>
                         {paciente.complemento_endereco && (
                             <p><span className={`font-semibold ${cores.primaryText}`}>Complemento:</span> {paciente.complemento_endereco}</p>
