@@ -59,7 +59,7 @@ export default function Painel() {
             >
 
                 <div className="h-28">
-                    <img src="/logo_aucatea.png" alt="Logo" className="w-25 h-28 mx-auto mt-5 " />
+                    <img src="/logo.png" alt="Logo" className="w-25 h-28 mx-auto mt-5 " />
                 </div>
                 <div className={`p-4 font-bold text-2xl text-center ${cores.dangerText}`}>
                     AUCA<span className={`${cores.primaryText}`}>TEA</span>

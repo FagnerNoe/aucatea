@@ -34,7 +34,7 @@ export default function PacienteDetalhesModal({
 
     return (
         <div className=" fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-            <div className="print-container bg-white rounded-lg shadow-lg w-90 sm:150 md:w-200 max-h-150 overflow-y-auto p-4 relative">
+            <div className=" bg-white rounded-lg shadow-lg w-90 sm:150 md:w-200 max-h-150 overflow-y-auto p-4 relative">
                 {/* Header */}
                 <h2 className="no-print text-2xl text-center font-bold mb-6 border-b pb-2 font-[Poppins] text-blue-500">
                     Detalhes do Paciente
@@ -56,7 +56,7 @@ export default function PacienteDetalhesModal({
                 )}
 
                 {/* Grid de informações */}
-                <div className="grid sm:grid-cols-2 gap-4 text-sm font-[Poppins]">
+                <div className="grid sm:grid-cols-2 gap-4 text-sm font-[Poppins] text-center">
                     <div>
                         <p><span className={`font-semibold ${cores.primaryText}`}>Nome:</span> {paciente.nome}</p>
                         <p><span className={`font-semibold ${cores.primaryText}`}>
