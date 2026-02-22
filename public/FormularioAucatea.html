@@ -22,7 +22,7 @@
 
             <label>
                 Nome Completo:
-                <input />
+                <input id="nome" />
             </label>
             <div id="boxNascimento">
                 <label>
@@ -36,13 +36,13 @@
                 <div class="campos">
                     <label>
                         Endereço:
-                        <input />
+                        <input id="endereco" />
                     </label>
                 </div>
                 <div id="numResidencia">
                     <label>
                         Numero:
-                        <input />
+                        <input id="numero_residencia" />
                     </label>
 
                 </div>
@@ -52,30 +52,30 @@
                 <div class="campos">
                     <label>
                         Bairro:
-                        <input />
+                        <input id="bairro" />
                     </label>
                 </div>
                 <label>
                     CEP:
-                    <input />
+                    <input id="cep" />
                 </label>
             </div>
 
             <label>
                 Complemento:
-                <input type="email" name="email" />
+                <input id="complemento" />
             </label>
 
             <div class="box">
                 <div class="campos">
                     <label>
                         Nome da Mãe:
-                        <input />
+                        <input id="nome_mae" />
                     </label>
                 </div>
                 <label>
                     Telefone Mãe:
-                    <input />
+                    <input id="telefone_mae" />
                 </label>
             </div>
 
@@ -84,25 +84,25 @@
 
                     <label>
                         Nome do Pai:
-                        <input />
+                        <input id="nome_pai" />
                     </label>
                 </div>
                 <label>
                     Telefone Pai:
-                    <input />
+                    <input id="telefone_pai" />
                 </label>
             </div>
             <label>
                 Email:
-                <input type="email" name="email" />
+                <input id="email" />
             </label>
             <label>
                 Instituição de Ensino:
-                <input type="email" name="email" />
+                <input id="escola" />
             </label>
             <label>
                 Instituição de Ensino(Fora Cândido Mota):
-                <input type="email" name="email" />
+                <input id="escola_fora" />
             </label>
             <div id="boxLaudo">
 
@@ -110,14 +110,14 @@
                     <label>
                         Laudo:
                     </label>
-                    <input />
+                    <input id="laudo" />
 
                 </div>
                 <div id="convenio">
                     <label>
                         Convenio:
                     </label>
-                    <input />
+                    <input id="convenio_form" />
 
                 </div>
 
@@ -143,6 +143,37 @@
 
 
     <script>
+        window.onload = () => {
+            const paciente = JSON.parse(localStorage.getItem("paciente"));
+            if (paciente) {
+                document.querySelector("#nome").value = paciente.nome;
+                document.querySelector("#dataNascimento").value = new Date(paciente.data_nascimento).toLocaleDateString("pt-BR");
+                document.querySelector("#endereco").value = paciente.endereco;
+                document.querySelector("#numero_residencia").value = paciente.numero_casa;
+                document.querySelector("#bairro").value = paciente.bairro;
+                document.querySelector("#cep").value = paciente.cep;
+                document.querySelector("#complemento").value = paciente.complemento_endereco;
+                document.querySelector("#nome_mae").value = paciente.nome_mae;
+                document.querySelector("#telefone_mae").value = paciente.telefone_mae;
+                document.querySelector("#nome_pai").value = paciente.nome_pai;
+                document.querySelector("#telefone_pai").value = paciente.telefone_pai;
+                document.querySelector("#email").value = paciente.email_principal;
+                document.querySelector("#escola").value = paciente.escola;
+                document.querySelector("#escola_fora").value = paciente.escola_externa;
+                document.querySelector("#convenio_form").value = paciente.convenio;
+                document.querySelector("#laudo").value = paciente.laudo;
+                document.querySelector("#terapia").value = paciente.tratamentos;
+            }
+
+            // Chama impressão automaticamente
+            window.print();
+
+
+            // Se quiser limpar logo após preencher:
+            localStorage.removeItem("paciente");
+        };
+
+
         // Pega a data atual e formata no padrão brasileiro
         const hoje = new Date();
         const opcoes = { day: 'numeric', month: 'long', year: 'numeric' };

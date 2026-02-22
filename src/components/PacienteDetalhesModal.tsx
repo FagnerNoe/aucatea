@@ -23,8 +23,17 @@ export default function PacienteDetalhesModal({
     const { cores } = useStyle();
     if (!isOpen || !paciente) return null;
 
+    const handlePrint = () => {
+        localStorage.setItem("paciente", JSON.stringify(paciente));
+
+
+        const win = window.open("/FormularioAucatea.html", "", "width=900,height=700");
+        win?.window.print();
+
+    };
+
     return (
-        <div className=" fixed inset-0 bg-black/40 flex items-center justify-center z-40">
+        <div className=" fixed inset-0 bg-black/40 flex items-center justify-center z-50">
             <div className="print-container bg-white rounded-lg shadow-lg w-90 sm:150 md:w-200 max-h-150 overflow-y-auto p-4 relative">
                 {/* Header */}
                 <h2 className="no-print text-2xl text-center font-bold mb-6 border-b pb-2 font-[Poppins] text-blue-500">
@@ -116,7 +125,7 @@ export default function PacienteDetalhesModal({
                 {/* Footer com ações */}
                 <div className="flex justify-between gap-x-3 mt-8 border-t pt-4">
                     <button
-                        onClick={() => console.log("impressao")}
+                        onClick={handlePrint}
                         className=" no-print shadow-sm rounded-lg shadow-gray-400 px-2">
                         <Printer />
                     </button>
