@@ -10,9 +10,9 @@ body{
 
 #header p{
     margin-top: -20px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
-
+               
 #container{
     display: flex;
     flex-direction: column;
@@ -36,7 +36,7 @@ input{
 #boxNascimento{
     display: flex;
     flex-direction: column;
-    width: 150px;
+    width: 170px;
 }
 
 .box{
