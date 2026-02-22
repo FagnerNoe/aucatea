@@ -62,9 +62,9 @@ export function Auth() {
                 <div className="bg-white rounded-2xl shadow-xl shadow-black p-6 z-50 sm:w-sm sm-150  lg:w-sm ">
                     <div className=" mb-8 flex flex-col justify-center items-center">
                         <div className="inline-flex items-center justify-center w-40 h-35  ml-5 ">
-                            <img src='logoAucatea.png' className="w-35 h-42 text-white" />
+                            <img src='logo.png' className="w-35 h-42 text-white" />
                         </div>
-                        <img src='nomeAucatea.png' className='w-35 h-18 mx-auto ' />
+                        <img src='titulo.png' className='w-35 h-18 mx-auto ' />
                         <p className="text-gray-500  font-medium mt-2 text-sm font-[Poppins] ">
                             Cadastros
                         </p>
