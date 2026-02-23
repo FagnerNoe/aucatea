@@ -39,11 +39,7 @@ export default function PacienteDetalhesModal({
                 <h2 className="no-print text-2xl text-center font-bold mb-6 border-b pb-2 font-[Poppins] text-blue-500">
                     Detalhes do Paciente
                 </h2>
-                <div className="hidden print-only">
-                    <h2 className="text-2xl text-center">AUCATEA</h2>
-                    <p>Associação Candidomotense de Apoio a Pessos com Transtorno do Espectro Autista</p>
-                </div>
-                <h4 className=" hidden print-only">Ficha de Cadastro de Pacientes</h4>
+
                 {/* Foto */}
                 {paciente.foto_paciente && (
                     <div className="no-print flex justify-center mb-6">
@@ -57,12 +53,12 @@ export default function PacienteDetalhesModal({
 
                 {/* Grid de informações */}
                 <div className="grid sm:grid-cols-2 gap-4 text-sm font-[Poppins] text-center">
-                    <div>
+                    <div >
                         <p><span className={`font-semibold ${cores.primaryText}`}>Nome:</span> {paciente.nome}</p>
                         <p><span className={`font-semibold ${cores.primaryText}`}>
                             Data de Nascimento:
                         </span>{" "}
-                            {new Date(paciente.data_nascimento).toLocaleDateString("pt-BR")}
+                            {new Date(paciente.data_nascimento + "T00:00:00").toLocaleDateString("pt-BR")}
                         </p>
 
                     </div>
@@ -78,7 +74,7 @@ export default function PacienteDetalhesModal({
                         <p><span className={`font-semibold ${cores.primaryText}`}>CEP:</span> {paciente.cep}</p>
                     </div>
 
-                    <div>
+                    <div >
                         <p><span className={`font-semibold ${cores.primaryText}`}>Mãe:</span> {paciente.nome_mae}</p>
                         <p><span className={`font-semibold ${cores.primaryText}`}>Telefone Mãe:</span> {paciente.telefone_mae}</p>
                         <p><span className={`font-semibold ${cores.primaryText}`}>Pai:</span> {paciente.nome_pai}</p>
@@ -88,10 +84,13 @@ export default function PacienteDetalhesModal({
 
                     <div>
                         {paciente.escola && (
-                            <p><span className={`font-semibold ${cores.primaryText}`}>Instituição de Ensino:</span> {paciente.escola}</p>
+                            <div>
+                                <p className={`font-semibold ${cores.primaryText}`}>Instituição de Ensino:</p>
+                                <span>{paciente.escola}</span>
+                            </div>
                         )}
                         {paciente.escola_externa && (
-                            <p><span className={`font-semibold ${cores.primaryText}`}>Outra Instituição:</span> {paciente.escola_externa}</p>
+                            <span><p className={`font-semibold ${cores.primaryText}`}>Outra Instituição:</p> {paciente.escola_externa}</span>
                         )}
                         <p><span className={`font-semibold ${cores.primaryText}`}>Laudo:</span> {paciente.laudo?.join(",")}</p>
                         <p><span className={`font-semibold ${cores.primaryText}`}>Convênio:</span> {paciente.convenio}</p>

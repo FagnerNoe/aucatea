@@ -147,7 +147,7 @@
             const paciente = JSON.parse(localStorage.getItem("paciente"));
             if (paciente) {
                 document.querySelector("#nome").value = paciente.nome;
-                document.querySelector("#dataNascimento").value = new Date(paciente.data_nascimento).toLocaleDateString("pt-BR");
+                document.querySelector("#dataNascimento").value = new Date(paciente.data_nascimento + "T00:00:00").toLocaleDateString("pt-BR");
                 document.querySelector("#endereco").value = paciente.endereco;
                 document.querySelector("#numero_residencia").value = paciente.numero_casa;
                 document.querySelector("#bairro").value = paciente.bairro;

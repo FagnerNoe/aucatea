@@ -31,9 +31,15 @@ export interface Membro {
   id: number;
   nome: string;
   telefone: string;
+  endereco?:string;
+  numero_residencia?:string;
+  bairro?:string,
+  cep?:string,
   responsabilidade: string;       // ex: presidente, tesoureiro, voluntário
+  disponibilidade?:string
   email?: string;
-  avatarUrl?: string;  
+  avatarUrl?: string; 
+  slug:string 
 }
 
 export interface Agenda {

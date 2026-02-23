@@ -63,9 +63,9 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
     ];
 
     const opcoesTratamentos = [
-        { id: "psicologo", label: "Psicólogo" },
-        { id: "terapia", label: "Terapia" },
-        { id: "fonoaudiologia", label: "Fonoaudiologia" },
+        { id: "Psicologo", label: "Psicólogo" },
+        { id: "Terapia", label: "Terapia" },
+        { id: "Fonoaudiologia", label: "Fonoaudiologia" },
         { id: "outros", label: "Outros" },
     ];
 
@@ -586,7 +586,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     </div>
                                 </div>
                                 <div >
-                                    <label htmlFor="complemento" className="text-md font-semibold"> Complemento </label>
+                                    <label htmlFor="complemento" className="text-md font-semibold"> Complemento / Referência </label>
                                     <input
                                         type="text"
                                         name="complemento"

@@ -9,6 +9,7 @@ type StyleContextType = {
         gradientBlue: string;
         gradientRed: string;
         gradientAdd: string;
+        gradientAddMembro: string;
         primaryText: string;
         secondaryText: string;
         dangerText: string;
@@ -27,6 +28,7 @@ export const StyleProvider = ({ children }: { children: ReactNode }) => {
         gradientBlue: "bg-gradient-to-l from-blue-600 to-sky-500",
         gradientRed: "bg-gradient-to-r from-red-600 to-red-500",
         gradientAdd: "bg-linear-to-r from-emerald-500 to-green-500",
+        gradientAddMembro: "bg-linear-to-r from-pink-500 to-purple-500",
 
         // cores para textos
         primaryText: "text-blue-500",
