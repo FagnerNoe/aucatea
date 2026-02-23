@@ -49,5 +49,11 @@ export interface Agenda {
   dataHora: Date;
   descricao?: string;
   criadoPor?: string; 
-  editadoPor?: string; 
+  editadoPor?: string;
+}
+
+export interface UserSistema {
+  id:number;
+  nome:string;
+  hierarquia:string;
 }

@@ -1,13 +1,13 @@
 // AuthContext.tsx
 import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../service/supabase';
-import type { Membro } from '../types/database.types';
+import type { UserSistema } from '../types/database.types';
 import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
     login: (email: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
-    user: Membro | null;
+    user: UserSistema | null;
     session: any;
     isAuthenticated: boolean;
     loadingSession: boolean;
@@ -16,7 +16,7 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [user, setUser] = useState<Membro | null>(null);
+    const [user, setUser] = useState<UserSistema | null>(null);
     const [session, setSession] = useState<any>(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loadingSession, setLoadingSession] = useState(true);
@@ -42,10 +42,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         let sessionChecked = false;
-        const fetchAdminData = async (id: string, _email: string) => {
+        const fetchAdminData = async (id: any, _email: string) => {
             const { data: usuarioData, error: adminError } = await supabase
                 .from('usuario_sistema')
-                .select('id, nome, telefone, responsabilidade')
+                .select('id, nome, hierarquia')
                 .eq('id', id)
                 .single();
 
