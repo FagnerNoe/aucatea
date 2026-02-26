@@ -768,7 +768,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     onClick={() => setOpen(!open)}
                                     className="w-full flex items-center  text-gray-700 font-[Poppins] justify-between border border-gray-300 p-2 h-10 rounded-sm text-left  focus:outline-none focus:ring-1 focus:ring-purple-400"
                                 >
-                                    <span>
+                                    <span className="w-full truncate">
                                         {selecionados.length > 0
                                             ? opcoesTratamentos
                                                 .filter((o) => selecionados.includes(o.id as any))
