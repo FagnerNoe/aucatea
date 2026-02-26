@@ -64,8 +64,11 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
 
     const opcoesTratamentos = [
         { id: "Psicologo", label: "Psicólogo" },
-        { id: "Terapia", label: "Terapia" },
+        { id: "Terapeuta Ocupacional", label: "Terapeuta Ocupacional" },
         { id: "Fonoaudiologia", label: "Fonoaudiologia" },
+        { id: "Musicoterapeuta", label: "Musicoterapeuta" },
+        { id: "Psicopedagogo", label: "Psicopedagogo" },
+        { id: "Equoterapia", label: "Equoterapia" },
         { id: "outros", label: "Outros" },
     ];
 
