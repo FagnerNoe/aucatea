@@ -46,7 +46,7 @@ export default function PacienteDetalhesModal({
                         <img
                             src={paciente.foto_paciente}
                             alt="Foto do paciente"
-                            className="w-32 h-32 rounded-lg shadow-md border border-blue-500 object-cover"
+                            className="w-35 h-35 rounded-lg shadow-md border border-blue-500 object-cover "
                         />
                     </div>
                 )}

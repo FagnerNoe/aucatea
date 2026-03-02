@@ -52,7 +52,7 @@ export function Auth() {
             </div>
 
 
-            <h1 className="border-t w-[90%] py-2 absolute top-12 xs:top-5 left-5 text-white sm:w-sm sm:left-55 lg:w-lg lg:text-4xl lg:top-60 lg:left-50
+            <h1 className="border-t w-[90%] py-2 absolute top-5 xs:top-5 left-5 text-white sm:w-sm sm:left-55 lg:w-lg lg:text-4xl lg:top-60 lg:left-50
             text-2xl z-10 font-[Style_Script,cursive] text-center  fade-down">
                 Associação Candidomotense de Apoio a Pessoas com Transtorno do Espectro Autista
             </h1>

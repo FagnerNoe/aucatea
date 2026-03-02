@@ -7,6 +7,8 @@ import type { Paciente } from "../types/database.types";
 
 
 
+
+
 type PacienteModalProps = {
     isOpen: boolean;
     onClose: () => void;
@@ -25,29 +27,32 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
     const [formData, setFormData] = useState<Record<string, any>>({});
     const { user } = useAuth();
 
+
+
+
+
+
+
+
     const escolas = [
-        "Outros",
-        "PRIMEIROS PASSOS JARDIM DA INFANCIA ",
-        "MARIA DOMENICA MORINO IRMA CRECHE ",
-        "JOSE AUGUSTO DE CARVALHO DR",
-        "ANTONIO FONTANA",
-        "E.E JOSE DOS SANTOS ALMEIDA (GRUPINHO)",
-        "SANTO HINO",
-        "LUIZ PIRES BARBOSA PROF ETEC",
-        "RACHID JABUR ",
-        "CLOTILDE DE CASTRO BARREIRA PROFA (GRUPÃO)",
-        "JARDIM SAO FRANCISCO",
-        "JOAO E MARIA EMEI  ",
-        "E.M HELENA PUPIM ALBANEZ",
-        "SANTA CLARA COLEGIO",
-        "NOSSA SENHORA DAS DORES CASA DA CRIANCA",
-        "MARIA PAGOTE CONTE ESCOLA DE EDUCACAO ESPECIAL",
-        "ESCOLA MUNICIPAL OLGA BREVE ALVES",
-        "E.M JOAO LEAO DE CARVALHO ",
-        "LEONILDA PEREIRA DE ALMEIDA EMEI",
-        "MENINO JESUS CRECHE",
-        "EMEI VALTER APARECIDO FRANCISCANI",
-        "SANTOS ANJOS COLEGIO",
+        "E.E Rachid Jabur",
+        "E.E Antônio Fontana",
+        "E.E Prof.ª Clotilde de Castro Barreira(Grupão)",
+        "E.E José dos Santos Almeida",
+        "E.E Dr. José Augusto de Carvalho",
+        "E.E Prof. Luiz Pires Barbosa(Etec)",
+        "EMEI Leonilda Pereira de Almeida(Parque Santa Cruz)",
+        "EMEI João e Maria(Jardim Alvorada)",
+        "EM Prof.ª Olga Breve Alves (Cohab Nosso Teto)",
+        "EM João Leão de Carvalho",
+        "EM Helena Pupim Albanez",
+        "EM Jardim São Francisco",
+        "EM Casa da Criança Nossa Senhora das Dores",
+        "Creche Menino Jesus(Vila Assunta)",
+        "Colégio Santa Clara",
+        "Colégio Santos Anjos(Sistema Objetivo)",
+        "Primeiros Passos Escola de Educação Infantil",
+        "Maria Pagote Conte Escola de Educação Especial APAE"
     ];
 
     const convenios = [
@@ -71,6 +76,8 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
         { id: "Equoterapia", label: "Equoterapia" },
         { id: "outros", label: "Outros" },
     ];
+
+    // Executa sempre que o estado de "aberto" mudar
 
 
 
@@ -97,6 +104,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                 cep: paciente.cep || "",
 
             });
+
             setPreview(paciente.foto_paciente || null);
             setPreviewLaudo(paciente.laudo_url || null);
         } else {
@@ -119,10 +127,11 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                 bairro: "",
                 cep: "",
             });
+
             setPreview(null);
             setPreviewLaudo(null);
         }
-    }, [paciente]);
+    }, [paciente, isOpen]);
 
     const formatarTelefone = (valor: string) => {
         // Remove tudo que não for número
@@ -212,7 +221,9 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
 
     const toggleSelecionado = (id: any) => {
         setSelecionados((prev) =>
-            prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+            prev.map(String).includes(String(id))
+                ? prev.filter((item) => String(item) !== String(id))
+                : [...prev, id]
         );
     };
 
@@ -393,7 +404,8 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
     };
 
 
-    const handleRemoveImage = () => {
+    const handleRemoveImage = (e: any) => {
+        e.preventDefault();
         setPreview(null);
         setFormData((prev) => ({
             ...prev,
@@ -459,33 +471,40 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                     >
                         <div className="flex flex-col sm:flex-row items-center">
                             <div className={`flex flex-col items-center  p-2 bg-white                              
-                                 rounded shadow-md mx-auto w-60 sm-w-full h-65 sm:mr-6 sm:mt-12 border ${isEditing ? 'border-blue-500' : 'border-green-400'}`}>
+                                 rounded shadow-md mx-auto w-60   h-65 sm:mr-6 sm:mt-12 border ${isEditing ? 'border-blue-500' : 'border-green-400'}`}>
                                 {/* Quadrado com ícone ou preview */}
-                                <div className="relative w-full h-full  flex items-center justify-center border border-gray-300 rounded bg-gray-100">
+                                <div className="relative w-full h-full  border border-gray-300 rounded bg-gray-100">
+
                                     {preview ? (
-                                        <img
-                                            src={preview}
-                                            alt="Pré-visualização"
-                                            className="w-full h-50 object-cover rounded"
-                                        />
+                                        <>
+                                            <img src={preview} alt="Preview" className="w-full h-52 object-cover rounded" />
+                                            <button
+                                                onClick={handleRemoveImage}
+                                                className="absolute top-2 right-2 z-20 bg-red-600 text-white rounded-full p-1.5 hover:bg-red-700 shadow-lg transition-transform hover:scale-110 border border-white/20"
+                                                title="Remover Foto"
+                                            >
+                                                <XCircleIcon className="h-5 w-5" />
+                                            </button></>
                                     ) : (
-                                        <UserIcon className="h-16 w-16 text-gray-400" /> // Ícone de usuário
+                                        <div className="w-full h-full flex flex-col items-center justify-center text-gray-400">
+                                            <UserIcon className="h-12 w-12" />
+                                            <span className="text-sm mt-2">Foto do Paciente</span>
+                                        </div>
                                     )}
 
-                                    {preview && (
-                                        <button
-                                            onClick={handleRemoveImage}
-                                            className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-700"
-                                        >
-                                            <XCircleIcon className="h-6 w-6" />
-                                        </button>
-                                    )}
+                                    {/* Botão de Remover: Sempre visível se houver imagem carregada */}
+
+
+
+
                                 </div>
+
+
 
                                 {/* Botão abaixo do quadrado */}
                                 <label
                                     htmlFor="imageInput"
-                                    className={`mt-4 text-xs flex items-center gap-2 ${isEditing ? 'bg-blue-500' : 'bg-green-500'} text-white px-2 py-1 rounded hover:bg-gray-400 transition cursor-pointer`}
+                                    className={`mt-2 text-xs flex items-center gap-2 ${isEditing ? 'bg-blue-500' : 'bg-green-500'} text-white px-2 py-1 rounded hover:bg-gray-400 transition cursor-pointer`}
                                 >
                                     <CameraIcon className="h-5 w-5" />
                                     {isEditing ? "Alterar Imagem" : "Adicionar Imagem"}
@@ -770,8 +789,9 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                 >
                                     <span className="w-full truncate">
                                         {selecionados.length > 0
-                                            ? opcoesTratamentos
-                                                .filter((o) => selecionados.includes(o.id as any))
+                                            ?
+                                            opcoesTratamentos
+                                                .filter((o) => selecionados.map(String).includes(String(o.id))) // Força string nos dois lados
                                                 .map((o) => o.label)
                                                 .join(", ")
                                             : "Selecione os tratamentos"}
@@ -795,7 +815,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             >
                                                 <input
                                                     type="checkbox"
-                                                    checked={selecionados.includes(opcao.id as any)}
+                                                    checked={selecionados.some(id => String(id) === String(opcao.id))}
                                                     onChange={() => toggleSelecionado(opcao.id as any)}
                                                     className="mr-2"
                                                 />
