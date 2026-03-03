@@ -568,7 +568,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     <div className=" flex w-25 flex-col sm:justify-center">
                                         <label htmlFor="numeroCasa" className="text-md font-semibold"> Número </label>
                                         <input
-                                            type="text"
+                                            type="number"
                                             name="numeroCasa"
                                             required
                                             value={formData.numeroCasa || ""}
@@ -761,7 +761,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     id="convenio"
                                     name="convenio"
                                     required
-                                    value={formData.convenio || ""}
+                                    value={formData.convenio || "SUS"}
                                     onChange={(e) => setFormData({ ...formData, convenio: e.target.value })}
                                     className="w-full border border-gray-300  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                 >
