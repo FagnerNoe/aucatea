@@ -35,6 +35,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
 
 
     const escolas = [
+        "A Confirmar..."
         "E.E Rachid Jabur",
         "E.E Antônio Fontana",
         "E.E Prof.ª Clotilde de Castro Barreira(Grupão)",
