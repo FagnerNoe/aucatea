@@ -42,6 +42,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
         "E.E José dos Santos Almeida",
         "E.E Dr. José Augusto de Carvalho",
         "E.E Prof. Luiz Pires Barbosa(Etec)",
+        "EMEI Valter Aparecido Franciscatti",
         "EMEI Leonilda Pereira de Almeida(Parque Santa Cruz)",
         "EMEI João e Maria(Jardim Alvorada)",
         "EM Prof.ª Olga Breve Alves (Cohab Nosso Teto)",
@@ -53,7 +54,8 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
         "Colégio Santa Clara",
         "Colégio Santos Anjos(Sistema Objetivo)",
         "Primeiros Passos Escola de Educação Infantil",
-        "Maria Pagote Conte Escola de Educação Especial APAE"
+        "Maria Pagote Conte Escola de Educação Especial APAE",
+        "Outros"
     ];
 
     const convenios = [
