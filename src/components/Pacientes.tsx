@@ -299,11 +299,8 @@ export function Pacientes() {
             <PacienteModal
                 isOpen={openModal}
                 onClose={() => {
-
                     setOpenModal(false);
                     setSelectedPaciente(null)
-
-
                 }}
                 paciente={selectedPaciente}
                 onSaved={() => {

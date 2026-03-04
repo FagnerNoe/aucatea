@@ -58,12 +58,13 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
     const convenios = [
         "SUS",
         "Unimed",
+        "Cartão de Todos",
+        "IAMSP",
         "Amil",
         "Bradesco Saúde",
         "SulAmérica",
         "Notredame Intermédica",
         "Hapvida",
-        "IAMSP",
         "Outros"
     ];
 
@@ -77,7 +78,6 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
         { id: "outros", label: "Outros" },
     ];
 
-    // Executa sempre que o estado de "aberto" mudar
 
 
 
@@ -761,11 +761,11 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     id="convenio"
                                     name="convenio"
                                     required
-                                    value={formData.convenio || "SUS"}
+                                    value={formData.convenio || ""}
                                     onChange={(e) => setFormData({ ...formData, convenio: e.target.value })}
                                     className="w-full border border-gray-300  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                 >
-                                    <option value={convenios[0]}>SUS</option>
+
                                     {convenios.map((convenio, index) => (
                                         <option key={index} value={convenio}>
                                             {convenio}
@@ -860,14 +860,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                                 title="laudo"
                                                 className="w-full object-fill"
                                             />
-                                            <a
-                                                href={previewLaudo}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-blue-600 underline"
-                                            >
-                                                Ver Laudo
-                                            </a>
+
                                         </div>
                                     ) : (
                                         // Adição: mostrar preview real
