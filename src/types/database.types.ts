@@ -15,11 +15,11 @@ export interface Paciente {
   email_principal?: string;
   laudo_url?: string;   // foto do laudo (opcional)
   foto_paciente?: string;  // foto/avatar do paciente (opcional)
-  convenio?: string; // nome do convênio (opcional) 
+  convenio: string; // nome do convênio (opcional) 
   escola?:string;
   escola_externa?:string;
   laudo?:[];
-  tratamento?: []; // descrição do tratamento (opcional)
+  tratamentos?: []; // descrição do tratamento (opcional)
   data_criacao: Date;
   data_atualizacao: Date;
   cadastro_por?: string; 

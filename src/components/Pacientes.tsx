@@ -141,7 +141,7 @@ export function Pacientes() {
 
     return (
         <div className="bg-white w-full">
-            <header className="flex flex-col justify-between items-center md:items-start mb-4 sm:mb-8 md:mb-20">
+            <header className="flex flex-col justify-end items-center md:items-start  h-25 mt-20 sm:mt-0 bg-white">
                 <h2 className=" text-xl font-bold font-[Poppins]">Pacientes</h2>
                 <div className="flex gap-2 justify-between flex-col md:flex-row md:gap-8">
                     <div className="flex items-center justify-center gap-2 flex-wrap ">
@@ -211,89 +211,91 @@ export function Pacientes() {
             </header>
 
             {/* Tabela */}
-            <table className="w-full border-collapse border border-gray-100 rounded shadow">
-                <thead>
-                    <tr className="bg-gray-100 text-left">
-                        <th className="p-2 w-sm sm:w-mdfont-[Poppins]">Nome</th>
-                        <th className="hidden sm:flex md:flex xl:flex md:px-4 md:py-2 font-[Poppins]  sm:w-xl ">Endereço</th>
-                        <th className="px-4 py-2 font-[Poppins]  ">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pacientes.filter((paciente) =>
-                        busca.length > 0
-                            ? paciente.nome.toLocaleLowerCase().includes(busca.toLocaleLowerCase())
-                            : true).map((paciente) => (
-                                <tr
-                                    key={paciente.id}
-                                    className={`${!showInactive ? "bg-gray-200 border-b border-b-white text-gray-400" : "bg-white border-b border-b-gray-300 hover:bg-red-50"}`}
-                                >
-                                    <td className="p-2 max-w-50 sm:max-w-sm md:max-w-md font-[Poppins] text-xs sm:text-sm md:text-sm xl:text-sm truncate ">{paciente.nome}</td>
-                                    <td className="hidden sm:flex md:flex xl:flex px-4 py-2 font-[Poppins] text-sm">{paciente.endereco}, {paciente.numero_casa}</td>
-                                    <td className="px-2 py-2">
-                                        <div className="flex gap-2">
-                                            <button
-                                                title="Detalhes"
-                                                onClick={() => {
-                                                    setSelectedPaciente(paciente);
-                                                    setOpenModalDetalhes(true)
-                                                }}
-                                                className="px-2   cursor-pointer text-sm bg-linear-to-r from-yellow-300 to-yellow-400 text-white rounded">
-                                                <TextSearchIcon className="w-4 h-4" />
-                                            </button>
-                                            <button
-                                                title="Editar"
-                                                onClick={() => {
-                                                    setSelectedPaciente(paciente); //paciente da linha
-                                                    setOpenModal(true)
-                                                }}
-                                                className="px-2  cursor-pointer text-sm bg-linear-to-r from-sky-500 to-blue-500 text-white rounded">
-                                                <PenLineIcon className="w-4 h-4" />
-                                            </button>
-                                            <button
-                                                title={!showInactive ? "Reativar" : "Inativar"}
-                                                onClick={() => {
-                                                    !showInactive ? reativarPaciente(paciente.id) : inativarPaciente(paciente.id)
-                                                }
-                                                }
-                                                className={`px-2 py-1 ${!showInactive ? "bg-green-500" : "bg-gray-500"} cursor-pointer text-sm  text-white rounded`}>
-                                                {!showInactive ?
-                                                    <UserPlus className="w-4 h-4" /> :
-                                                    <UserRoundX className="w-4 h-4" />
-                                                }
-                                            </button>
-                                            {!showInactive && (
+            <section className="flex-1 overflow-y-auto  mt-10 max-h-[70vh] ">
+                <table className="w-full  h-full border-collapse border border-gray-100  shadow rounded-lg ">
+                    <thead className="sticky -top-px bg-gray-100 ">
+                        <tr className="bg-gray-200 text-left rounded-lg">
+                            <th className="p-2 w-sm sm:w-md font-[Poppins]">Nome</th>
+                            <th className="hidden sm:table-cell md:table-cell xl:table-cell md:px-12 md:py-2 font-[Poppins]  sm:w-xl ">Endereço</th>
+                            <th className="px-4 py-2 text-center font-[Poppins]  ">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        {pacientes.sort((a, b) => a.nome.localeCompare(b.nome)).filter((paciente) =>
+                            busca.length > 0
+                                ? paciente.nome.toLocaleLowerCase().includes(busca.toLocaleLowerCase())
+                                : true).map((paciente) => (
+                                    <tr
+                                        key={paciente.id}
+                                        className={`${!showInactive ? "bg-gray-200 border-b border-b-white text-gray-400" : "bg-white border-b border-b-gray-300 hover:bg-red-50"}`}
+                                    >
+                                        <td className="p-2 max-w-50 sm:max-w-sm md:max-w-md font-[Poppins] text-xs sm:text-sm md:text-sm xl:text-sm truncate ">{paciente.nome}</td>
+                                        <td className="hidden sm:table-cell md:table-cell xl:table-cell px-12 py-2 font-[Poppins] text-sm">{paciente.endereco}, {paciente.numero_casa}</td>
+                                        <td className="px-2 py-2">
+                                            <div className="flex gap-2">
                                                 <button
-                                                    title="Excluir"
-                                                    onClick={() => confirmarExclusao(paciente.id)}
-                                                    className="bg-red-500 px-2 cursor-pointer text-sm text-white rounded"
-                                                >
-                                                    <Trash className="w-4 h-4" />
+                                                    title="Detalhes"
+                                                    onClick={() => {
+                                                        setSelectedPaciente(paciente);
+                                                        setOpenModalDetalhes(true)
+                                                    }}
+                                                    className="px-2   cursor-pointer text-sm bg-linear-to-r from-yellow-300 to-yellow-400 text-white rounded">
+                                                    <TextSearchIcon className="w-4 h-4" />
                                                 </button>
-                                            )}
+                                                <button
+                                                    title="Editar"
+                                                    onClick={() => {
+                                                        setSelectedPaciente(paciente); //paciente da linha
+                                                        setOpenModal(true)
+                                                    }}
+                                                    className="px-2  cursor-pointer text-sm bg-linear-to-r from-sky-500 to-blue-500 text-white rounded">
+                                                    <PenLineIcon className="w-4 h-4" />
+                                                </button>
+                                                <button
+                                                    title={!showInactive ? "Reativar" : "Inativar"}
+                                                    onClick={() => {
+                                                        !showInactive ? reativarPaciente(paciente.id) : inativarPaciente(paciente.id)
+                                                    }
+                                                    }
+                                                    className={`px-2 py-1 ${!showInactive ? "bg-green-500" : "bg-gray-500"} cursor-pointer text-sm  text-white rounded`}>
+                                                    {!showInactive ?
+                                                        <UserPlus className="w-4 h-4" /> :
+                                                        <UserRoundX className="w-4 h-4" />
+                                                    }
+                                                </button>
+                                                {!showInactive && (
+                                                    <button
+                                                        title="Excluir"
+                                                        onClick={() => confirmarExclusao(paciente.id)}
+                                                        className="bg-red-500 px-2 cursor-pointer text-sm text-white rounded"
+                                                    >
+                                                        <Trash className="w-4 h-4" />
+                                                    </button>
+                                                )}
 
-                                            {showModalExclusao && (
-                                                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                                                    <div className="bg-white rounded-lg shadow-lg w-80 max-h-180 overflow-y-auto p-6 relative">
-                                                        <p className="text-gray-800 font-[Poppins] text-sm text-center">Tem certeza que deseja excluir este paciente permanentemente?</p>
-                                                        <div className="mt-5 flex items-center justify-between">
+                                                {showModalExclusao && (
+                                                    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                                                        <div className="bg-white rounded-lg shadow-lg w-80 max-h-180 overflow-y-auto p-6 relative">
+                                                            <p className="text-gray-800 font-[Poppins] text-sm text-center">Tem certeza que deseja excluir este paciente permanentemente?</p>
+                                                            <div className="mt-5 flex items-center justify-between">
 
-                                                            <button onClick={() => setShowModalExclusao(false)}
-                                                                className="bg-gray-700 px-5 py-2 rounded-lg cursor-pointer shadow-2xl text-white "
-                                                            >Não</button>
-                                                            <button onClick={deletarPaciente}
-                                                                className="bg-red-500 rounded-lg text-white px-5 py-2 cursor-pointer shadow-xl">Sim</button>
+                                                                <button onClick={() => setShowModalExclusao(false)}
+                                                                    className="bg-gray-700 px-5 py-2 rounded-lg cursor-pointer shadow-2xl text-white "
+                                                                >Não</button>
+                                                                <button onClick={deletarPaciente}
+                                                                    className="bg-red-500 rounded-lg text-white px-5 py-2 cursor-pointer shadow-xl">Sim</button>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                </div>
-                                            )}
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                </tbody>
-            </table>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                    </tbody>
+                </table>
+            </section>
 
             {/* Modal */}
             <PacienteModal

@@ -53,7 +53,7 @@ export default function Painel() {
 
             {/* Sidebar */}
             <aside
-                className={`fixed inset-y-0 z-50 left-0 w-64 min-h-full bg-gray-200 shadow-lg flex-col  transform transition-transform duration-300
+                className={`fixed inset-y-0 z-50 left-0 w-64 h-full bg-gray-200 shadow-lg flex-col  transform transition-transform duration-300
           ${menuAberto ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0 md:static md:flex`}
             >

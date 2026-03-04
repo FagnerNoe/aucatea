@@ -23,24 +23,20 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
     const [previewLaudo, setPreviewLaudo] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
-    const [selecionados, setSelecionados] = useState<number[]>([]);
+    const [selecionados, setSelecionados] = useState<string[]>([]);
     const [formData, setFormData] = useState<Record<string, any>>({});
     const { user } = useAuth();
 
 
-
-
-
-
-
-
     const escolas = [
+        "A Confirmar...",
         "E.E Rachid Jabur",
         "E.E Antônio Fontana",
         "E.E Prof.ª Clotilde de Castro Barreira(Grupão)",
         "E.E José dos Santos Almeida",
         "E.E Dr. José Augusto de Carvalho",
         "E.E Prof. Luiz Pires Barbosa(Etec)",
+        "EMEI Valter Aparecido Franciscatti",
         "EMEI Leonilda Pereira de Almeida(Parque Santa Cruz)",
         "EMEI João e Maria(Jardim Alvorada)",
         "EM Prof.ª Olga Breve Alves (Cohab Nosso Teto)",
@@ -52,7 +48,8 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
         "Colégio Santa Clara",
         "Colégio Santos Anjos(Sistema Objetivo)",
         "Primeiros Passos Escola de Educação Infantil",
-        "Maria Pagote Conte Escola de Educação Especial APAE"
+        "Maria Pagote Conte Escola de Educação Especial APAE",
+        "Outros"
     ];
 
     const convenios = [
@@ -97,8 +94,8 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                 escola: paciente.escola || "",
                 escola_externa: paciente.escola_externa || '',
                 laudo: paciente.laudo || [],
-                convenio: paciente.convenio || "",
-                tratamentos: paciente.tratamento || [],
+                convenio: paciente.convenio || convenios[0],
+                tratamentos: paciente.tratamentos || [],
                 dataNascimento: paciente.data_nascimento || "",
                 bairro: paciente.bairro || "",
                 cep: paciente.cep || "",
@@ -107,6 +104,8 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
 
             setPreview(paciente.foto_paciente || null);
             setPreviewLaudo(paciente.laudo_url || null);
+            setSelecionados(paciente.tratamentos || []);
+
         } else {
             setFormData({
                 nome: "",
@@ -120,7 +119,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                 telefonePai: "",
                 escola: "",
                 escola_externa: "",
-                convenio: "",
+                convenio: convenios[0],
                 laudo: [],
                 dataNascimento: "",
                 tratamentos: [],
@@ -130,6 +129,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
 
             setPreview(null);
             setPreviewLaudo(null);
+            setSelecionados([]);
         }
     }, [paciente, isOpen]);
 
@@ -219,11 +219,9 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
     };
 
 
-    const toggleSelecionado = (id: any) => {
+    const toggleSelecionado = (id: string) => {
         setSelecionados((prev) =>
-            prev.map(String).includes(String(id))
-                ? prev.filter((item) => String(item) !== String(id))
-                : [...prev, id]
+            prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
         );
     };
 
@@ -231,8 +229,6 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
 
     // Função para gerar slug único
     function gerarSlugPaciente(nome: string, existentes: string[]): string {
-
-
         // remove acentos e caracteres especiais
         const baseSlug = nome
             .toLowerCase()
@@ -321,7 +317,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                     telefone_pai: formData.telefonePai,
                     escola: formData.escola,
                     escola_externa: formData.escola_externa,
-                    convenio: formData.convenio,
+                    convenio: formData.convenio || convenios[0],
                     laudo: formData.laudo,
                     tratamentos: selecionados,
                     data_atualizacao: new Date().toISOString(),
@@ -362,7 +358,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                         email_principal: formData.email,
                         escola: formData.escola,
                         escola_externa: formData.escola_externa,
-                        convenio: formData.convenio,
+                        convenio: formData.convenio || convenios[0],
                         laudo: formData.laudo,
                         tratamentos: selecionados,
                         data_criacao: new Date(),
@@ -454,7 +450,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                         <X className="sm:h-8 sm:w-8 border-2 rounded-lg text-white hover:text-red-500" />
                     </button>
 
-                    <h3 className={`text-md sm:text-2xl text-white font-bold mb-6 shadow-sm px-4 py-1 rounded-lg 
+                    <h3 className={`text-md sm:text-2xl text-white font-bold mb-6 shadow-sm px-4 py-1 rounded
                     ${isEditing ? 'bg-linear-to-l from-blue-500 to-indigo-500' : 'bg-linear-to-l from-green-500 to-emerald-500'
                         }`}>
                         {isEditing ? "Editar Paciente" : "Novo Paciente"}</h3>
@@ -761,7 +757,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     id="convenio"
                                     name="convenio"
                                     required
-                                    value={formData.convenio || ""}
+                                    value={formData.convenio}
                                     onChange={(e) => setFormData({ ...formData, convenio: e.target.value })}
                                     className="w-full border border-gray-300  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
                                 >
@@ -791,7 +787,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                         {selecionados.length > 0
                                             ?
                                             opcoesTratamentos
-                                                .filter((o) => selecionados.map(String).includes(String(o.id))) // Força string nos dois lados
+                                                .filter((o) => selecionados.includes(o.id))
                                                 .map((o) => o.label)
                                                 .join(", ")
                                             : "Selecione os tratamentos"}
@@ -815,8 +811,8 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             >
                                                 <input
                                                     type="checkbox"
-                                                    checked={selecionados.some(id => String(id) === String(opcao.id))}
-                                                    onChange={() => toggleSelecionado(opcao.id as any)}
+                                                    checked={selecionados.includes(opcao.id)}
+                                                    onChange={() => toggleSelecionado(opcao.id)}
                                                     className="mr-2"
                                                 />
                                                 {opcao.label}
