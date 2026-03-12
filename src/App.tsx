@@ -6,9 +6,10 @@ import { PrivateRoute } from './components/PrivateRoute';
 import { Membros } from './components/Membros';
 import { Pacientes } from './components/Pacientes';
 import { Agenda } from './components/Agenda';
-import { Relatorios } from './components/Relatorios';
 import { Home } from './components/Home';
 import { Doacoes } from './components/Doacoes';
+import { Relatorios } from './components/Relatorios';
+
 
 
 

@@ -239,7 +239,7 @@ export function Pacientes() {
                                                         setSelectedPaciente(paciente);
                                                         setOpenModalDetalhes(true)
                                                     }}
-                                                    className="px-2   cursor-pointer text-sm bg-linear-to-r from-yellow-300 to-yellow-400 text-white rounded">
+                                                    className="px-2 cursor-pointer text-sm border border-yellow-500 hover:bg-yellow-400 text-yellow-500 hover:text-gray-600 rounded">
                                                     <TextSearchIcon className="w-4 h-4" />
                                                 </button>
                                                 <button
@@ -248,7 +248,7 @@ export function Pacientes() {
                                                         setSelectedPaciente(paciente); //paciente da linha
                                                         setOpenModal(true)
                                                     }}
-                                                    className="px-2  cursor-pointer text-sm bg-linear-to-r from-sky-500 to-blue-500 text-white rounded">
+                                                    className="px-2  cursor-pointer text-sm border border-blue-500 hover:bg-blue-500 text-blue-500 hover:text-white rounded">
                                                     <PenLineIcon className="w-4 h-4" />
                                                 </button>
                                                 <button
@@ -257,7 +257,7 @@ export function Pacientes() {
                                                         !showInactive ? reativarPaciente(paciente.id) : inativarPaciente(paciente.id)
                                                     }
                                                     }
-                                                    className={`px-2 py-1 ${!showInactive ? "bg-green-500" : "bg-gray-500"} cursor-pointer text-sm  text-white rounded`}>
+                                                    className={`px-2 py-1 ${!showInactive ? "border border-green-500 bg-green-500 hover:bg-green-300 text-white" : "border border-gray-500 hover:bg-gray-500 hover:text-white"} cursor-pointer text-sm  text-gray-500 rounded`}>
                                                     {!showInactive ?
                                                         <UserPlus className="w-4 h-4" /> :
                                                         <UserRoundX className="w-4 h-4" />
@@ -267,7 +267,7 @@ export function Pacientes() {
                                                     <button
                                                         title="Excluir"
                                                         onClick={() => confirmarExclusao(paciente.id)}
-                                                        className="bg-red-500 px-2 cursor-pointer text-sm text-white rounded"
+                                                        className="bg-red-500 hover:bg-red-400 px-2 cursor-pointer text-sm text-white rounded"
                                                     >
                                                         <Trash className="w-4 h-4" />
                                                     </button>
