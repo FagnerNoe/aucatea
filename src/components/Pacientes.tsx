@@ -11,6 +11,8 @@ export function Pacientes() {
     const [openModal, setOpenModal] = useState(false);
     const [openModalDetalhes, setOpenModalDetalhes] = useState(false);
     const [showModalExclusao, setShowModalExclusao] = useState(false);
+
+
     const [showInactive, setShowInactive] = useState(true);
     const { pacientes, fetchPacientes } = usePacientes();
     const [selectedPaciente, setSelectedPaciente] = useState<any>(null);
@@ -306,10 +308,11 @@ export function Pacientes() {
                 }}
                 paciente={selectedPaciente}
                 onSaved={() => {
-                    fetchPacientes();
+                    fetchPacientes(showInactive ? true : false);
                     setSelectedPaciente(null);
                 }}
             />
+
             <PacienteDetalhesModal
                 paciente={selectedPaciente}
                 isOpen={openModalDetalhes}

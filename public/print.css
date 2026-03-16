@@ -24,7 +24,7 @@ label{
 }
 
 input{
-    border:1px solid rgba(128, 128, 128, 0.692);
+    border:1px solid rgba(59, 59, 59, 0.878);
     border-radius: 5px;
     height: 20px;
     width: 100%;    
@@ -32,6 +32,7 @@ input{
     padding-top: 8px;
     font-size:1rem;
 }
+
 
 #boxNascimento{
     display: flex;

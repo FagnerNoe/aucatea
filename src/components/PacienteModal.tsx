@@ -9,6 +9,7 @@ import type { Paciente } from "../types/database.types";
 
 
 
+
 type PacienteModalProps = {
     isOpen: boolean;
     onClose: () => void;
@@ -372,9 +373,10 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
 
             { isEditing ? alert("Paciente Editado com Sucesso!") : alert("Paciente salvo com sucesso!") };
             setLoading(false);
+
             onClose(); // fecha modal
             console.log("atualizado em:", paciente?.data_atualizacao)
-            if (onSaved) onSaved();
+            onSaved();
         } catch (err) {
             console.error(err);
             { isEditing ? alert("Erro ao Editar Paciente") : alert("Erro ao Salvar Paciente") }

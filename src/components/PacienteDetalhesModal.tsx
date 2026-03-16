@@ -97,7 +97,7 @@ export default function PacienteDetalhesModal({
                         <p><span className={`font-semibold ${cores.primaryText}`}>Tratamentos:</span> {paciente.tratamentos?.join(", ")}</p>
                         {paciente.laudo_url && (
                             <a
-                                href={paciente.laudo_url}
+                                href={`${paciente.laudo_url}#view=Fit&zoom=100`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="no-print text-pink-500 underline mt-2 block"
