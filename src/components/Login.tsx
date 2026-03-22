@@ -44,7 +44,8 @@ export function Auth() {
 
 
     return (
-        <div className="h-screen  bg-linear-to-t from-white to-gray-200 flex items-center justify-start">
+        <div className="h-screen  bg-linear-to-t from-white to-gray-200 flex items-center justify-start"
+            style={{ backgroundImage: "url('/fundo-autismo.jpg')" }}>
 
             <div className="absolute inset-0 h-screen  max-w-5xl bg-cover bg-center  "
                 style={{ backgroundImage: "url('/aucatea_capa.jpg')" }}>

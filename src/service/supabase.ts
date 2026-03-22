@@ -29,3 +29,4 @@ const savedSession = sessionStorage.getItem("supabase.auth.token")
 if (savedSession) {
   supabase.auth.setSession(JSON.parse(savedSession))
 }
+
