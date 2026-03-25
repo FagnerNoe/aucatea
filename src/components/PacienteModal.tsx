@@ -200,22 +200,38 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
 
     const convertImageToPDF = async (file: File): Promise<File> => {
         return new Promise((resolve) => {
+            // Se já for PDF, não converte
+            if (file.type === "application/pdf") {
+                setFormData((prev) => ({ ...prev, laudoFile: file }));
+                resolve(file);
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = (e) => {
                 const imgData = e.target?.result as string;
                 const pdf = new jsPDF();
-                pdf.addImage(imgData, "JPEG", 10, 10, 180, 160);
+
+                // Pega dimensões da página
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+
+                // Define margens e calcula tamanho proporcional
+                const margin = 10;
+                const imgWidth = pageWidth - margin * 2;
+                const imgHeight = pageHeight - margin * 2;
+
+                pdf.addImage(imgData, "JPEG", margin, margin, imgWidth, imgHeight);
 
                 const pdfBlob = pdf.output("blob");
                 const pdfFile = new File([pdfBlob], file.name.replace(/\.\w+$/, ".pdf"), {
                     type: "application/pdf",
                 });
+
                 setFormData((prev) => ({ ...prev, laudoFile: pdfFile }));
                 resolve(pdfFile);
             };
             reader.readAsDataURL(file);
-
-
         });
     };
 
@@ -862,7 +878,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                         </div>
                                     ) : (
                                         // Adição: mostrar preview real
-                                        previewLaudo.endsWith(".pdf") ? (
+                                        previewLaudo == "application/pdf" ? (
                                             <iframe
                                                 src={previewLaudo}
                                                 title="Pré-visualização do laudo"
