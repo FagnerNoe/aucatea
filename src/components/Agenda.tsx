@@ -7,12 +7,12 @@ const events = [
 
 export function Agenda() {
     return (
-        <div className='h-100 bg-white'>
-            <h1>Agenda</h1>
+        <div className='h-full bg-white'>
+            <h1 className='text-center font-[Poppins] bg-clip-text text-transparent bg-linear-to-r from-blue-600 to-emerald-300 text-xl font-bold'>Agenda</h1>
             <FullCalendar
                 plugins={[dayGridPlugin]}
                 initialView='dayGridMonth'
-                weekends={false}
+                weekends={true}
                 events={events}
                 eventContent={renderEventContent}
             />
