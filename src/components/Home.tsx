@@ -27,15 +27,18 @@ export function Home() {
         );
     }
     return (
-        <div className="mt-10 md:mt-5 lg:mt-0 ">
-            <h1 className={`font-['Style_Script',cursive] text-4xl bg-clip-text text-center ${cores.gradientBlue} text-transparent`}>
-                Associação Candidomotense de Apoio a Pessoas com Transtorno do Espectro Autista
-            </h1>
-            <p className="font-[Poppins] text-gray-500 text-sm text-center">
-                Bem Vindo ao Sistema de Cadastros Aucatea !
-            </p>
+        <div >
+            <header className={`h-full mt-10 md:mt-5`}>
+                <h1 className={`font-['Style_Script',cursive] text-4xl bg-clip-text text-center ${cores.gradientBlue} text-transparent`}>
+                    Associação Candidomotense de Apoio a Pessoas com Transtorno do Espectro Autista
+                </h1>
+                <p className="font-[Poppins] text-gray-500 text-sm text-center">
+                    Bem Vindo ao Sistema de Cadastros Aucatea !
+                </p>
 
-            <div className="w-full mt-10  flex flex-col items-center justify-start gap-7 bg-white  ">
+            </header>
+
+            <div className="w-full border border-gray-100 rounded mt-5  h-full flex flex-col items-center justify-center gap-4 bg-white  ">
                 {doDia.length > 0 && (
                     <div className="border border-gray-300 p-2 rounded flex flex-col items-center justify-center ">
                         <h2 className="bg-linear-to-r from-blue-500 to-sky-500 px-4 mb-2 rounded text-white/90 animate-pulse">Nosso Parabéns hoje é para: </h2>
@@ -63,8 +66,13 @@ export function Home() {
                         </div>
                     </div>
                 )}
-                <section className="w-full flex flex-col md:flex-row items-start justify-center gap-10  ">
-                    <div className="w-full border border-gray-300 p-2 bg-white rounded h-110 md:max-h-75 overflow-y-auto">
+                {doDia.length === 0 && (
+                    <div className="w-full md:h-20 p-2 bg-white rounded   overflow-y-auto">
+                        <p className="text-gray-700 font-[Poppins] text-center"></p>
+                    </div>
+                )}
+                <section className=" w-full p-2 flex flex-col md:flex-row items-start justify-center gap-10  ">
+                    <div className="w-full border border-gray-300 p-2 bg-white rounded   overflow-y-auto">
                         <div className=" flex items-center justify-between bg-linear-to-r from-blue-500 to-sky-400 px-2 py-2 rounded  ">
                             <h2 className="text-white/90 font-[Poppins]">Aniversariantes do Mês <span className="bg-white/30 px-3 font-bold text-white rounded-full">{doMes.length}</span></h2>
                             <span className="bg-white/30 px-3 font-bold text-white rounded-full">{mesAtual.charAt(0).toUpperCase() + mesAtual.slice(1)}</span>
@@ -75,7 +83,7 @@ export function Home() {
                             return (
                                 <div key={index} className="flex items-center justify-between  border-b border-gray-300 mt-2">
                                     <div className={`flex items-center justify-between w-full mb-1 ${ehDoDia ? "bg-green-100 rounded" : ""}`} >
-                                        <span className="text-[0.8rem] text-gray-700 font-[] font-bold ml-1 truncate pr-1">{aniversariante.nome}</span>
+                                        <span className="text-[0.8rem] text-gray-700 font-[Poppins] font-medium ml-1 truncate pr-1">{aniversariante.nome}</span>
                                         <span className="text-[0.8rem] text-gray-600  border border-green-500 px-2 rounded ">
                                             <span className="font-bold">
                                                 {new Date(aniversariante.data_nascimento + "T00:00:00").getDate().toString().padStart(2, "0")}
