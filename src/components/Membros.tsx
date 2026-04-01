@@ -172,8 +172,8 @@ export function Membros() {
                                                     setSelectedMembro(membro);
                                                     setOpenModalDetalhes(true)
                                                 }}
-                                                className="px-2 py-1   cursor-pointer text-sm bg-linear-to-r from-yellow-300 to-yellow-400 text-white rounded">
-                                                <TextSearchIcon className="w-4 h-4" />
+                                                className="px-2 py-1   cursor-pointer text-sm border border-yellow-400 hover:bg-yellow-400 rounded">
+                                                <TextSearchIcon className="w-4 h-4 text-yellow-600 hover:text-white" />
                                             </button>
                                             <button
                                                 title="Editar"
@@ -181,15 +181,15 @@ export function Membros() {
                                                     setSelectedMembro(membro); //membro da linha
                                                     setOpenModalMembro(true)
                                                 }}
-                                                className="px-2 cursor-pointer text-sm bg-linear-to-r from-sky-500 to-blue-500 text-white rounded">
-                                                <PenLineIcon className="w-4 h-4" />
+                                                className="px-2 cursor-pointer text-sm border border-blue-500 hover:bg-blue-500  rounded">
+                                                <PenLineIcon className="w-4 h-4 text-blue-500 hover:text-white" />
                                             </button>
                                             <button
                                                 title="Deletar"
                                                 onClick={() => confirmarExclusao(membro.id)}
-                                                className="px-2 cursor-pointer text-sm bg-red-500 text-white rounded"
+                                                className="px-2 cursor-pointer text-sm border border-red-500  bg-white hover:bg-red-200 text-white rounded"
                                             >
-                                                <Trash className="w-4 h-4" />
+                                                <Trash className="w-4 h-4 text-red-500 hover:text-white" />
                                             </button>
 
 

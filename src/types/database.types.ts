@@ -3,7 +3,8 @@ export interface Paciente {
   nome: string;  
   endereco: string;
   complemento_endereco?: string;  
-  numero_casa: string;
+  telefone_paciente?:string;
+  numero_casa: number;
   data_nascimento: Date;
   bairro: string;
   cep: string;
@@ -16,6 +17,7 @@ export interface Paciente {
   laudo_url?: string;   // foto do laudo (opcional)
   foto_paciente?: string;  // foto/avatar do paciente (opcional)
   convenio: string; // nome do convênio (opcional) 
+  cad_unico?:boolean; // indica se o paciente é cadastrado no CadÚnico (opcional)
   escola?:string;
   escola_externa?:string;
   laudo?:[];

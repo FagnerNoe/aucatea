@@ -60,7 +60,9 @@ export default function PacienteDetalhesModal({
                         </span>{" "}
                             {new Date(paciente.data_nascimento + "T00:00:00").toLocaleDateString("pt-BR")}
                         </p>
-
+                        {paciente.telefone_paciente && (
+                            <p><span className={`font-semibold ${cores.primaryText}`}>Telefone:</span> {paciente.telefone_paciente}</p>
+                        )}
                     </div>
 
 
@@ -77,8 +79,11 @@ export default function PacienteDetalhesModal({
                     <div >
                         <p><span className={`font-semibold ${cores.primaryText}`}>Mãe:</span> {paciente.nome_mae}</p>
                         <p><span className={`font-semibold ${cores.primaryText}`}>Telefone Mãe:</span> {paciente.telefone_mae}</p>
-                        <p><span className={`font-semibold ${cores.primaryText}`}>Pai:</span> {paciente.nome_pai}</p>
-                        <p><span className={`font-semibold ${cores.primaryText}`}>Telefone Pai:</span> {paciente.telefone_pai}</p>
+                        {paciente.nome_pai && (
+                            <><p><span className={`font-semibold ${cores.primaryText}`}>Pai:</span> {paciente.nome_pai}</p>
+                                <p><span className={`font-semibold ${cores.primaryText}`}>Telefone Pai:</span> {paciente.telefone_pai}</p></>
+                        )}
+
                         <p><span className={`font-semibold ${cores.primaryText}`}>Email:</span> {paciente.email_principal}</p>
                     </div>
 
@@ -92,9 +97,20 @@ export default function PacienteDetalhesModal({
                         {paciente.escola_externa && (
                             <span><p className={`font-semibold ${cores.primaryText}`}>Outra Instituição:</p> {paciente.escola_externa}</span>
                         )}
-                        <p><span className={`font-semibold ${cores.primaryText}`}>Laudo:</span> {paciente.laudo?.join(",")}</p>
+
+                        {paciente.laudo.length > 0 && (
+                            <p><span className={`font-semibold ${cores.primaryText}`}>Laudo:</span> {paciente.laudo.join(", ")}</p>
+                        )}
+
                         <p><span className={`font-semibold ${cores.primaryText}`}>Convênio:</span> {paciente.convenio}</p>
-                        <p><span className={`font-semibold ${cores.primaryText}`}>Tratamentos:</span> {paciente.tratamentos?.join(", ")}</p>
+
+                        {paciente.cad_unico && (
+                            <p><span className={`font-semibold ${cores.primaryText}`}>CadÚnico:</span> Sim</p>
+                        )}
+
+                        {paciente.tratamentos && paciente.tratamentos.length > 0 && (
+                            <p><span className={`font-semibold ${cores.primaryText}`}>Tratamentos:</span> {paciente.tratamentos.join(", ")}</p>
+                        )}
                         {paciente.laudo_url && (
                             <a
                                 href={`${paciente.laudo_url}#view=Fit&zoom=100`}

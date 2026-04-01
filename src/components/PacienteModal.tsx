@@ -87,6 +87,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                 endereco: paciente.endereco || "",
                 numeroCasa: paciente.numero_casa || "",
                 complemento: paciente.complemento_endereco || "",
+                telefonePaciente: paciente.telefone_paciente || "",
                 mae: paciente.nome_mae || "",
                 pai: paciente.nome_pai || "",
                 email: paciente.email_principal || "",
@@ -96,6 +97,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                 escola_externa: paciente.escola_externa || '',
                 laudo: paciente.laudo || [],
                 convenio: paciente.convenio || convenios[0],
+                cad_unico: paciente.cad_unico || false,
                 tratamentos: paciente.tratamentos || [],
                 dataNascimento: paciente.data_nascimento || "",
                 bairro: paciente.bairro || "",
@@ -113,6 +115,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                 endereco: "",
                 numeroCasa: "",
                 complemento: "",
+                telefonePaciente: "",
                 mae: "",
                 pai: "",
                 email: "",
@@ -121,6 +124,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                 escola: "",
                 escola_externa: "",
                 convenio: convenios[0],
+                cad_unico: false,
                 laudo: [],
                 dataNascimento: "",
                 tratamentos: [],
@@ -324,6 +328,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                     endereco: formData.endereco,
                     numero_casa: formData.numeroCasa,
                     complemento_endereco: formData.complemento,
+                    telefone_paciente: formData.telefonePaciente,
                     bairro: formData.bairro,
                     cep: formData.cep,
                     email_principal: formData.email,
@@ -335,6 +340,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                     escola: formData.escola,
                     escola_externa: formData.escola_externa,
                     convenio: formData.convenio || convenios[0],
+                    cad_unico: formData.cad_unico,
                     laudo: formData.laudo,
                     tratamentos: selecionados,
                     data_atualizacao: new Date().toISOString(),
@@ -363,6 +369,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                         endereco: formData.endereco,
                         numero_casa: formData.numeroCasa,
                         complemento_endereco: formData.complemento,
+                        telefone_paciente: formData.telefonePaciente,
                         bairro: formData.bairro,
                         cep: formData.cep,
                         nome_mae: formData.mae,
@@ -376,6 +383,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                         escola: formData.escola,
                         escola_externa: formData.escola_externa,
                         convenio: formData.convenio || convenios[0],
+                        cad_unico: formData.cad_unico,
                         laudo: formData.laudo,
                         tratamentos: selecionados,
                         data_criacao: new Date(),
@@ -547,7 +555,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             name="nome"
                                             value={formData.nome || ""}
                                             onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                                            className=" w-full border border-gray-300 text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                            className=" w-full border border-gray-300 text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                                         />
                                     </div>
                                     <div className="flex flex-col items-start">
@@ -561,7 +569,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             name="dataNascimento"
                                             value={formData.dataNascimento || ""}
                                             onChange={(e) => setFormData({ ...formData, dataNascimento: e.target.value })}
-                                            className=" border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                            className=" border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                                         />
                                     </div>
                                 </div>
@@ -576,7 +584,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             required
                                             value={formData.endereco || ""}
                                             onChange={(e) => setFormData({ ...formData, endereco: e.target.value })}
-                                            className="w-full border border-gray-300 p-2  text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                            className="w-full border border-gray-300 p-2  text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                                         />
                                     </div>
                                     <div className=" flex w-25 flex-col sm:justify-center">
@@ -588,7 +596,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             value={formData.numeroCasa || ""}
                                             onChange={(e) => setFormData({ ...formData, numeroCasa: e.target.value })}
                                             placeholder="Num"
-                                            className=" border border-gray-300   text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                            className=" border border-gray-300   text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                                         />
                                     </div>
 
@@ -605,7 +613,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             required
                                             value={formData.bairro || ""}
                                             onChange={(e) => setFormData({ ...formData, bairro: e.target.value })}
-                                            className="w-full border border-gray-300  p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                            className="w-full border border-gray-300  p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                                         />
                                     </div>
                                     <div className="w-50  sm:w-35 flex flex-col ">
@@ -617,20 +625,35 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             maxLength={9}
                                             onChange={(e) => setFormData({ ...formData, cep: formatarCep(e.target.value) })}
                                             placeholder="CEP"
-                                            className=" border border-gray-300  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                            className=" border border-gray-300  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                                         />
                                     </div>
                                 </div>
-                                <div >
-                                    <label htmlFor="complemento" className="text-md font-semibold"> Complemento / Referência </label>
-                                    <input
-                                        type="text"
-                                        name="complemento"
-                                        value={formData.complemento || ""}
-                                        onChange={(e) => setFormData({ ...formData, complemento: e.target.value })}
+                                <div className="flex items-start flex-col sm:flex-row gap-2 justify-between">
+                                    <div className="w-full">
+                                        <label htmlFor="complemento" className="text-md font-semibold"> Complemento / Referência </label>
+                                        <input
+                                            type="text"
+                                            name="complemento"
+                                            value={formData.complemento || ""}
+                                            onChange={(e) => setFormData({ ...formData, complemento: e.target.value })}
 
-                                        className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
-                                    />
+                                            className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
+                                        />
+                                    </div>
+                                    <div >
+                                        <label htmlFor="telefonePaciente" className="text-md font-semibold">Celular Paciente</label>
+                                        <input
+                                            type="text"
+                                            name="telefonePaciente"
+                                            maxLength={14}
+                                            value={formData.telefonePaciente || ""}
+                                            onChange={(e) => setFormData({ ...formData, telefonePaciente: formatarTelefone(e.target.value) })}
+                                            placeholder="(xx)xxxx-xxxx"
+                                            className=" border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
+                                        />
+
+                                    </div>
                                 </div>
 
                             </div>
@@ -649,7 +672,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     required
                                     value={formData.mae || ""}
                                     onChange={(e) => setFormData({ ...formData, mae: e.target.value })}
-                                    className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                    className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                                 />
 
                             </div>
@@ -663,14 +686,14 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     value={formData.telefoneMae || ""}
                                     onChange={(e) => setFormData({ ...formData, telefoneMae: formatarTelefone(e.target.value) })}
                                     placeholder="(xx)xxxx-xxxx"
-                                    className=" border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                    className=" border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                                 />
 
                             </div>
 
                         </div>
-                        <div className="flex flex-col sm:flex-row md:flex-row items-center justify-between gap-2">
-                            <div className=" w-full">
+                        <div className="flex flex-col sm:flex-row md:flex-row items-start justify-between gap-2 ">
+                            <div className="w-full ">
                                 <label
                                     htmlFor="pai"
                                     className="text-md font-semibold ">Nome do Pai
@@ -680,11 +703,11 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     name="pai"
                                     value={formData.pai || ""}
                                     onChange={(e) => setFormData({ ...formData, pai: e.target.value })}
-                                    className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                    className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                                 />
 
                             </div>
-                            <div >
+                            <div className=" flex flex-col">
                                 <label htmlFor="telefonePai" className="text-md font-semibold">Celular do Pai</label>
                                 <input
                                     type="text"
@@ -693,11 +716,10 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     value={formData.telefonePai || ""}
                                     onChange={(e) => setFormData({ ...formData, telefonePai: formatarTelefone(e.target.value) })}
                                     placeholder="(xx)xxxx-xxxx"
-                                    className="border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                    className=" border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                                 />
 
                             </div>
-
                         </div>
 
                         <div >
@@ -707,7 +729,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                 name="email"
                                 value={formData.email || ""}
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                             />
                         </div>
                         <div >
@@ -718,7 +740,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                 required
                                 value={formData.escola || ""}
                                 onChange={(e) => setFormData({ ...formData, escola: e.target.value })}
-                                className="w-full border border-gray-300  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                className="w-full border border-gray-300  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                             >
 
                                 {escolas.map((escola, index) => (
@@ -736,12 +758,12 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                 name="escola_externa"
                                 value={formData.escola_externa || ""}
                                 onChange={(e) => setFormData({ ...formData, escola_externa: e.target.value })}
-                                className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                className="w-full border border-gray-300 p-2 text-gray-700 font-[Poppins] rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                             />
                         </div>
 
-                        <div className="flex items-center justify-start space-x-4">
-                            <div>
+                        <div className="flex flex-col sm:flex-row md:flex-row  md:items-end justify-between gap-2">
+                            <div className="w-full md:w-130">
                                 <label
                                     htmlFor="laudo"
                                     className="font-semibold text-md"
@@ -758,13 +780,13 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             laudo: e.target.value.split(",").map(v => v.trim()).filter(Boolean)
                                         })
                                     }
-                                    className="w-full border border-gray-300 p-2 rounded-lg"
+                                    className="w-full border border-gray-300 p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400 text-gray-700 font-[Poppins]"
                                 />
 
                             </div>
 
 
-                            <div>
+                            <div className="flex flex-col w-60 md:w-90" >
                                 <label
                                     htmlFor="convenio"
                                     className="font-semibold text-md"
@@ -777,7 +799,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                     required
                                     value={formData.convenio}
                                     onChange={(e) => setFormData({ ...formData, convenio: e.target.value })}
-                                    className="w-full border border-gray-300  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                    className="w-full border border-gray-300  text-gray-700 font-[Poppins] p-2 rounded-lg col-span-1 focus:outline-none focus:ring-1 focus:ring-green-400"
                                 >
 
                                     {convenios.map((convenio, index) => (
@@ -788,7 +810,22 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                 </select>
                             </div>
 
-
+                            <div className="border border-gray-200 mt-2 md:mt-0 p-2 rounded-lg flex flex-row-reverse items-center justify-between gap-2 w-35 md:w-30">
+                                <label
+                                    htmlFor="cad_unico"
+                                    className="font-semibold text-md"
+                                >
+                                    CadÚnico
+                                </label>
+                                <input type="checkbox"
+                                    id="cad_unico"
+                                    name="cad_unico"
+                                    checked={formData.cad_unico || false}
+                                    onChange={(e) => setFormData({ ...formData, cad_unico: e.target.checked })}
+                                    className="h-5 w-5 accent-blue-500 checked:bg-white "
+                                    style={{ background: "blue" }}
+                                />
+                            </div>
 
                         </div>
 
@@ -799,7 +836,7 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                 <button
                                     type="button"
                                     onClick={() => setOpen(!open)}
-                                    className="w-full flex items-center  text-gray-700 font-[Poppins] justify-between border border-gray-300 p-2 h-10 rounded-sm text-left  focus:outline-none focus:ring-1 focus:ring-purple-400"
+                                    className="w-full flex items-center  text-gray-700 font-[Poppins] justify-between border border-gray-300 p-2 h-10 rounded-sm text-left  focus:outline-none focus:ring-1 focus:ring-green-400"
                                 >
                                     <span className="w-full truncate">
                                         {selecionados.length > 0
@@ -874,28 +911,27 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                                 title="laudo"
                                                 className="w-full object-fill"
                                             />
-
                                         </div>
                                     ) : (
-                                        // Adição: mostrar preview real
-                                        previewLaudo == "application/pdf" ? (
-                                            <iframe
-                                                src={previewLaudo}
-                                                title="Pré-visualização do laudo"
-                                                className="w-full h-64 border rounded"
-                                            />
-                                        ) : (
+                                        previewLaudo == formData.laudo_url ? (
                                             <img
                                                 src={previewLaudo}
                                                 alt="Pré-visualização"
                                                 className="max-w-full rounded border"
+                                            />
+                                        ) : (
+                                            <embed
+                                                src={previewLaudo}
+                                                type="application/pdf"
+                                                title="Pré-visualização do Laudo"
+                                                className="w-full h-64 border rounded"
                                             />
                                         )
                                     )}
 
                                     <button
                                         onClick={handleRemoveLaudoImage}
-                                        className="absolute top-2 right-2 bg-white text-red-700 rounded-full p-1 hover:bg-red-700"
+                                        className="absolute top-2 right-2 bg-white text-red-700 rounded-full p-1 hover:bg-red-700 hover:text-white"
                                     >
                                         <XCircleIcon className="h-6 w-6" />
                                     </button>

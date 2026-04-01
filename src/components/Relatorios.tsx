@@ -81,8 +81,6 @@ export function Relatorios() {
                 label: "Pacientes por Laudo",
                 data: Object.values(laudos),
                 backgroundColor: "#37A2EB",
-
-
             },
         ],
     };

@@ -120,6 +120,13 @@
                     <input id="convenio_form" />
 
                 </div>
+                <div id="cadunico">
+                    <label>
+                        CadUnico:
+                    </label>
+                    <input id="cad_unico" />
+
+                </div>
 
             </div>
             <label>
@@ -162,6 +169,7 @@
                 document.querySelector("#escola_fora").value = paciente.escola_externa;
                 document.querySelector("#convenio_form").value = paciente.convenio;
                 document.querySelector("#laudo").value = paciente.laudo;
+                document.querySelector("#cad_unico").value = paciente.cad_unico ? "SIM" : "NÃO";
                 document.querySelector("#terapia").value = paciente.tratamentos;
             }
 
