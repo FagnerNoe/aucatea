@@ -903,31 +903,25 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
 
                             {previewLaudo && (
                                 <div className="relative mt-4">
-                                    {isEditing ? (
-                                        // Edição: mostrar ícone + link
-                                        <div className="flex flex-col items-center space-x-2">
-                                            <iframe
-                                                src={previewLaudo}
-                                                title="laudo"
-                                                className="w-full object-fill"
-                                            />
-                                        </div>
+                                    {previewLaudo.includes("pdf") ? (
+                                        <embed
+                                            src={previewLaudo}
+                                            type="application/pdf"
+                                            title="Pré-visualização do Laudo"
+                                            className="w-full h-64 border rounded"
+                                        />
+
                                     ) : (
-                                        previewLaudo == formData.laudo_url ? (
-                                            <img
-                                                src={previewLaudo}
-                                                alt="Pré-visualização"
-                                                className="max-w-full rounded border"
-                                            />
-                                        ) : (
-                                            <embed
-                                                src={previewLaudo}
-                                                type="application/pdf"
-                                                title="Pré-visualização do Laudo"
-                                                className="w-full h-64 border rounded"
-                                            />
-                                        )
+                                        <img
+                                            src={previewLaudo}
+                                            alt="Pré-visualização"
+                                            className="max-w-full rounded border"
+                                        />
+
                                     )}
+
+
+
 
                                     <button
                                         onClick={handleRemoveLaudoImage}
