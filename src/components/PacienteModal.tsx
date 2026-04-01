@@ -910,18 +910,13 @@ export function PacienteModal({ isOpen, onClose, paciente, onSaved }: PacienteMo
                                             title="Pré-visualização do Laudo"
                                             className="w-full h-64 border rounded"
                                         />
-
                                     ) : (
                                         <img
                                             src={previewLaudo}
                                             alt="Pré-visualização"
                                             className="max-w-full rounded border"
                                         />
-
                                     )}
-
-
-
 
                                     <button
                                         onClick={handleRemoveLaudoImage}
