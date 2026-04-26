@@ -60,6 +60,8 @@ export default function PacienteDetalhesModal({
                         </span>{" "}
                             {new Date(paciente.data_nascimento + "T00:00:00").toLocaleDateString("pt-BR")}
                         </p>
+                        <p><span className={`font-semibold ${cores.primaryText}`}>Idade:</span>
+                            {Math.floor((new Date().getTime() - new Date(paciente.data_nascimento + "T00:00:00").getTime()) / (1000 * 60 * 60 * 24 * 365.25))} anos</p>
                         {paciente.telefone_paciente && (
                             <p><span className={`font-semibold ${cores.primaryText}`}>Telefone:</span> {paciente.telefone_paciente}</p>
                         )}

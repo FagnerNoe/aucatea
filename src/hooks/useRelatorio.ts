@@ -11,11 +11,11 @@ const [totalPacientes, setTotalPacientes] = useState<number>(0);
       // Contar pacientes
       const { count } = await supabase
         .from("pacientes")
-        .select("*", { count: "exact", head: true });
+        .select("*", { count: "exact", head: true }).eq("ativo", true);
       setTotalPacientes(count || 0);
 
       // Buscar tipos de laudo
-      const { data } = await supabase.from("pacientes").select("laudo, tratamentos");
+      const { data } = await supabase.from("pacientes").select("laudo, tratamentos").eq("ativo", true);
 
       if (data) {
         const agrupado = data.reduce((acc: Record<string, number>, paciente: any) => {

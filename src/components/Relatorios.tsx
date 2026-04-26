@@ -139,8 +139,8 @@ export function Relatorios() {
             <div className="flex-1 overflow-y-auto mt-4 max-h-[80vh]">
 
                 {/* Card de total de pacientes */}
-                <div className="bg-blue-500 text-white rounded-lg shadow-md p-4 mb-6 w-45 sm:w-64">
-                    <h3 className="text-md font-semibold">Total de Pacientes</h3>
+                <div className="bg-blue-500 text-white rounded-lg shadow-md p-4 mb-6 w-60">
+                    <h3 className="text-md font-semibold">Total de Pacientes Ativos</h3>
                     <p className="text-3xl font-bold">{totalPacientes}</p>
                 </div>
 
