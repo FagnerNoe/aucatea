@@ -4,7 +4,7 @@
 
 ### Descrição do Projeto
 ---
-#### Projeto em desenvolvimento para Associação de Austistas de Cândido Mota. O projeto visa auxiliar o cadastro de pacientes que fazem parte ou que pretendam entrar na Associação.
+#### Projeto em desenvolvimento para Associação de Autistas de Cândido Mota. O projeto visa auxiliar o cadastro de pacientes que fazem parte ou que pretendam entrar na Associação.
 ---
 #### _O Sistema permite que membros da Associção possam:_
  * Incluir pacientes (dados, anexar foto e um laudo atestando a condição do paciente)
@@ -13,7 +13,7 @@
  * Deletar um Paciente
  * Imprimir Cadastro(Formulario para Prenchimento manual ou Formulario Preenchido)
 
-Projeto esta sendo desenvolvido Utilizando React e Supabase pra Autenticão e Banco de Dados ...
+Projeto esta sendo desenvolvido Utilizando React e Supabase(Banco de Dados) ...
 
 
 
