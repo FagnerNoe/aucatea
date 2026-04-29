@@ -89,15 +89,18 @@ export function Home() {
                                 <div key={index} className="flex items-center justify-between  border-b border-gray-300 mt-2">
                                     <div className={`flex items-center justify-between w-full mb-1 ${ehDoDia ? "bg-green-100 rounded" : ""}`} >
                                         <span className="text-[0.8rem] text-gray-700 font-[Poppins] font-medium ml-1 truncate pr-1">{aniversariante.nome}</span>
-                                        <span className="text-[0.8rem] text-gray-600  border border-green-500 px-2 rounded ">
-                                            <span className="font-bold">
-                                                {new Date(aniversariante.data_nascimento + "T00:00:00").getDate().toString().padStart(2, "0")}
+                                        <div className="flex w-40 max-w-[50] justify-between">
+                                            <span className="text-[0.8rem] text-gray-600  border border-green-500 px-2 rounded ">
+                                                <span className="font-bold">
+                                                    {new Date(aniversariante.data_nascimento + "T00:00:00").getDate().toString().padStart(2, "0")}
+                                                </span>
+                                                /{(new Date(aniversariante.data_nascimento + "T00:00:00").getMonth() + 1).toString().padStart(2, "0")}
+                                                /{new Date(aniversariante.data_nascimento + "T00:00:00").getFullYear()}
+
                                             </span>
-                                            /{(new Date(aniversariante.data_nascimento + "T00:00:00").getMonth() + 1).toString().padStart(2, "0")}
-                                            /{new Date(aniversariante.data_nascimento + "T00:00:00").getFullYear()}
-
-                                        </span>
-
+                                            <p className="bg-sky-200 rounded-lg px-2 text-xs md:text-sm">
+                                                <span className="font-bold ">{Math.floor((new Date().getTime() - new Date(aniversariante.data_nascimento + "T00:00:00").getTime()) / (1000 * 60 * 60 * 24 * 365.25))}</span> anos</p>
+                                        </div>
                                     </div>
                                 </div>
                             )
