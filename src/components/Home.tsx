@@ -89,7 +89,7 @@ export function Home() {
                                 <div key={index} className="flex items-center justify-between  border-b border-gray-300 mt-2">
                                     <div className={`flex items-center justify-between w-full mb-1 ${ehDoDia ? "bg-green-100 rounded" : ""}`} >
                                         <span className="text-[0.8rem] text-gray-700 font-[Poppins] font-medium ml-1 truncate pr-1">{aniversariante.nome}</span>
-                                        <div className="flex flex-col-reverse sm:flex-row  sm:w-40 max-w-[60] justify-between">
+                                        <div className="flex flex-col-reverse sm:flex-row max-w-20 sm:max-w-40 gap-x-2 justify-between">
                                             <span className="text-[0.8rem] text-gray-600  border border-sky-500 px-2 rounded ">
                                                 <span className="font-bold">
                                                     {new Date(aniversariante.data_nascimento + "T00:00:00").getDate().toString().padStart(2, "0")}
@@ -98,7 +98,7 @@ export function Home() {
                                                 /{new Date(aniversariante.data_nascimento + "T00:00:00").getFullYear()}
 
                                             </span>
-                                            <p className="bg-linear-to-r from-sky-300  to-sky-500 text-gray-200 rounded-t-md sm:rounded-lg w-18 text-center text-xs md:text-sm m-auto">
+                                            <p className="bg-linear-to-r from-sky-300  to-sky-500 text-gray-200 rounded-t-md sm:rounded-lg w-17 text-center text-xs md:text-sm m-auto">
                                                 <span className="font-bold text-white font-[Poppins]">{Math.floor((new Date().getTime() - new Date(aniversariante.data_nascimento + "T00:00:00").getTime()) / (1000 * 60 * 60 * 24 * 365.25))}</span> anos</p>
                                         </div>
                                     </div>
