@@ -89,7 +89,7 @@ export function Home() {
                                 <div key={index} className="flex items-center justify-between  border-b border-gray-300 mt-2">
                                     <div className={`flex items-center justify-between w-full mb-1 ${ehDoDia ? "bg-green-100 rounded" : ""}`} >
                                         <span className="text-[0.8rem] text-gray-700 font-[Poppins] font-medium ml-1 truncate pr-1">{aniversariante.nome}</span>
-                                        <div className="flex flex-col-reverse sm:flex-row  sm:w-40 max-w-[50] justify-between">
+                                        <div className="flex flex-col-reverse sm:flex-row  sm:w-40 max-w-[60] justify-between">
                                             <span className="text-[0.8rem] text-gray-600  border border-sky-500 px-2 rounded ">
                                                 <span className="font-bold">
                                                     {new Date(aniversariante.data_nascimento + "T00:00:00").getDate().toString().padStart(2, "0")}
