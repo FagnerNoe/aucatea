@@ -44,6 +44,7 @@ export function Home() {
                         <h2 className="bg-linear-to-r from-blue-500 to-sky-500 px-4 mb-2 rounded text-white/90 animate-pulse">Nosso Parabéns hoje é para: </h2>
                         <div className="flex flex-wrap items-center justify-center gap-4 w-full">
                             {doDia.map((aniversariante, index) => {
+                                const idade = Math.floor((new Date().getTime() - new Date(doDia[0].data_nascimento + "T00:00:00").getTime()) / (1000 * 60 * 60 * 24 * 365.25) + 1);
                                 return (
                                     <div key={index} className="relative flex items-center gap-2 border border-blue-300 rounded py-2 px-4 shadow-md">
                                         {aniversariante.foto_paciente ? (
@@ -54,6 +55,10 @@ export function Home() {
                                         <div className="flex flex-col ">
                                             <span className="text-xs text-gray-700 font-[Poppins] font-bold">{aniversariante.nome}</span>
                                             <span className="text-xs text-gray-700 font-medium">{new Date(aniversariante.data_nascimento + "T00:00:00").toLocaleDateString("pt-BR")}</span>
+                                            <span className="text-xs text-gray-600 font-medium ">
+                                                <span className="font-bold bg-sky-500 rounded-lg px-1 text-white">
+                                                    {idade}</span>{idade < 2 ? "ano" : "anos"}
+                                            </span>
                                             <a
                                                 href={`https://wa.me/55${aniversariante.telefone}?text=${encodeURIComponent("Olá quero mais informações")}`}
                                                 target="_blank"
@@ -83,6 +88,7 @@ export function Home() {
                             <span className="bg-white/30 px-3 font-bold text-white rounded-full">{mesAtual.charAt(0).toUpperCase() + mesAtual.slice(1)}</span>
                         </div>
                         {doMes.map((aniversariante, index) => {
+                            const idade = Math.floor((new Date().getTime() - new Date(aniversariante.data_nascimento + "T00:00:00").getTime()) / (1000 * 60 * 60 * 24 * 365.25) + 1);
                             const ehDoDia = doDia.some(d => d.id === aniversariante.id);
 
                             return (
@@ -99,10 +105,12 @@ export function Home() {
 
                                             </span>
                                             <p className="bg-linear-to-r from-sky-300  to-sky-500 text-gray-200 rounded-t-md sm:rounded-lg w-17 text-center text-xs md:text-sm m-auto">
-                                                <span className="font-bold text-white font-[Poppins]">{Math.floor((new Date().getTime() - new Date(aniversariante.data_nascimento + "T00:00:00").getTime()) / (1000 * 60 * 60 * 24 * 365.25))}</span> anos</p>
+                                                <span className="font-bold text-white font-[Poppins]">
+                                                    {idade}</span> {idade < 2 ? "ano" : "anos"}</p>
                                         </div>
                                     </div>
                                 </div>
+
                             )
                         })}
                     </div>
@@ -125,8 +133,8 @@ export function Home() {
                     </div>
 
                 </section>
-            </div>
-        </div>
+            </div >
+        </div >
 
     );
 }
