@@ -10,9 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fullcalendar/daygrid": "^6.1.20",
+    "@fullcalendar/interaction": "^6.1.20",
+    "@fullcalendar/list": "^6.1.20",
+    "@fullcalendar/react": "^6.1.20",
+    "@fullcalendar/timegrid": "^6.1.20",
     "@supabase/supabase-js": "^2.90.1",
     "chart.js": "^4.5.1",
     "dotenv": "^17.3.1",
+    "fullcalendar": "^6.1.20",
     "jspdf": "^4.0.0",
     "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.562.0",
