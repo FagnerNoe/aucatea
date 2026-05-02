@@ -19,6 +19,17 @@
   animation: fadeDown 4s ease forwards;
 }
 
+.fc .fc-toolbar-title {
+  text-transform: capitalize; /* Primeira letra maiúscula */
+}
+
+.fc-toolbar-title {
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  font-weight: 300;
+  font-size: 1.2em !important;
+}
+
 @media print {
   .pdf-viewer {
     width: 100vw;

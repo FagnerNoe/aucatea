@@ -57,7 +57,7 @@ export function Home() {
                                             <span className="text-xs text-gray-700 font-medium">{new Date(aniversariante.data_nascimento + "T00:00:00").toLocaleDateString("pt-BR")}</span>
                                             <span className="text-xs text-gray-600 font-medium ">
                                                 <span className="font-bold bg-sky-500 rounded-lg px-1 text-white">
-                                                    {idade}</span>{idade < 2 ? "ano" : "anos"}
+                                                    {idade}</span> {idade < 2 ? "ano" : "anos"}
                                             </span>
                                             <a
                                                 href={`https://wa.me/55${aniversariante.telefone}?text=${encodeURIComponent("Olá quero mais informações")}`}
