@@ -44,7 +44,7 @@ export function Home() {
                         <h2 className="bg-linear-to-r from-blue-500 to-sky-500 px-4 mb-2 rounded text-white/90 animate-pulse">Nosso Parabéns hoje é para: </h2>
                         <div className="flex flex-wrap items-center justify-center gap-4 w-full">
                             {doDia.map((aniversariante, index) => {
-                                const idade = Math.floor((new Date().getTime() - new Date(doDia[0].data_nascimento + "T00:00:00").getTime()) / (1000 * 60 * 60 * 24 * 365.25) + 1);
+                                const idade = Math.floor((new Date().getTime() - new Date(doDia[0].data_nascimento + "T00:00:00").getTime()) / (1000 * 60 * 60 * 24 * 365.25));
                                 return (
                                     <div key={index} className="relative flex items-center gap-2 border border-blue-300 rounded py-2 px-4 shadow-md">
                                         {aniversariante.foto_paciente ? (
@@ -88,7 +88,7 @@ export function Home() {
                             <span className="bg-white/30 px-3 font-bold text-white rounded-full">{mesAtual.charAt(0).toUpperCase() + mesAtual.slice(1)}</span>
                         </div>
                         {doMes.map((aniversariante, index) => {
-                            const idade = Math.floor((new Date().getTime() - new Date(aniversariante.data_nascimento + "T00:00:00").getTime()) / (1000 * 60 * 60 * 24 * 365.25) + 1);
+                            const idade = Math.floor((new Date().getTime() - new Date(aniversariante.data_nascimento + "T00:00:00").getTime()) / (1000 * 60 * 60 * 24 * 365.25));
                             const ehDoDia = doDia.some(d => d.id === aniversariante.id);
 
                             return (
