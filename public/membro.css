@@ -25,12 +25,13 @@ label{
 
 input{
     border:none;  
-   width: 100%;    
+    width: 100%;    
     font-size:1.1rem;  
 }
 
 #endereco, #numero_residencia{
-    font-size:1.2rem;
+    font-size:1.1rem;
+    font-family: 'Arial', sans-serif;
 }
 
 .box{
