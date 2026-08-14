@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Voluntario</title>
+    <link href="/membro.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <form>
+
+        <div id="header">
+            <h1>Aucatea</h1>
+            <p>Associação Candidomotense de Apoio a Pessoas com Transtorno do Espectro Autista</p>
+        </div>
+
+        <div id="container" class="espaco">
+
+            <div class="box">
+                <label>
+                    Nome:
+                </label>
+                <input id="nome" />
+            </div>
+
+            <div class="box">
+                <label>
+                    Telefone:
+                </label>
+                <input id="telefone" />
+            </div>
+
+            <div class="box">
+                <label>
+                    Endereço:
+                </label>
+                <div id="endereco-ordem">
+                    <span id="endereco"></span>
+                    &mdash;
+                    <span id="numero_residencia"></span>
+                </div>
+
+
+            </div>
+
+            <div class="box">
+                <label>
+                    Bairro:
+                </label>
+                <input id="bairro" />
+            </div>
+
+            <div class="box">
+                <label>
+                    Email:
+                </label>
+                <input id="email_membro" />
+            </div>
+
+            <div class="box">
+                <label>
+                    Disponibilidade:
+                </label>
+                <input id="disponivel" />
+            </div>
+
+
+
+
+
+
+            <div id="assinatura">
+                <p>Cândido Mota, <span id="data"></span></p>
+                <hr id="linhaAssinatura">
+                <p>Assinatura do Voluntario</p>
+            </div>
+
+
+
+
+        </div>
+
+
+    </form>
+
+
+    <script>
+        window.onload = () => {
+            const membro = JSON.parse(localStorage.getItem("dbmembro"));
+            if (membro) {
+                document.querySelector("#nome").value = membro.nome;
+                document.querySelector("#telefone").value = membro.telefone;
+                document.querySelector("#endereco").innerHTML = membro.endereco;
+                document.querySelector("#numero_residencia").innerHTML = membro.numero_residencia;
+                document.querySelector("#bairro").value = membro.bairro;
+                document.querySelector("#email_membro").value = membro.email;
+                document.querySelector("#disponivel").value = membro.disponibilidade;
+
+            }
+
+            // Chama impressão automaticamente
+            window.print();
+
+
+            // limpar logo após preencher:
+            localStorage.removeItem("membro");
+        };
+
+
+        // Pega a data atual e formata no padrão brasileiro
+        const hoje = new Date();
+        const opcoes = { day: 'numeric', month: 'long', year: 'numeric' };
+        document.getElementById("data").textContent = hoje.toLocaleDateString('pt-BR', opcoes);
+    </script>
+
+
+
+</body>
+
+</html>

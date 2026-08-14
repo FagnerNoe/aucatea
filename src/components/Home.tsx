@@ -13,11 +13,13 @@ export function Home() {
 
 
 
+    /*
     const eventos = [
         { nome: "Reunião de Equipe", data: "02/03/2026" },
         { nome: "Palestra sobre Autismo", data: "15/03/2026" },
         { nome: "Campanha de Doação", data: "28/03/2026" }
     ];
+    */
 
     if (loading) {
         return (
@@ -114,23 +116,7 @@ export function Home() {
                             )
                         })}
                     </div>
-                    <div className="w-full border border-gray-300 p-2 bg-white rounded mb-10 max-h-80 md:max-h-75 overflow-y-auto">
-                        <div className=" flex items-center justify-between bg-linear-to-r from-green-500 to-sky-400 px-2 py-2 rounded  ">
-                            <h2 className="text-white/90 font-[Poppins]">Eventos do Mês <span className="bg-white/30 px-3 font-bold text-white rounded-full">{eventos.length}</span></h2>
-                            <span className="bg-white/30 px-3 font-bold text-white rounded-full">{mesAtual.charAt(0).toUpperCase() + mesAtual.slice(1)}</span>
-                        </div>
-                        {eventos.map((evento, index) => {
-                            return (
-                                <div key={index} className="flex items-center px-4 border-b border-gray-300 mt-2">
 
-                                    <div className="flex items-center justify-between w-full ">
-                                        <span className="text-[0.8rem] text-gray-700 font-[] font-bold">{evento.nome}</span>
-                                        <span className="text-sm text-gray-600 font-bold bg-gray-100 px-2 rounded-full">{evento.data}</span>
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </div>
 
                 </section>
             </div >

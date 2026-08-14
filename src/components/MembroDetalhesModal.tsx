@@ -1,6 +1,7 @@
 
 
 // Adjust the import path based on your project structure
+import { Printer } from "lucide-react";
 import { useStyle } from "../context/StyleContext";
 
 interface MembroDetalhesModalProps {
@@ -11,7 +12,7 @@ interface MembroDetalhesModalProps {
 
 }
 
-export default function PacienteDetalhesModal({
+export default function MembroDetalhesModal({
     membro,
     isOpen,
     onClose,
@@ -20,6 +21,15 @@ export default function PacienteDetalhesModal({
 }: MembroDetalhesModalProps) {
     const { cores } = useStyle();
     if (!isOpen || !membro) return null;
+
+    const handlePrint = () => {
+        localStorage.setItem("dbmembro", JSON.stringify(membro));
+
+
+        const win = window.open("/FormularioVoluntario.html", "", "width=900,height=700");
+        win?.window.print();
+
+    };
 
 
 
@@ -71,7 +81,12 @@ export default function PacienteDetalhesModal({
 
 
                 {/* Footer com ações */}
-                <div className="flex justify-end gap-x-3 mt-8 border-t pt-4">
+                <div className="flex justify-between gap-x-3 mt-8 border-t pt-4">
+                    <button
+                        onClick={handlePrint}
+                        className=" no-print shadow-sm rounded-lg shadow-gray-400 px-2">
+                        <Printer />
+                    </button>
 
                     <div className=" flex gap-3">
                         <button
